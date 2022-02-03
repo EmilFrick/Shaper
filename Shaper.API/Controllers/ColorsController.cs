@@ -18,10 +18,16 @@ namespace Shaper.API.Controllers
         {
             _db = db;
         }
+
+
         [HttpGet]
         public async Task<IActionResult> GetColors()
         {
             var result = await _db.Colors.GetAllAsync();
+            if (result == null)
+            {
+                return NotFound();
+            }
             return Ok(result);
         }
 
@@ -31,7 +37,7 @@ namespace Shaper.API.Controllers
             var result = await _db.Colors.GetFirstOrDefaultAsync(x => x.Id == id);
             if (result == null)
             {
-                return BadRequest();
+                return NotFound();
             }
             return Ok(result);
         }
@@ -41,10 +47,60 @@ namespace Shaper.API.Controllers
         {
             if (ModelState.IsValid)
             {
+                var result = await _db.Colors.GetFirstOrDefaultAsync(x => x.Name == color.Name || x.Name == color.Name);
+                if (result is not null)
+                {
+                    return Conflict(result);
+                }
+
                 Color addColor = color.GetColorFromCreateVM();
                 await _db.Colors.AddAsync(addColor);
                 await _db.SaveAsync();
+
                 return CreatedAtAction("GetColor", new { id = addColor.Id }, addColor);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> UpdateColor(int id, ColorUpdateVM color)
+        {
+            if (color.Id != id)
+            {
+                return BadRequest();
+            }
+            if (ModelState.IsValid)
+            {
+                var result = await _db.Colors.GetFirstOrDefaultAsync(x => x.Name == color.Name || x.Name == color.Name);
+                if (result is not null)
+                {
+                    return Conflict(result);
+                }
+
+                Color updateColor = color.GetColorFromUpdateVM();
+                _db.Colors.Update(updateColor);
+                await _db.SaveAsync();
+                
+                return CreatedAtAction("GetColor", new { id = updateColor.Id }, updateColor);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteColor(int id)
+        {
+            var result = await _db.Colors.GetFirstOrDefaultAsync(x => x.Id == id);
+            if (result is not null)
+            {
+                _db.Colors.Remove(result);
+                await _db.SaveAsync();
+                return NoContent();
             }
             else
             {

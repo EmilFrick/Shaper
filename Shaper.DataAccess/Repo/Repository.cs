@@ -54,15 +54,9 @@ namespace SnutteBook.DataAccess.Repository
             return await query.FirstOrDefaultAsync();
         }
 
-        public async void RemoveAsync(T entity)
+        public void Remove(T entity)
         {
             dbSet.Remove(entity);
-        }
-
-        public void RemoveRangeAsync(IEnumerable<T> entities)
-        {
-            dbSet.RemoveRange(entities);
-
         }
     }
 }

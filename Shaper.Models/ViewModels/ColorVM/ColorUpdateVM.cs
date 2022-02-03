@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Shaper.Models.Entities;
+using Shaper.Utility.CustomValidations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,8 +16,21 @@ namespace Shaper.Models.ViewModels.ColorVM
         [Required]
         public string Name { get; set; }
         [Required]
+        [HexValidation]
         public string Hex { get; set; }
         [Required]
+        [Range(1,100)]
         public double AddedValue { get; set; }
+
+        public Color GetColorFromUpdateVM()
+        {
+            return new()
+            {
+                Id = this.Id,
+                Name = this.Name,
+                Hex = this.Hex.ToUpper(),
+                AddedValue = this.AddedValue
+            };
+        }
     }
 }

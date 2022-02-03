@@ -12,7 +12,6 @@ namespace Shaper.DataAccess.Repo.IRepo
         Task<T> GetFirstOrDefaultAsync(Expression<Func<T,bool>> filter, string? includeProperties = null);
         Task<IEnumerable<T>> GetAllAsync(string? includeProperties = null);
         Task AddAsync(T entity);
-        void RemoveAsync(T entity);
-        void RemoveRangeAsync(IEnumerable<T> entity);
+        void Remove(T entity);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Shaper.Utility.CustomValidations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,8 +18,10 @@ namespace Shaper.Models.Entities
         [Required]
         public string Name { get; set; }
         [Required]
+        [HexValidation]
         public string Hex { get; set; }
         [Required]
+        [Range(1,100)]
         [Column(TypeName ="money")]
         public double AddedValue { get; set; }
         //Navigation
