@@ -9,16 +9,11 @@ using System.Threading.Tasks;
 
 namespace Shaper.Models.ViewModels.ColorVM
 {
-    public class ColorDisplayVM
+    public class ColorCreateVM
     {
-        [Required]
-        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]
         public string Hex { get; set; }
-        [ValidateNever]
-        public ICollection<Product> Products { get; set; }
-
     }
 }

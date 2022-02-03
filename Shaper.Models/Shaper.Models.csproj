@@ -17,11 +17,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ViewModels\ShoppingCartVM\" />
-    <Folder Include="ViewModels\ProductVM\" />
-    <Folder Include="ViewModels\TransparencyVM\" />
-    <Folder Include="ViewModels\ShapeVM\" />
-  </ItemGroup>
-
 </Project>

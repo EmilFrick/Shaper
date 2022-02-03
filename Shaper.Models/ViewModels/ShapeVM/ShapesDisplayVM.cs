@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shaper.Models.ViewModels.OrderVM
+namespace Shaper.Models.ViewModels.ShapeVM
 {
-    internal class OrderDisplayVM
+    internal class ShapesDisplayVM
     {
     }
 }

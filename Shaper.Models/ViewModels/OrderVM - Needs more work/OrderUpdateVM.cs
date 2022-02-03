@@ -7,18 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shaper.Models.ViewModels.ColorVM
+namespace Shaper.Models.ViewModels.OrderVM
 {
-    public class ColorDisplayVM
+    public class OrderUpdateVM
     {
         [Required]
         public int Id { get; set; }
         [Required]
-        public string Name { get; set; }
+        public DateTime OrderPlaced { get; set; }
         [Required]
-        public string Hex { get; set; }
-        [ValidateNever]
-        public ICollection<Product> Products { get; set; }
+        public decimal OrderValue { get; set; }
 
     }
 }

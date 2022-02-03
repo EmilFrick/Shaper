@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using Shaper.Models.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shaper.Models.ViewModels.ColorVM
 {
-    public class ColorDisplayVM
+    public class ColorUpdateVM
     {
         [Required]
         public int Id { get; set; }
@@ -17,8 +15,5 @@ namespace Shaper.Models.ViewModels.ColorVM
         public string Name { get; set; }
         [Required]
         public string Hex { get; set; }
-        [ValidateNever]
-        public ICollection<Product> Products { get; set; }
-
     }
 }
