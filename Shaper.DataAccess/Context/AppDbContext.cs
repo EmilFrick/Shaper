@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Shaper.DataAccess.IdentityContext;
 using Shaper.Models.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,14 +11,14 @@ using System.Threading.Tasks;
 
 namespace Shaper.DataAccess.Context
 {
-    public class AppDbContext : IdentityDbContext
+    public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions options) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
 
         }
 
-        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<ShaperUser> ShaperUsers { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Shape> Shapes { get; set; }
         public DbSet<Color> Colors { get; set; }

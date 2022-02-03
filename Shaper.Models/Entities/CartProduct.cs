@@ -18,7 +18,5 @@ namespace Shaper.Models.Entities
         [ForeignKey("ShoppingCart")]
         public int ShoppingCartId { get; set; }
         public ShoppingCart ShoppingCart { get; set; }
-
-
     }
 }

@@ -16,6 +16,7 @@ namespace Shaper.Models.Entities
         [Required]
         public DateTime OrderPlaced { get; set; }
         [Required]
+        [Column(TypeName ="money")]
         public decimal OrderValue { get; set; }
 
         //Navigation Props
@@ -23,7 +24,7 @@ namespace Shaper.Models.Entities
         [ForeignKey("CustomerId")]
         public string CustomerId { get; set; }
         [ValidateNever]
-        public ApplicationUser Customer { get; set; }
+        public ShaperUser Customer { get; set; }
         [ValidateNever]
         public ICollection<OrderProduct> OrderProducts { get; set; }
 

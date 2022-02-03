@@ -15,6 +15,7 @@ namespace Shaper.Models.Entities
         public int Id { get; set; }
         public bool CheckedOut { get; set; }
         public DateTime OrderStarted { get; set; }
+        [Column(TypeName ="money")]
         public decimal OrderValue { get; set; }
 
         //Navigation Props
@@ -22,7 +23,7 @@ namespace Shaper.Models.Entities
         [ForeignKey("CustomerId")]
         public string CustomerId { get; set; }
         [ValidateNever]
-        public ApplicationUser Customer { get; set; }
+        public ShaperUser Customer { get; set; }
         [ValidateNever]
         public ICollection<CartProduct> CartProducts { get; set; }
     }

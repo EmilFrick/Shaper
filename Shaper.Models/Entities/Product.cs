@@ -18,6 +18,7 @@ namespace Shaper.Models.Entities
         [Required]
         public string Description { get; set; }
         [Required]
+        [Column(TypeName ="money")]
         public double Price { get; set; }
         [Required]
         public string Artist { get; set; }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Shaper.DataAccess.Migrations
 {
-    public partial class formDB : Migration
+    public partial class initProductManagement : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -24,24 +24,20 @@ namespace Shaper.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
+                name: "ShaperUsers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderPlaced = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    OrderValue = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdentityId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Orders_AspNetUsers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_ShaperUsers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -55,28 +51,6 @@ namespace Shaper.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Shapes", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ShoppingCarts",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CheckedOut = table.Column<bool>(type: "bit", nullable: false),
-                    OrderStarted = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    OrderValue = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ShoppingCarts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ShoppingCarts_AspNetUsers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -95,6 +69,51 @@ namespace Shaper.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderPlaced = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    OrderValue = table.Column<decimal>(type: "money", nullable: false),
+                    CustomerId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CustomerId1 = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_ShaperUsers_CustomerId1",
+                        column: x => x.CustomerId1,
+                        principalTable: "ShaperUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ShoppingCarts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CheckedOut = table.Column<bool>(type: "bit", nullable: false),
+                    OrderStarted = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    OrderValue = table.Column<decimal>(type: "money", nullable: false),
+                    CustomerId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CustomerId1 = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShoppingCarts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ShoppingCarts_ShaperUsers_CustomerId1",
+                        column: x => x.CustomerId1,
+                        principalTable: "ShaperUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -102,7 +121,7 @@ namespace Shaper.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: false),
+                    Price = table.Column<decimal>(type: "money", nullable: false),
                     Artist = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ShapeId = table.Column<int>(type: "int", nullable: false),
@@ -191,9 +210,9 @@ namespace Shaper.DataAccess.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_CustomerId",
+                name: "IX_Orders_CustomerId1",
                 table: "Orders",
-                column: "CustomerId");
+                column: "CustomerId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_ColorId",
@@ -211,9 +230,9 @@ namespace Shaper.DataAccess.Migrations
                 column: "TransparencyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoppingCarts_CustomerId",
+                name: "IX_ShoppingCarts_CustomerId1",
                 table: "ShoppingCarts",
-                column: "CustomerId");
+                column: "CustomerId1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -232,6 +251,9 @@ namespace Shaper.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "ShaperUsers");
 
             migrationBuilder.DropTable(
                 name: "Colors");
