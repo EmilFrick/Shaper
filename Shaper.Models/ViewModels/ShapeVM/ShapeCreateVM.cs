@@ -9,22 +9,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shaper.Models.ViewModels.TransparencyVM
+namespace Shaper.Models.ViewModels.ShapeVM
 {
-    public class TransparencyDisplayVM
+    public class ShapeCreateVM
     {
         [Required]
-        public int Id { get; set; }
-        [Required]
         public string Name { get; set; }
-        public string? Description { get; set; }
-        [Required]
-        public int Value { get; set; }
         [Required]
         public double AddedValue { get; set; }
-
-
-        [ValidateNever]
-        public ICollection<Product> Products { get; set; }
     }
 }

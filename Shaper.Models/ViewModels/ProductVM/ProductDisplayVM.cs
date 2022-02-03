@@ -30,12 +30,10 @@ namespace Shaper.Models.ViewModels.ProductVM
         public int ShapeId { get; set; }
         [ValidateNever]
         public Shape Shape { get; set; }
-
         [Required]
         public int ColorId { get; set; }
         [ValidateNever]
         public Color Color { get; set; }
-
         [Required]
         public int TransparencyId { get; set; }
         [ValidateNever]

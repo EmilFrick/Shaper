@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Shaper.Models.ViewModels.TransparencyVM
 {
-    public class TransparencyDisplayVM
+    public class TransparencyUpdateVM
     {
         [Required]
         public int Id { get; set; }
@@ -22,9 +22,5 @@ namespace Shaper.Models.ViewModels.TransparencyVM
         public int Value { get; set; }
         [Required]
         public double AddedValue { get; set; }
-
-
-        [ValidateNever]
-        public ICollection<Product> Products { get; set; }
     }
 }
