@@ -22,5 +22,17 @@ namespace Shaper.Models.ViewModels.TransparencyVM
         public int Value { get; set; }
         [Required]
         public double AddedValue { get; set; }
+
+        public Transparency GetTransparencyFromUpdateVM()
+        {
+            return new()
+            {
+                Id = this.Id,
+                Name = this.Name,
+                Description = this.Description,
+                Value = this.Value,
+                AddedValue = this.AddedValue
+            };
+        }
     }
 }

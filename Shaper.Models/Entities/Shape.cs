@@ -18,6 +18,7 @@ namespace Shaper.Models.Entities
         public string Name { get; set; }
 
         [Required]
+        [Range(1,100)]
         [Column(TypeName = "money")]
         public double AddedValue { get; set; }
 

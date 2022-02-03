@@ -16,6 +16,17 @@ namespace Shaper.Models.ViewModels.ShapeVM
         [Required]
         public string Name { get; set; }
         [Required]
+        [Range(1,100)]
         public double AddedValue { get; set; }
+
+
+        public Shape GetShapeFromCreateVM()
+        {
+            return new()
+            {
+                Name = this.Name,
+                AddedValue = this.AddedValue,
+            };
+        }
     }
 }
