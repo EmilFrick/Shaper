@@ -17,6 +17,8 @@ namespace Shaper.Models.ViewModels.ColorVM
         public string Name { get; set; }
         [Required]
         public string Hex { get; set; }
+        [Required]
+        public double AddedValue { get; set; }
         [ValidateNever]
         public ICollection<Product> Products { get; set; }
 
