@@ -18,6 +18,7 @@ namespace Shaper.Models.Entities
         [Required]
         public string Description { get; set; }
         [Required]
+        [Range(1,500)]
         [Column(TypeName ="money")]
         public double Price { get; set; }
         [Required]

@@ -23,7 +23,7 @@ namespace Shaper.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetColors()
         {
-            var result = await _db.Colors.GetAllAsync();
+            var result = await _db.Colors.GetAllAsync(includeProperties:"Products");
             if (result == null)
             {
                 return NotFound();
@@ -34,7 +34,7 @@ namespace Shaper.API.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetColor(int id)
         {
-            var result = await _db.Colors.GetFirstOrDefaultAsync(x => x.Id == id);
+            var result = await _db.Colors.GetFirstOrDefaultAsync(x => x.Id == id, includeProperties:"Products");
             if (result == null)
             {
                 return NotFound();
@@ -47,7 +47,7 @@ namespace Shaper.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _db.Colors.GetFirstOrDefaultAsync(x => x.Name == color.Name || x.Name == color.Name);
+                var result = await _db.Colors.GetFirstOrDefaultAsync(x => x.Name == color.Name || x.Hex == color.Hex);
                 if (result is not null)
                 {
                     return Conflict(result);
@@ -74,7 +74,7 @@ namespace Shaper.API.Controllers
             }
             if (ModelState.IsValid)
             {
-                var result = await _db.Colors.GetFirstOrDefaultAsync(x => x.Name == color.Name || x.Name == color.Name);
+                var result = await _db.Colors.GetFirstOrDefaultAsync(x => x.Name == color.Name || x.Hex == color.Hex);
                 if (result is not null)
                 {
                     return Conflict(result);

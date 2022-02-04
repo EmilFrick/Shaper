@@ -19,6 +19,7 @@ namespace Shaper.Models.ViewModels.ProductVM
         [Required]
         public string Description { get; set; }
         [Required]
+        [Range(1,500)]
         public double Price { get; set; }
         [Required]
         public string Artist { get; set; }

@@ -18,6 +18,7 @@ namespace Shaper.Models.ViewModels.ProductVM
         [Required]
         public string Description { get; set; }
         [Required]
+        [Range(1,500)]
         public double Price { get; set; }
         [Required]
         public string Artist { get; set; }
@@ -33,5 +34,20 @@ namespace Shaper.Models.ViewModels.ProductVM
 
         [Required]
         public int TransparencyId { get; set; }
+
+        public Product GetProductFromCreateVM()
+        {
+            return new()
+            {
+                Name = this.Name,
+                Description = this.Description,
+                Price = this.Price,
+                Artist = this.Artist,
+                Created = this.Created,
+                ShapeId = this.ShapeId,
+                ColorId = this.ColorId,
+                TransparencyId = this.TransparencyId
+            };
+        }
     }
 }

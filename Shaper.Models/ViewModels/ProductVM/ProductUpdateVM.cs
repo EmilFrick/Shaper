@@ -19,10 +19,12 @@ namespace Shaper.Models.ViewModels.ProductVM
         [Required]
         public string Description { get; set; }
         [Required]
+
         public double Price { get; set; }
         [Required]
         public string Artist { get; set; }
-
+        [Required]
+        public DateTime Created { get; set; }
 
         [Required]
         public int ShapeId { get; set; }
@@ -32,5 +34,22 @@ namespace Shaper.Models.ViewModels.ProductVM
 
         [Required]
         public int TransparencyId { get; set; }
+
+
+        public Product GetProductFromUpdateVM(Product originalProduct)
+        {
+            return new()
+            {
+                Id = this.Id,
+                Name = this.Name,
+                Description = this.Description,
+                Price = this.Price,
+                Artist = this.Artist,
+                Created = originalProduct.Created,
+                ShapeId = this.ShapeId,
+                ColorId = this.ColorId,
+                TransparencyId = this.TransparencyId
+            };
+        }
     }
 }

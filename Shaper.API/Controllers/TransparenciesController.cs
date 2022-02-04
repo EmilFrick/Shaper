@@ -21,7 +21,7 @@ namespace Shaper.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetTransparencies()
         {
-            var result = await _db.Transparencies.GetAllAsync();
+            var result = await _db.Transparencies.GetAllAsync(includeProperties:"Products");
             if (result == null)
             {
                 return NotFound();
@@ -32,7 +32,7 @@ namespace Shaper.API.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetTransparency(int id)
         {
-            var result = await _db.Transparencies.GetFirstOrDefaultAsync(x => x.Id == id);
+            var result = await _db.Transparencies.GetFirstOrDefaultAsync(x => x.Id == id, includeProperties:"Products");
             if (result == null)
             {
                 return NotFound();
@@ -45,7 +45,7 @@ namespace Shaper.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _db.Transparencies.GetFirstOrDefaultAsync(x => x.Name == transparency.Name || x.Name == transparency.Name);
+                var result = await _db.Transparencies.GetFirstOrDefaultAsync(x => x.Name == transparency.Name || x.Value == transparency.Value);
                 if (result is not null)
                 {
                     return Conflict(result);
@@ -72,7 +72,7 @@ namespace Shaper.API.Controllers
             }
             if (ModelState.IsValid)
             {
-                var result = await _db.Transparencies.GetFirstOrDefaultAsync(x => x.Name == transparency.Name || x.Name == transparency.Name);
+                var result = await _db.Transparencies.GetFirstOrDefaultAsync(x => x.Name == transparency.Name || x.Value == transparency.Value);
                 if (result is not null)
                 {
                     return Conflict(result);

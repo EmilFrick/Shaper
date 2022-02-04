@@ -34,7 +34,7 @@ namespace Shaper.DataAccess.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("CartProducts");
+                    b.ToTable("CartProducts", (string)null);
                 });
 
             modelBuilder.Entity("Shaper.Models.Entities.Color", b =>
@@ -58,7 +58,7 @@ namespace Shaper.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Colors");
+                    b.ToTable("Colors", (string)null);
                 });
 
             modelBuilder.Entity("Shaper.Models.Entities.Order", b =>
@@ -86,7 +86,7 @@ namespace Shaper.DataAccess.Migrations
 
                     b.HasIndex("CustomerId1");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("Shaper.Models.Entities.OrderProduct", b =>
@@ -101,7 +101,7 @@ namespace Shaper.DataAccess.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderProducts");
+                    b.ToTable("OrderProducts", (string)null);
                 });
 
             modelBuilder.Entity("Shaper.Models.Entities.Product", b =>
@@ -147,7 +147,7 @@ namespace Shaper.DataAccess.Migrations
 
                     b.HasIndex("TransparencyId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Shaper.Models.Entities.Shape", b =>
@@ -167,7 +167,7 @@ namespace Shaper.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Shapes");
+                    b.ToTable("Shapes", (string)null);
                 });
 
             modelBuilder.Entity("Shaper.Models.Entities.ShaperUser", b =>
@@ -200,7 +200,7 @@ namespace Shaper.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ShaperUsers");
+                    b.ToTable("ShaperUsers", (string)null);
                 });
 
             modelBuilder.Entity("Shaper.Models.Entities.ShoppingCart", b =>
@@ -231,7 +231,7 @@ namespace Shaper.DataAccess.Migrations
 
                     b.HasIndex("CustomerId1");
 
-                    b.ToTable("ShoppingCarts");
+                    b.ToTable("ShoppingCarts", (string)null);
                 });
 
             modelBuilder.Entity("Shaper.Models.Entities.Transparency", b =>
@@ -257,7 +257,7 @@ namespace Shaper.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Transparencies");
+                    b.ToTable("Transparencies", (string)null);
                 });
 
             modelBuilder.Entity("Shaper.Models.Entities.CartProduct", b =>

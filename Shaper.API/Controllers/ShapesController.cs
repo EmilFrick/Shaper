@@ -22,7 +22,7 @@ namespace Shaper.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetShapes()
         {
-            var result = await _db.Shapes.GetAllAsync();
+            var result = await _db.Shapes.GetAllAsync(includeProperties:"Products");
             if (result == null)
             {
                 return NotFound();
@@ -33,7 +33,7 @@ namespace Shaper.API.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetShape(int id)
         {
-            var result = await _db.Shapes.GetFirstOrDefaultAsync(x => x.Id == id);
+            var result = await _db.Shapes.GetFirstOrDefaultAsync(x => x.Id == id, includeProperties:"Products");
             if (result == null)
             {
                 return NotFound();
@@ -46,7 +46,7 @@ namespace Shaper.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _db.Shapes.GetFirstOrDefaultAsync(x => x.Name == shape.Name || x.Name == shape.Name);
+                var result = await _db.Shapes.GetFirstOrDefaultAsync(x => x.Name == shape.Name);
                 if (result is not null)
                 {
                     return Conflict(result);
@@ -73,7 +73,7 @@ namespace Shaper.API.Controllers
             }
             if (ModelState.IsValid)
             {
-                var result = await _db.Shapes.GetFirstOrDefaultAsync(x => x.Name == shape.Name || x.Name == shape.Name);
+                var result = await _db.Shapes.GetFirstOrDefaultAsync(x => x.Name == shape.Name);
                 if (result is not null)
                 {
                     return Conflict(result);
