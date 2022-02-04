@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shaper.Web", "Shaper.Web\Shaper.Web.csproj", "{CB8CF3E7-F170-4FBC-AD2F-A6D2FE6F6EB2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shaper.Web", "Shaper.Web\Shaper.Web.csproj", "{CB8CF3E7-F170-4FBC-AD2F-A6D2FE6F6EB2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shaper.API", "Shaper.API\Shaper.API.csproj", "{A01C72A8-7877-44D6-A241-D434990BDFCD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shaper.API", "Shaper.API\Shaper.API.csproj", "{A01C72A8-7877-44D6-A241-D434990BDFCD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shaper.DataAccess", "Shaper.DataAccess\Shaper.DataAccess.csproj", "{271ADE44-77A8-4A15-A691-D0AE6FE04F13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shaper.DataAccess", "Shaper.DataAccess\Shaper.DataAccess.csproj", "{271ADE44-77A8-4A15-A691-D0AE6FE04F13}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shaper.Models", "Shaper.Models\Shaper.Models.csproj", "{84B03CF8-3332-4495-8C40-88735B3C252B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shaper.Models", "Shaper.Models\Shaper.Models.csproj", "{84B03CF8-3332-4495-8C40-88735B3C252B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shaper.Utility", "Shaper.Utility\Shaper.Utility.csproj", "{B5144C8C-1E5F-4FE9-A821-488A88DB6316}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shaper.Utility", "Shaper.Utility\Shaper.Utility.csproj", "{B5144C8C-1E5F-4FE9-A821-488A88DB6316}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

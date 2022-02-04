@@ -8,12 +8,19 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-//Context implemented here so we can easily add migrations to DB since there is an issue with migrating with simultanious start-up programs. 
+//Context implemented here so we can easily add migrations during development to DB since there is an issue
+//with migrating with simultanious start-up programs. 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ProductConnection")));
 
 builder.Services.AddDbContext<IdentityAppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<IdentityAppDbContext>();
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = $"/User/Account/Login";
+    options.LogoutPath = $"/User/Account/Logout";
+    options.AccessDeniedPath = $"/User/Account/AccessDenied";
+});
 
 var app = builder.Build();
 
@@ -30,10 +37,12 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{area=User}/{controller=Home}/{action=Index}/{id?}");
+
 
 app.Run();
