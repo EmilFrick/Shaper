@@ -6,13 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using static Shaper.Utility.SD;
 
 namespace Shaper.Models.ViewModels.UserVM
 {
     public class UserRegisterVM
     {
         [Required]
-        [Display(Name ="Full Name")]
+        [Display(Name = "Full Name")]
         public string Fullname { get; set; }
 
         [Required]
@@ -26,9 +27,11 @@ namespace Shaper.Models.ViewModels.UserVM
         public string City { get; set; }
 
         [Required]
-        [Display(Name ="Postal Code")]
+        [Display(Name = "Postal Code")]
         public string PostalCode { get; set; }
 
+        [Required]
+        public UserType UserType{ get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -37,7 +40,6 @@ namespace Shaper.Models.ViewModels.UserVM
         [Display(Name = "Confirm Password")]
         [Compare("Password", ErrorMessage = "The password does not match.")]
         public string ConfirmPassword { get; set; }
-
 
         public ApplicationUser VMtoUser()
         {
@@ -48,9 +50,9 @@ namespace Shaper.Models.ViewModels.UserVM
                 Email = this.Email,
                 Address = this.Address,
                 City = this.City,
-                PostalCode = this.PostalCode
+                PostalCode = this.PostalCode,
+                SelectedRole = this.UserType.ToString()
             };
-            
         }
     }
 }

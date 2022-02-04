@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,15 @@ namespace Shaper.Utility
 {
     public static class SD
     {
-        public static Regex HexRx = new Regex(@"^#([0-9A-Fa-f]{3}){1,2}$"); 
+        public static Regex HexRx = new Regex(@"^#([0-9A-Fa-f]{3}){1,2}$");
+        public enum UserType { Customer, Admin, Artist }
+        public static IEnumerable<SelectListItem> UserTypeSelection()
+        {
+            return Enum.GetNames(typeof(UserType)).Select(i => new SelectListItem
+            {
+                Text = i.ToString(),
+                Value = i.ToString()
+            }).ToList();
+        }
     }
 }
