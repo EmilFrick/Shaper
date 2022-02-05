@@ -21,7 +21,7 @@ builder.Services.AddDbContext<IdentityAppDbContext>(options => options.UseSqlSer
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<IdentityAppDbContext>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
-
+builder.Services.AddHttpClient();
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -29,6 +29,13 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LogoutPath = $"/User/Account/Logout";
     options.AccessDeniedPath = $"/User/Account/AccessDenied";
 });
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromSeconds(10);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 
 builder.AddShaperAuthentication();
 

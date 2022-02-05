@@ -16,6 +16,7 @@ namespace Shaper.Web.Areas.User.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
 
         private readonly IAccountService _accountService;
+        private readonly IAuthenticationService _authenticationService;
 
 
 
@@ -26,6 +27,7 @@ namespace Shaper.Web.Areas.User.Controllers
             _userManager = userManager;
             _roleManager = roleManager;
             _accountService = accountService;
+            _authenticationService = authenticationService;
         }
 
         [HttpGet]
@@ -42,7 +44,7 @@ namespace Shaper.Web.Areas.User.Controllers
             if (ModelState.IsValid)
             {
                 await _accountService.ConfirmingRoles();
-                var registration= await _accountService.UserRegistration(userVM);
+                var registration = await _accountService.UserRegistration(userVM);
                 if (registration.Succeeded)
                 {
                     return RedirectToAction("Index");
@@ -64,17 +66,16 @@ namespace Shaper.Web.Areas.User.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var successfulLogin = await _accountService.LoginShaperUser(loginUser);
-                if (successfulLogin)
+                var loginResult = await _accountService.ShaperLogin(loginUser);
+                if (loginResult != null && loginResult.Token != null)
                 {
+                    HttpContext.Session.SetString("JwToken", loginResult.Token);
                     return LocalRedirect(returnUrl);
                 }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Unable to login.");
-                    return View(loginUser);
-                }
+                return View(loginUser);
             }
+
+            ModelState.AddModelError(string.Empty, "Unable to login.");
             return View(loginUser);
         }
 

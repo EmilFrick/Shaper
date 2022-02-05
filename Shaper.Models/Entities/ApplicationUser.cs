@@ -20,8 +20,10 @@ namespace Shaper.Models.Entities
         public string PostalCode { get; set; }
         [Required]
         public string City { get; set; }
+        
+        
         [NotMapped]
-        public string? SelectedRole { get; set; }
+        public string Role { get; set; }
         [NotMapped]
         public string? Token { get; set; }
     }

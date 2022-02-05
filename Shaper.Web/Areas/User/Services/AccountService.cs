@@ -4,6 +4,7 @@ using Shaper.DataAccess.IdentityContext;
 using Shaper.Models.Entities;
 using Shaper.Models.ViewModels.UserVM;
 using Shaper.Utility;
+using Microsoft.AspNetCore.Http;
 
 namespace Shaper.Web.Areas.User.Services
 {
@@ -56,27 +57,29 @@ namespace Shaper.Web.Areas.User.Services
         private async Task FinalizeRegistration(ApplicationUser user)
         {
             await _signinManager.SignInAsync(user, isPersistent: false);
-            await _userManager.AddToRoleAsync(user, user.SelectedRole);
+            await _userManager.AddToRoleAsync(user, user.Role);
         }
 
-        public async Task<bool> LoginShaperUser(UserLoginVM loginUser)
+        public async Task<ApplicationUser> ShaperLogin(UserLoginVM loginUser)
         {
-            ApplicationUser user = await _db.ApplicationUsers.FirstOrDefaultAsync(x => x.Email == loginUser.Email);
+            var user = await GetApplicationUser(loginUser);
             if (user == null)
-            {
-                return false;
-            }
-
+                return null;
+            
             var userLogin = await _signinManager.PasswordSignInAsync(loginUser.Email, loginUser.Password, false, lockoutOnFailure: false);
-            if (userLogin.Succeeded)
-            {
-                _authenticationService.Authentication(user);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            if (!userLogin.Succeeded)
+                return null;
+
+            await _authenticationService.HandingOverToken(user);
+            if (user.Token == null)
+                return null;
+
+            return user;
+        }
+
+        private async Task<ApplicationUser> GetApplicationUser(UserLoginVM loginUser)
+        {
+            return await _db.ApplicationUsers.FirstOrDefaultAsync(x => x.Email == loginUser.Email);
         }
     }
 }

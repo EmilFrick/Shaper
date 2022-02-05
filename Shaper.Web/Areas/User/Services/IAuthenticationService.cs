@@ -4,6 +4,6 @@ namespace Shaper.Web.Areas.User.Services
 {
     public interface IAuthenticationService
     {
-        void Authentication(ApplicationUser user);
+        Task HandingOverToken(ApplicationUser user);
     }
 }
