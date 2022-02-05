@@ -51,7 +51,7 @@ namespace Shaper.Models.ViewModels.UserVM
                 Address = this.Address,
                 City = this.City,
                 PostalCode = this.PostalCode,
-                SelectedRole = this.UserType.ToString()
+                Role = this.UserType.ToString()
             };
         }
     }

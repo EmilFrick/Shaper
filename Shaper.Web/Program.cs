@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Shaper.DataAccess.Context;
 using Shaper.DataAccess.IdentityContext;
 using Shaper.Web;
+using Shaper.Web.ApiService.IService;
 using Shaper.Web.Areas.User.Services;
 using Shaper.Web.AuthenticationOptions;
 
@@ -21,6 +22,8 @@ builder.Services.AddDbContext<IdentityAppDbContext>(options => options.UseSqlSer
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<IdentityAppDbContext>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IShaperApiService, ShaperApiService>();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddHttpClient();
 
 builder.Services.ConfigureApplicationCookie(options =>

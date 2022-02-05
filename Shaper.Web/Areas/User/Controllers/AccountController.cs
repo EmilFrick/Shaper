@@ -16,18 +16,16 @@ namespace Shaper.Web.Areas.User.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
 
         private readonly IAccountService _accountService;
-        private readonly IAuthenticationService _authenticationService;
 
 
 
         public AccountController(SignInManager<IdentityUser> signinManager, UserManager<IdentityUser> userManager,
-            RoleManager<IdentityRole> roleManager, IAccountService accountService, IAuthenticationService authenticationService)
+            RoleManager<IdentityRole> roleManager, IAccountService accountService)
         {
             _signinManager = signinManager;
             _userManager = userManager;
             _roleManager = roleManager;
             _accountService = accountService;
-            _authenticationService = authenticationService;
         }
 
         [HttpGet]
