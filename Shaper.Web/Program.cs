@@ -1,8 +1,12 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Shaper.DataAccess.Context;
 using Shaper.DataAccess.IdentityContext;
+using Shaper.Web;
 using Shaper.Web.Areas.User.Services;
+using Shaper.Web.AuthenticationOptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +20,8 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(buil
 builder.Services.AddDbContext<IdentityAppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<IdentityAppDbContext>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -23,6 +29,8 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LogoutPath = $"/User/Account/Logout";
     options.AccessDeniedPath = $"/User/Account/AccessDenied";
 });
+
+builder.AddShaperAuthentication();
 
 var app = builder.Build();
 
