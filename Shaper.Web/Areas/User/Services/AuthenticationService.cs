@@ -25,10 +25,10 @@ namespace Shaper.Web.Areas.User.Services
 
             var tokenDescriptor = CreateTokenDescriptor(user);
             var token = tokenHandeler.CreateToken(tokenDescriptor);
-
+            user.Token = tokenHandeler.WriteToken(token);
         }
 
-        public SecurityTokenDescriptor CreateTokenDescriptor(ApplicationUser user)
+        private SecurityTokenDescriptor CreateTokenDescriptor(ApplicationUser user)
         {
             var key = Encoding.ASCII.GetBytes(_appSettings.ShaperKey);
             return new()

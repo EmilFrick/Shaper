@@ -8,5 +8,6 @@ namespace Shaper.Web.Areas.User.Services
     {
         Task ConfirmingRoles();
         Task<IdentityResult> UserRegistration(UserRegisterVM registerVM);
+        Task<bool> LoginShaperUser(UserLoginVM loginVM);
     }
 }

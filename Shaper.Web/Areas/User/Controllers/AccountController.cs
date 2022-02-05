@@ -18,8 +18,9 @@ namespace Shaper.Web.Areas.User.Controllers
         private readonly IAccountService _accountService;
 
 
+
         public AccountController(SignInManager<IdentityUser> signinManager, UserManager<IdentityUser> userManager,
-            RoleManager<IdentityRole> roleManager, IAccountService accountService)
+            RoleManager<IdentityRole> roleManager, IAccountService accountService, IAuthenticationService authenticationService)
         {
             _signinManager = signinManager;
             _userManager = userManager;
@@ -63,8 +64,8 @@ namespace Shaper.Web.Areas.User.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var userLogin = await _signinManager.PasswordSignInAsync(loginUser.Email, loginUser.Password, false, lockoutOnFailure: false);
-                if (userLogin.Succeeded)
+                var successfulLogin = await _accountService.LoginShaperUser(loginUser);
+                if (successfulLogin)
                 {
                     return LocalRedirect(returnUrl);
                 }
