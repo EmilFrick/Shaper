@@ -6,6 +6,8 @@ using Shaper.DataAccess.Context;
 using Shaper.DataAccess.IdentityContext;
 using Shaper.Web;
 using Shaper.Web.ApiService.IService;
+using Shaper.Web.Areas.Admin.Services;
+using Shaper.Web.Areas.Admin.Services.IService;
 using Shaper.Web.Areas.User.Services;
 using Shaper.Web.AuthenticationOptions;
 
@@ -22,21 +24,24 @@ builder.Services.AddDbContext<IdentityAppDbContext>(options => options.UseSqlSer
 builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<IdentityAppDbContext>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IColorService, ColorService>();
 builder.Services.AddScoped<IShaperApiService, ShaperApiService>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddHttpClient();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(10);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = $"/User/Account/Login";
     options.LogoutPath = $"/User/Account/Logout";
     options.AccessDeniedPath = $"/User/Account/AccessDenied";
-});
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromSeconds(10);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
 });
 
 
@@ -57,6 +62,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 

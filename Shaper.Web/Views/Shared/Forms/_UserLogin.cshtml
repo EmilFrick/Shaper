@@ -1,0 +1,19 @@
+﻿@model UserLoginVM
+@{
+    var formtype = "Login";
+}
+<form method="post" asp-controller="Account" asp-action="Login">
+    <div class="row m-3">
+        <div class="col-5">
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control">
+            <span asp-validation-for="Email"></span>
+        </div>
+        <div class="col-5">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control">
+            <span asp-validation-for="Password"></span>
+        </div>
+    </div>
+    <partial name="Buttons/_Confirm" model="formtype" />
+</form>

@@ -45,7 +45,7 @@ namespace Shaper.Web.Areas.User.Controllers
                 var registration = await _accountService.UserRegistration(userVM);
                 if (registration.Succeeded)
                 {
-                    return RedirectToAction("Index");
+                    return LocalRedirect(Url.Content("~/User/Home"));
                 }
             }
             return View(userVM);

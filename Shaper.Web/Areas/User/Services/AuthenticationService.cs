@@ -52,7 +52,7 @@ namespace Shaper.Web.Areas.User.Services
         private async Task VerifyingUserRole(ApplicationUser user)
         {
             var roleId = await _db.UserRoles.FirstOrDefaultAsync(x => x.UserId == user.Id);
-            var role = await _db.Roles.FirstOrDefaultAsync(x => x.Name == roleId.RoleId);
+            var role = await _db.Roles.FirstOrDefaultAsync(x => x.Id == roleId.RoleId);
             user.Role = role.Name;
         }
 

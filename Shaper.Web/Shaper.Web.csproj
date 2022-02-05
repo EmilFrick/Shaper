@@ -25,11 +25,8 @@
 
   <ItemGroup>
     <Folder Include="Areas\Artist\Controllers\" />
-    <Folder Include="Areas\Artist\Views\" />
     <Folder Include="Areas\Customer\Controllers\" />
     <Folder Include="Areas\Customer\Views\" />
-    <Folder Include="Areas\Admin\Controllers\" />
-    <Folder Include="Areas\Admin\Views\" />
   </ItemGroup>
 
 </Project>

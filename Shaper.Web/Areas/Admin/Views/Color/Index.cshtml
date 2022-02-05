@@ -1,0 +1,14 @@
+﻿@model IEnumerable<Color>
+
+@if (Model != null)
+{
+
+    @foreach (var color in Model)
+    {
+        <p>@color.Name</p>
+    }
+}
+else
+{
+    <p>No colors found</p>
+}
