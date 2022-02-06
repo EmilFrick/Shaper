@@ -23,7 +23,8 @@ namespace Shaper.Web.ApiService
             }
 
             var req = new HttpRequestMessage(HttpMethod.Get, url);
-            var res = client.SendAsync(req).Result;
+            var res = await client.SendAsync(req);
+
             if (res.IsSuccessStatusCode)
             {
                 var jsonString = await res.Content.ReadAsStringAsync();

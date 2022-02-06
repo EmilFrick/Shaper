@@ -82,5 +82,10 @@ namespace Shaper.Web.Areas.User.Controllers
             await _signinManager.SignOutAsync();
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }

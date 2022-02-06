@@ -15,32 +15,32 @@ namespace Shaper.Web.AuthenticationOptions
             var settings = section.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(settings.ShaperKey);
 
-            builder.AddingShaperAuthentication().AddingShaperJwtBearer(key);
+            //builder.AddingShaperAuthentication().AddingShaperJwtBearer(key);
         }
 
-        private static AuthenticationBuilder AddingShaperAuthentication(this WebApplicationBuilder builder)
-        {
-            return builder.Services.AddAuthentication(x =>
-            {
-                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            });
-        }
+        //private static AuthenticationBuilder AddingShaperAuthentication(this WebApplicationBuilder builder)
+        //{
+        //    return builder.Services.AddAuthentication(x =>
+        //    {
+        //        x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        //        x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        //    });
+        //}
 
-        private static AuthenticationBuilder AddingShaperJwtBearer(this AuthenticationBuilder builder, byte[] key)
-        {
-            return builder.AddJwtBearer(x =>
-            {
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
-                x.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ValidateIssuer = false,
-                    ValidateAudience = false
-                };
-            });
-        }
+        //private static AuthenticationBuilder AddingShaperJwtBearer(this AuthenticationBuilder builder, byte[] key)
+        //{
+        //    return builder.AddJwtBearer(x =>
+        //    {
+        //        x.RequireHttpsMetadata = false;
+        //        x.SaveToken = true;
+        //        x.TokenValidationParameters = new TokenValidationParameters
+        //        {
+        //            ValidateIssuerSigningKey = true,
+        //            IssuerSigningKey = new SymmetricSecurityKey(key),
+        //            ValidateIssuer = false,
+        //            ValidateAudience = false
+        //        };
+        //    });
+        //}
     }
 }

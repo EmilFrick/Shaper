@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Shaper.API.AuthenticationOptions;
 using Shaper.DataAccess.Context;
 using Shaper.DataAccess.Repo;
 using Shaper.DataAccess.Repo.IRepo;
@@ -16,6 +17,7 @@ builder.Services.AddControllersWithViews().AddNewtonsoftJson(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.AddShaperAuthentication();
 
 var app = builder.Build();
 

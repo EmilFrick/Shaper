@@ -4,7 +4,7 @@ namespace Shaper.Web.Areas.Admin.Services.IService
 {
     public interface IColorService
     {
-        Task<IEnumerable<Color>> GetColors();
+        Task<IEnumerable<Color>> GetColors(string token);
 
     }
 }

@@ -14,10 +14,9 @@ namespace Shaper.Web.Areas.Admin.Services
             _apiService = apiService;
         }
 
-        public async Task<IEnumerable<Color>> GetColors()
+        public async Task<IEnumerable<Color>> GetColors(string token)
         {
-            return await _apiService.ColorApi.GetAllAsync(ApiPaths.ApiPath.Colors.GetEndpoint(null));
-
+            return await _apiService.ColorApi.GetAllAsync(ApiPaths.ApiPath.Colors.GetEndpoint(null), token);
         }
     }
 }

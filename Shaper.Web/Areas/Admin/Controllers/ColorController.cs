@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Shaper.Web.Areas.Admin.Services.IService;
 
 namespace Shaper.Web.Areas.Admin.Controllers
@@ -13,9 +14,10 @@ namespace Shaper.Web.Areas.Admin.Controllers
             _colorService = colorService;
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
-            var colors = await _colorService.GetColors();
+            var colors = await _colorService.GetColors(HttpContext.Session.GetString("JwToken"));
             return View(colors);
         }
 

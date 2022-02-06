@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shaper.DataAccess.Repo;
 using Shaper.DataAccess.Repo.IRepo;
 using Shaper.Models.Entities;
 using Shaper.Models.ViewModels.ColorVM;
+using System.Data;
 
 namespace Shaper.API.Controllers
 {
@@ -18,9 +20,9 @@ namespace Shaper.API.Controllers
         {
             _db = db;
         }
-
-
+        
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetColors()
         {
             var result = await _db.Colors.GetAllAsync(includeProperties:"Products");
