@@ -12,19 +12,24 @@
                 <li class="nav-item">
                     <a class="nav-link text-dark" asp-area="User" asp-controller="Home" asp-action="Index">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="User" asp-controller="Account" asp-action="Register">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="User" asp-controller="Account" asp-action="Login">Login</a>
-                </li>
-                @if (contextAcc.HttpContext.Session.GetString("JwToken") != null &&
-                contextAcc.HttpContext.Session.GetString("JwToken").ToString().Length > 0)
+
+                @if (contextAcc.HttpContext.Session.GetString("JwToken") != null && contextAcc.HttpContext.Session.GetString("JwToken").ToString().Length > 0)
                 {
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="Admin" asp-controller="Color" asp-action="Index">Colors</a>
-                    </li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <partial name="Navigation/_NavAdmin" />
+                    }
+                    @if (User.IsInRole("Customer"))
+                    {
+                        <partial name="Navigation/_NavCustomer" />
+                    }
+                    @if (User.IsInRole("Artist"))
+                    {
+                        <partial name="Navigation/_NavArtist" />
+                    }
                 }
+
+                <partial name="Navigation/_NavIdentity" />
             </ul>
         </div>
 

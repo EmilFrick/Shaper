@@ -80,7 +80,8 @@ namespace Shaper.Web.Areas.User.Controllers
         public async Task<IActionResult> LogOut()
         {
             await _signinManager.SignOutAsync();
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            HttpContext.Session.SetString("JwToken", "");
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult AccessDenied()
