@@ -2,7 +2,7 @@
 @{
     var formtype = "Login";
 }
-<form method="post" asp-controller="Account" asp-action="Login">
+<form method="post" asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]">
     <div class="row m-3">
         <div class="col-5">
             <label asp-for="Email"></label>

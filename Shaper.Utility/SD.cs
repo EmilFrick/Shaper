@@ -13,7 +13,10 @@ namespace Shaper.Utility
     {
         public static Regex HexRx = new Regex(@"^#([0-9A-Fa-f]{3}){1,2}$");
         public enum UserType { Customer, Admin, Artist }
-
+        public enum Shapes { square, rectangle, circle, oval, triangleup, triangledown, triangleleft,
+                             triangleright, triangletopleft, triangletopright, trianglebottomleft,
+                             trianglebottomright, trapezoid, pentagon, hexagon, octagon, heart,
+                             diamond, cone, cross }
         public static IEnumerable<SelectListItem> UserTypeSelection()
         {
             return Enum.GetNames(typeof(UserType)).Select(i => new SelectListItem

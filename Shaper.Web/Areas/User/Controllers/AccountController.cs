@@ -10,21 +10,12 @@ namespace Shaper.Web.Areas.User.Controllers
 {
     public class AccountController : Controller
     {
-
         private readonly SignInManager<IdentityUser> _signinManager;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-
         private readonly IAccountService _accountService;
 
-
-
-        public AccountController(SignInManager<IdentityUser> signinManager, UserManager<IdentityUser> userManager,
-            RoleManager<IdentityRole> roleManager, IAccountService accountService)
+        public AccountController(SignInManager<IdentityUser> signinManager, IAccountService accountService)
         {
             _signinManager = signinManager;
-            _userManager = userManager;
-            _roleManager = roleManager;
             _accountService = accountService;
         }
 
@@ -32,11 +23,11 @@ namespace Shaper.Web.Areas.User.Controllers
         public IActionResult Register()
         {
             UserRegisterVM registerUserVM = new();
-
             return View(registerUserVM);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(UserRegisterVM userVM)
         {
             if (ModelState.IsValid)
@@ -51,24 +42,29 @@ namespace Shaper.Web.Areas.User.Controllers
             return View(userVM);
         }
 
-        public async Task<IActionResult> Login(string returnUrl = null)
+        public async Task<IActionResult> Login()
         {
-            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
+
+        public async Task<IActionResult> RedirectLogin(string returnurl = null)
+        {
+            ViewData["ReturnUrl"] = returnurl;
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(UserLoginVM loginUser, string? returnUrl = null)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(UserLoginVM loginUser, string? returnurl = null)
         {
-            returnUrl = returnUrl ?? Url.Content("~/User/Home");
-            ViewData["ReturnUrl"] = returnUrl;
+            var urlDirection = returnurl ?? Url.Content("~/User/Home");
             if (ModelState.IsValid)
             {
                 var loginResult = await _accountService.ShaperLogin(loginUser);
                 if (loginResult != null && loginResult.Token != null)
                 {
                     HttpContext.Session.SetString("JwToken", loginResult.Token);
-                    return LocalRedirect(returnUrl);
+                    return LocalRedirect(urlDirection);
                 }
                 return View(loginUser);
             }

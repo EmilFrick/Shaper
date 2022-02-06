@@ -1,7 +1,8 @@
 ﻿@model UserRegisterVM
 @{
     var formtype = "Register";
-    var userTypes = SD.UserTypeSelection();
+    var userTypes = Enum.GetNames(typeof(SD.UserType)).Select(i => new SelectListItem
+            { Text = i.ToString(), Value = i.ToString()}).ToList();
 }
 <form method="post" asp-controller="Account" asp-action="Register">
     <div class="row m-3">

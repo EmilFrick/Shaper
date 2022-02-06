@@ -1,0 +1,32 @@
+﻿@model TransparencyCreateVM
+@{
+    var formtype = "Create";
+}
+
+<form method="post" asp-controller="Transparency" asp-action="Create">
+    <div class="row m-3">
+        <div class="col-5">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control">
+            <span asp-validation-for="Name"></span>
+        </div>
+        <div class="col-5">
+            <label asp-for="Description"></label>
+            <input asp-for="Description" class="form-control">
+            <span asp-validation-for="Description"></span>
+        </div>
+        <div class="col-5">
+            <label asp-for="Value" for="customRange1" class="form-label">Transparency</label>
+            <input asp-for="Value" type="range" class="form-range" id="customRange1">
+            <p class="text-primary" id="range-output"></p>
+        </div>
+        <div class="col-5">
+            <label asp-for="AddedValue"></label>
+            <input asp-for="AddedValue" class="form-control">
+            <span asp-validation-for="AddedValue"></span>
+        </div>
+    </div>
+    <partial name="Buttons/_Confirm" model="formtype" />
+</form>
+
+

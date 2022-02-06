@@ -8,16 +8,26 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Shaper.Utility.CustomValidations;
 
 namespace Shaper.Models.ViewModels.ShapeVM
 {
     public class ShapeCreateVM
     {
         [Required]
+        [ShapeValidation]
+        [Display(Name = "Shape")]
         public string Name { get; set; }
+        
         [Required]
-        [Range(1,100)]
+        [Display(Name = "Frame")]
+        public bool HasFrame { get; set; }
+
+        [Required]
+        [Display(Name = "Shape Value")]
+        [Range(1, 100)]
         public double AddedValue { get; set; }
+
 
 
         public Shape GetShapeFromCreateVM()
@@ -26,6 +36,8 @@ namespace Shaper.Models.ViewModels.ShapeVM
             {
                 Name = this.Name,
                 AddedValue = this.AddedValue,
+                HasFrame = this.HasFrame,
+
             };
         }
     }

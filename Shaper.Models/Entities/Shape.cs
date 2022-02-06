@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Shaper.Utility.CustomValidations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,10 +16,15 @@ namespace Shaper.Models.Entities
         [Key]
         public int Id { get; set; }
         [Required]
+        [ShapeValidation]
+        [Display(Name = "Shape")]
         public string Name { get; set; }
-
         [Required]
-        [Range(1,100)]
+        [Display(Name = "Frame")]
+        public bool HasFrame { get; set; }
+        [Required]
+        [Range(1, 100)]
+        [Display(Name = "Shape Value")]
         [Column(TypeName = "money")]
         public double AddedValue { get; set; }
 
