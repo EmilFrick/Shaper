@@ -18,8 +18,9 @@ namespace Shaper.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var transparencys = await _transparencyService.GetTransparencys(HttpContext.Session.GetString("JwToken"));
-            return View(transparencys);
+            var transparencies = await _transparencyService.GetTransparencys(HttpContext.Session.GetString("JwToken"));
+            var transparenciesVM = TransparencyDisplayVM.TransparencyDisplayVMs(transparencies);
+            return View(transparenciesVM);
         }
 
         public async Task<IActionResult> Details(int id)

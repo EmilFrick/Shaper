@@ -23,7 +23,7 @@ namespace Shaper.API.Controllers
             _db = db;
         }
 
-
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetShapes()
         {
@@ -35,6 +35,7 @@ namespace Shaper.API.Controllers
             return Ok(result);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetShape(int id)
         {

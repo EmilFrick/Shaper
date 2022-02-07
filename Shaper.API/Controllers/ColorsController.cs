@@ -24,6 +24,7 @@ namespace Shaper.API.Controllers
             _db = db;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetColors()
         {
@@ -35,6 +36,7 @@ namespace Shaper.API.Controllers
             return Ok(result);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetColor(int id)
         {

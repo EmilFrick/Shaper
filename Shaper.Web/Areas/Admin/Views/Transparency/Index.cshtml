@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Transparency>
+﻿@model IEnumerable<TransparencyDisplayVM>
 
 @if (Model != null)
 {
@@ -6,19 +6,19 @@
     <div class="container">
         <div class="row pt-4 my-2">
             <div class="col-4">
-                <h2 class="text-primary">Color List</h2>
+                <h2 class="text-primary">Transparency List</h2>
             </div>
             <div class="col-8 text-end">
-                <a asp-action="Upsert" class="btn btn-primary"><i class="bi bi-folder-plus">&nbsp; New Color</i></a>
+                <a asp-action="Upsert" class="btn btn-primary"><i class="bi bi-folder-plus">&nbsp; New Transparency</i></a>
             </div>
         </div>
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>@nameof(Transparency.Name)</th>
-                    <th>@nameof(Transparency.Value)</th>
-                    <th>@nameof(Transparency.Description)</th>
-                    <th>@nameof(Transparency.AddedValue)</th>
+                    <th>@nameof(TransparencyDisplayVM.Name)</th>
+                    <th>@nameof(TransparencyDisplayVM.Value)</th>
+                    <th>@nameof(TransparencyDisplayVM.Description)</th>
+                    <th>@nameof(TransparencyDisplayVM.AddedValue)</th>
                     <th></th>
                 </tr>
             </thead>

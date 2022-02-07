@@ -20,7 +20,7 @@ namespace Shaper.API.Controllers
             _db = db;
         }
 
-
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetTransparencies()
         {
@@ -32,6 +32,7 @@ namespace Shaper.API.Controllers
             return Ok(result);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetTransparency(int id)
         {

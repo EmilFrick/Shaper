@@ -50,7 +50,7 @@ namespace Shaper.API.Controllers
             {
                 return Conflict(product);
             }
-            
+
             if (ModelState.IsValid)
             {
                 var result = await _db.Products.GetFirstOrDefaultAsync(x => x.Name == product.Name ||
@@ -94,9 +94,10 @@ namespace Shaper.API.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _db.Products.GetFirstOrDefaultAsync(x => x.Name == product.Name ||
-                                                                           (x.ColorId == product.ColorId &&
-                                                                            x.ShapeId == product.ShapeId &&
-                                                                            x.TransparencyId == product.TransparencyId));
+                                                                      (x.Id != product.Id &&
+                                                                       x.ColorId == product.ColorId &&
+                                                                       x.ShapeId == product.ShapeId &&
+                                                                       x.TransparencyId == product.TransparencyId));
                 if (result is not null)
                 {
                     return Conflict(result);

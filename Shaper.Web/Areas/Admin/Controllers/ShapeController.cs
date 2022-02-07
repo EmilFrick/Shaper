@@ -19,7 +19,8 @@ namespace Shaper.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var shapes = await _shapeService.GetShapes(HttpContext.Session.GetString("JwToken"));
-            return View(shapes);
+            var shapeVMs = ShapeDisplayVM.ShapeDisplayVMs(shapes);
+            return View(shapeVMs);
         }
 
         public async Task<IActionResult> Details(int id)

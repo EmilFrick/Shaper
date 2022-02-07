@@ -19,7 +19,8 @@ namespace Shaper.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var colors = await _colorService.GetColors(HttpContext.Session.GetString("JwToken"));
-            return View(colors);
+            var colorVMs = ColorDisplayVM.ColorDisplayVMs(colors);
+            return View(colorVMs);
         }
 
         public async Task<IActionResult> Details(int id)

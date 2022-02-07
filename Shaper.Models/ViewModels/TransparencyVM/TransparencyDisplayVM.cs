@@ -13,18 +13,29 @@ namespace Shaper.Models.ViewModels.TransparencyVM
 {
     public class TransparencyDisplayVM
     {
-        [Required]
         public int Id { get; set; }
-        [Required]
         public string Name { get; set; }
         public string? Description { get; set; }
-        [Required]
         public int Value { get; set; }
-        [Required]
         public double AddedValue { get; set; }
+        public TransparencyDisplayVM(Transparency transparency)
+        {
+            Id = transparency.Id;
+            Name = transparency.Name;
+            Description = transparency.Description;
+            Value = transparency.Value;
+            AddedValue = transparency.AddedValue;
+        }
 
-
-        [ValidateNever]
-        public ICollection<Product> Products { get; set; }
+        public static IEnumerable<TransparencyDisplayVM> TransparencyDisplayVMs(IEnumerable<Transparency> transparencies)
+        {
+            List<TransparencyDisplayVM> transparencyDisplayVMs = new List<TransparencyDisplayVM>();
+            foreach (var transparency in transparencies)
+            {
+                var transsparencyVM = new TransparencyDisplayVM(transparency);
+                transparencyDisplayVMs.Add(transsparencyVM);
+            }
+            return transparencyDisplayVMs;
+        }
     }
 }

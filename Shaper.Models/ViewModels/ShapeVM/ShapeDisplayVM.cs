@@ -9,25 +9,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Shaper.Utility.CustomValidations;
+using Shaper.Models.ViewModels.ShapeVM;
 
 namespace Shaper.Models.ViewModels.ShapeVM
 {
     public class ShapeDisplayVM
     {
-        [Required]
         public int Id { get; set; }
-        [Required]
-        [ShapeValidation]
-        [Display(Name = "Shape")]
         public string Name { get; set; }
-        [Required]
-        [Display(Name = "Frame")]
         public bool HasFrame { get; set; }
-        [Required]
-        [Display(Name = "Shape Value")]
         public double AddedValue { get; set; }
+        public ShapeDisplayVM(Shape shape)
+        {
+            Id = shape.Id;
+            Name = shape.Name;
+            HasFrame = shape.HasFrame;
+            AddedValue = shape.AddedValue;
+        }
 
-        [ValidateNever]
-        public ICollection<Product> Products { get; set; }
+        public static IEnumerable<ShapeDisplayVM> ShapeDisplayVMs(IEnumerable<Shape> shapes)
+        {
+            List<ShapeDisplayVM> shapeDisplayVMs = new List<ShapeDisplayVM>();
+            foreach (var shape in shapes)
+            {
+                var shapeVM = new ShapeDisplayVM(shape);
+                shapeDisplayVMs.Add(shapeVM);
+            }
+            return shapeDisplayVMs;
+        }
     }
 }
