@@ -14,9 +14,29 @@ namespace Shaper.Web.Areas.Admin.Services
             _apiService = apiService;
         }
 
+        public async Task<Color> GetColor(int id, string token)
+        {
+            return await _apiService.ColorApi.GetFirstOrDefaultAsync(ApiPaths.ApiPath.Colors.GetEndpoint(id), token);
+        }
+
         public async Task<IEnumerable<Color>> GetColors(string token)
         {
             return await _apiService.ColorApi.GetAllAsync(ApiPaths.ApiPath.Colors.GetEndpoint(null), token);
+        }
+
+        public async Task CreateColor(Color color, string token)
+        {
+            await _apiService.ColorApi.AddAsync(color, ApiPaths.ApiPath.Colors.GetEndpoint(null), token);
+        }
+
+        public async Task UpdateColor(int id, Color color, string token)
+        {
+            await _apiService.ColorApi.UpdateAsync(color, ApiPaths.ApiPath.Colors.GetEndpoint(id), token);
+        }
+
+        public async Task DeleteColor(int id, string token)
+        {
+            await _apiService.ColorApi.GetFirstOrDefaultAsync(ApiPaths.ApiPath.Colors.GetEndpoint(id), token);
         }
     }
 }

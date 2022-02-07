@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Shaper.Web.ApiService.IService;
 using System.Net.Http.Headers;
+using System.Text;
 
 namespace Shaper.Web.ApiService
 {
@@ -33,24 +34,88 @@ namespace Shaper.Web.ApiService
 
             return null;
         }
-        public Task<T> GetFirstOrDefaultAsync(int id, string url, string token = "")
+        public async Task<T> GetFirstOrDefaultAsync(string url, string token = "")
         {
-            throw new NotImplementedException();
+            var client = _httpClient.CreateClient();
+            if (token != null && token.Length != 0)
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
+            var req = new HttpRequestMessage(HttpMethod.Get, url);
+            var res = await client.SendAsync(req);
+
+            if (res.IsSuccessStatusCode)
+            {
+                var jsonString = await res.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<T>(jsonString);
+            }
+            return null;
         }
 
-        public Task AddAsync(T entity, string url, string token = "")
+        public async Task<bool> AddAsync(T entity, string url, string token = "")
         {
-            throw new NotImplementedException();
+            if (entity != null)
+            {
+                var client = _httpClient.CreateClient();
+                var req = new HttpRequestMessage(HttpMethod.Post, url);
+                req.Content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
+                if (token != null && token.Length != 0)
+                {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                }
+                var res = await client.SendAsync(req);
+                if (res.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return false;
         }
 
 
-        public Task Update(int id, T entity, string url, string token = "")
+        public async Task<bool> UpdateAsync(T entity, string url, string token = "")
         {
-            throw new NotImplementedException();
+            if (entity != null)
+            {
+                var client = _httpClient.CreateClient();
+                var req = new HttpRequestMessage(HttpMethod.Put, url);
+                req.Content = new StringContent(JsonConvert.SerializeObject(entity), Encoding.UTF8, "application/json");
+                if (token != null && token.Length != 0)
+                {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                }
+                var res = await client.SendAsync(req);
+                if (res.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return false;
+
         }
-        public void Remove(T entity, string url, string token = "")
+        public async Task<bool> RemoveAsync(string url, string token = "")
         {
-            throw new NotImplementedException();
+            var client = _httpClient.CreateClient();
+            if (token != null && token.Length != 0)
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
+            var req = new HttpRequestMessage(HttpMethod.Delete, url);
+            var res = await client.SendAsync(req);
+
+            if (res.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

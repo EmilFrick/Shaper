@@ -4,7 +4,7 @@
     var userTypes = Enum.GetNames(typeof(SD.UserType)).Select(i => new SelectListItem
             { Text = i.ToString(), Value = i.ToString()}).ToList();
 }
-<form method="post" asp-controller="Account" asp-action="Register">
+<form method="post">
     <div class="row m-3">
         <div class="col-5">
             <label asp-for="Fullname"></label>

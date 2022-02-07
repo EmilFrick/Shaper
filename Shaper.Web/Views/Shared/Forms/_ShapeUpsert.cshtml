@@ -1,8 +1,9 @@
-﻿@model ShapeCreateVM
+﻿@model ShapeUpsertVM
 @{
-    var formtype = "Create";
+    var formtype = Model.Id == null? "Create" : "Update";
 }
-<form method="post" asp-controller="Shape" asp-action="Create">
+<form method="post">
+    <input asp-for="Id" hidden />
     <div class="row m-3">
         <div class="col-5">
             <label asp-for="Name"></label>

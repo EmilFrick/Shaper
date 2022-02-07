@@ -2,7 +2,7 @@
 
 namespace Shaper.Web.ApiService.IService
 {
-    public interface IShapeApiService : IApiService<Shape>
+    public interface ITransparencyApiService : IApiService<Transparency>
     {
 
     }

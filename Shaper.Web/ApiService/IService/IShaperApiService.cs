@@ -3,5 +3,8 @@
     public interface IShaperApiService
     {
         IColorApiService ColorApi { get; }
+        IShapeApiService ShapeApi { get; }
+        ITransparencyApiService TransparencyApi { get; }
+
     }
 }
