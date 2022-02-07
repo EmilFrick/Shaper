@@ -21,6 +21,7 @@ namespace Shaper.Models.ViewModels.TransparencyVM
         [Required]
         public double AddedValue { get; set; }
 
+            
         public Transparency GetTransparencyFromCreateVM()
         {
             return new()

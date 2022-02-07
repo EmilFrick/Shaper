@@ -29,6 +29,7 @@ namespace Shaper.Models.ViewModels.ShapeVM
         public double AddedValue { get; set; }
 
 
+        
 
         public Shape GetShapeFromCreateVM()
         {

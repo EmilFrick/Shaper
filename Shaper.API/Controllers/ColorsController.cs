@@ -12,6 +12,7 @@ using Color = Shaper.Models.Entities.Color;
 namespace Shaper.API.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Roles = "Admin")]
     [ApiController]
     public class ColorsController : ControllerBase
     {
@@ -24,7 +25,6 @@ namespace Shaper.API.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetColors()
         {
             var result = await _db.Colors.GetAllAsync(includeProperties: "Products");
@@ -79,7 +79,7 @@ namespace Shaper.API.Controllers
             if (ModelState.IsValid)
             {
                 Color conflict = await _db.Colors.GetFirstOrDefaultAsync(x => x.Id != color.Id && x.Hex == color.Hex ||
-                                                                          x.Id != color.Id && x.Name == color.Name );
+                                                                          x.Id != color.Id && x.Name == color.Name);
                 if (conflict is not null)
                 {
                     var feedback = new ColorUpdateVM(conflict);

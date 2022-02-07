@@ -1,14 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shaper.DataAccess.Repo.IRepo;
 using Shaper.Models.Entities;
 using Shaper.Models.ViewModels.TransparencyVM;
-using Shaper.Models.ViewModels.TransparencyVM;
-using System.Drawing;
+using System.Data;
 
 namespace Shaper.API.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Roles = "Admin")]
     [ApiController]
     public class TransparenciesController : ControllerBase
     {
@@ -74,8 +75,8 @@ namespace Shaper.API.Controllers
             }
             if (ModelState.IsValid)
             {
-                Transparency conflict = await _db.Transparencies.GetFirstOrDefaultAsync(x => x.Id != transparency.Id && x.Hex == transparency.Hex ||
-                x.Id != transparency.Id && x.Name == transparency.Name);
+                Transparency conflict = await _db.Transparencies.GetFirstOrDefaultAsync(x => x.Id != transparency.Id && x.Name == transparency.Name ||
+                                                                                        x.Id != transparency.Id && x.Value == transparency.Value);
                 if (conflict is not null)
                 {
                     var feedback = new TransparencyUpdateVM(conflict);

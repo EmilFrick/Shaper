@@ -1,6 +1,6 @@
 ﻿@model ColorUpsertVM
 @{
-    var formtype = Model?.Id == null? "Create" : "Update";
+    var formtype = Model?.Id == 0? "Create" : "Update";
 }
 <form method="post">
     <input asp-for="Id" hidden />

@@ -47,6 +47,7 @@ namespace Shaper.Models.ViewModels.ShapeVM
             {
                 Id = this.Id,
                 Name = this.Name,
+                HasFrame = this.HasFrame,
                 AddedValue = this.AddedValue,
             };
         }

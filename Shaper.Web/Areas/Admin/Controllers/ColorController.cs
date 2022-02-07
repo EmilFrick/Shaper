@@ -31,7 +31,7 @@ namespace Shaper.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Upsert(int? id)
         {
             ColorUpsertVM colorVM = new();
-            if (id == 0)
+            if (id == 0 || id == null)
             {
                 return View(colorVM);
             }

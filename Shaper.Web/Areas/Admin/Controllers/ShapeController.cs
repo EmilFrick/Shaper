@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shaper.Models.Entities;
 using Shaper.Models.ViewModels.ShapeVM;
 using Shaper.Web.Areas.Admin.Services.IService;
 
@@ -29,14 +30,16 @@ namespace Shaper.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> Upsert(int? id)
         {
-            if (id == 0)
+            ShapeUpsertVM shapeVM = new();
+            if (id == 0 || id == null)
             {
-                ShapeUpsertVM shapeVM = new();
                 return View(shapeVM);
             }
             else
             {
-                return View(await _shapeService.GetShape(id.GetValueOrDefault(), HttpContext.Session.GetString("JwToken")));
+                Shape shape = await _shapeService.GetShape(id.GetValueOrDefault(), HttpContext.Session.GetString("JwToken"));
+                shapeVM = new ShapeUpsertVM(shape);
+                return View(shapeVM);
             }
         }
 

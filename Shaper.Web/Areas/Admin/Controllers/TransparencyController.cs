@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shaper.Models.Entities;
 using Shaper.Models.ViewModels.TransparencyVM;
 using Shaper.Web.Areas.Admin.Services.IService;
 
@@ -29,14 +30,16 @@ namespace Shaper.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> Upsert(int? id)
         {
-            if (id == 0)
+            TransparencyUpsertVM transparencyVM = new();
+            if (id == 0 || id == null)
             {
-                TransparencyUpsertVM transparencyVM = new();
                 return View(transparencyVM);
             }
             else
             {
-                return View(await _transparencyService.GetTransparency(id.GetValueOrDefault(), HttpContext.Session.GetString("JwToken")));
+                Transparency transparency = await _transparencyService.GetTransparency(id.GetValueOrDefault(), HttpContext.Session.GetString("JwToken"));
+                transparencyVM = new TransparencyUpsertVM(transparency);
+                return View(transparencyVM);
             }
         }
 
