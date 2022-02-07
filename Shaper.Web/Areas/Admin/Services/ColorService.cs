@@ -36,7 +36,7 @@ namespace Shaper.Web.Areas.Admin.Services
 
         public async Task DeleteColor(int id, string token)
         {
-            await _apiService.ColorApi.GetFirstOrDefaultAsync(ApiPaths.ApiPath.Colors.GetEndpoint(id), token);
+            await _apiService.ColorApi.RemoveAsync(ApiPaths.ApiPath.Colors.GetEndpoint(id), token);
         }
     }
 }

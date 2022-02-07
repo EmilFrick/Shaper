@@ -19,13 +19,21 @@ namespace Shaper.Models.ViewModels.ColorVM
         [HexValidation]
         public string Hex { get; set; }
         [Required]
-        [Range(1,100)]
+        [Range(1, 100)]
         public double AddedValue { get; set; }
 
         public ColorUpsertVM()
         {
 
         }
+        public ColorUpsertVM(Color color)
+        {
+            Id = color.Id;
+            Name = color.Name;
+            Hex = color.Hex;
+            AddedValue = color.AddedValue;
+        }
+
         public Color GetColorFromUpdateVM()
         {
             return new()

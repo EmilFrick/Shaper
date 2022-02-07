@@ -25,6 +25,8 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkSto
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IColorService, ColorService>();
+builder.Services.AddScoped<IShapeService, ShapeService>();
+builder.Services.AddScoped<ITransparencyService, TransparencyService>();
 builder.Services.AddScoped<IShaperApiService, ShaperApiService>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddHttpClient();

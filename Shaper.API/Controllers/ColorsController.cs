@@ -6,6 +6,8 @@ using Shaper.DataAccess.Repo.IRepo;
 using Shaper.Models.Entities;
 using Shaper.Models.ViewModels.ColorVM;
 using System.Data;
+using System.Drawing;
+using Color = Shaper.Models.Entities.Color;
 
 namespace Shaper.API.Controllers
 {
@@ -20,12 +22,12 @@ namespace Shaper.API.Controllers
         {
             _db = db;
         }
-        
+
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetColors()
         {
-            var result = await _db.Colors.GetAllAsync(includeProperties:"Products");
+            var result = await _db.Colors.GetAllAsync(includeProperties: "Products");
             if (result == null)
             {
                 return NotFound();
@@ -36,7 +38,7 @@ namespace Shaper.API.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetColor(int id)
         {
-            var result = await _db.Colors.GetFirstOrDefaultAsync(x => x.Id == id, includeProperties:"Products");
+            var result = await _db.Colors.GetFirstOrDefaultAsync(x => x.Id == id, includeProperties: "Products");
             if (result == null)
             {
                 return NotFound();
@@ -76,17 +78,17 @@ namespace Shaper.API.Controllers
             }
             if (ModelState.IsValid)
             {
-                var result = await _db.Colors.GetFirstOrDefaultAsync(x => x.Name == color.Name || x.Hex == color.Hex);
-                if (result is not null)
+                Color conflict = await _db.Colors.GetFirstOrDefaultAsync(x => x.Id != color.Id && x.Hex == color.Hex ||
+                                                                          x.Id != color.Id && x.Name == color.Name );
+                if (conflict is not null)
                 {
-                    return Conflict(result);
+                    var feedback = new ColorUpdateVM(conflict);
+                    return Conflict(feedback);
                 }
-
-                Color updateColor = color.GetColorFromUpdateVM();
-                _db.Colors.Update(updateColor);
+                Color c = color.GetColorFromUpdateVM();
+                _db.Colors.Update(c);
                 await _db.SaveAsync();
-                
-                return CreatedAtAction("GetColor", new { id = updateColor.Id }, updateColor);
+                return Ok();
             }
             else
             {

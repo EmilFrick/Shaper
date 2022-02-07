@@ -22,6 +22,17 @@ namespace Shaper.Models.ViewModels.ColorVM
         [Range(1,100)]
         public double AddedValue { get; set; }
 
+        public ColorUpdateVM()
+        {
+
+        }
+        public ColorUpdateVM(Color color)
+        {
+            Id = color.Id;
+            Name = color.Name;
+            Hex = color.Hex;
+            AddedValue = color.AddedValue;
+        }
         public Color GetColorFromUpdateVM()
         {
             return new()

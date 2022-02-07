@@ -36,7 +36,7 @@ namespace Shaper.Web.Areas.Admin.Services
 
         public async Task DeleteShape(int id, string token)
         {
-            await _apiService.ShapeApi.GetFirstOrDefaultAsync(ApiPaths.ApiPath.Shapes.GetEndpoint(id), token);
+            await _apiService.ShapeApi.RemoveAsync(ApiPaths.ApiPath.Shapes.GetEndpoint(id), token);
         }
     }
 }

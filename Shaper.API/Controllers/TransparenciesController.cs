@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Shaper.DataAccess.Repo.IRepo;
 using Shaper.Models.Entities;
 using Shaper.Models.ViewModels.TransparencyVM;
+using Shaper.Models.ViewModels.TransparencyVM;
+using System.Drawing;
 
 namespace Shaper.API.Controllers
 {
@@ -21,7 +23,7 @@ namespace Shaper.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetTransparencies()
         {
-            var result = await _db.Transparencies.GetAllAsync(includeProperties:"Products");
+            var result = await _db.Transparencies.GetAllAsync(includeProperties: "Products");
             if (result == null)
             {
                 return NotFound();
@@ -32,7 +34,7 @@ namespace Shaper.API.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetTransparency(int id)
         {
-            var result = await _db.Transparencies.GetFirstOrDefaultAsync(x => x.Id == id, includeProperties:"Products");
+            var result = await _db.Transparencies.GetFirstOrDefaultAsync(x => x.Id == id, includeProperties: "Products");
             if (result == null)
             {
                 return NotFound();
@@ -72,17 +74,17 @@ namespace Shaper.API.Controllers
             }
             if (ModelState.IsValid)
             {
-                var result = await _db.Transparencies.GetFirstOrDefaultAsync(x => x.Name == transparency.Name || x.Value == transparency.Value);
-                if (result is not null)
+                Transparency conflict = await _db.Transparencies.GetFirstOrDefaultAsync(x => x.Id != transparency.Id && x.Hex == transparency.Hex ||
+                x.Id != transparency.Id && x.Name == transparency.Name);
+                if (conflict is not null)
                 {
-                    return Conflict(result);
+                    var feedback = new TransparencyUpdateVM(conflict);
+                    return Conflict(feedback);
                 }
-
-                Transparency updateTransparency = transparency.GetTransparencyFromUpdateVM();
-                _db.Transparencies.Update(updateTransparency);
+                Transparency c = transparency.GetTransparencyFromUpdateVM();
+                _db.Transparencies.Update(c);
                 await _db.SaveAsync();
-                
-                return CreatedAtAction("GetTransparency", new { id = updateTransparency.Id }, updateTransparency);
+                return Ok();
             }
             else
             {

@@ -36,7 +36,7 @@ namespace Shaper.Web.Areas.Admin.Services
 
         public async Task DeleteTransparency(int id, string token)
         {
-            await _apiService.TransparencyApi.GetFirstOrDefaultAsync(ApiPaths.ApiPath.Transparencies.GetEndpoint(id), token);
+            await _apiService.TransparencyApi.RemoveAsync(ApiPaths.ApiPath.Transparencies.GetEndpoint(id), token);
         }
     }
 }

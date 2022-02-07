@@ -28,6 +28,18 @@ namespace Shaper.Models.ViewModels.ShapeVM
         [Range(1, 100)]
         public double AddedValue { get; set; }
 
+        public ShapeUpdateVM()
+        {
+
+        }
+
+        public ShapeUpdateVM(Shape shape)
+        {
+            Id = shape.Id;
+            Name = shape.Name;
+            HasFrame = shape.HasFrame;
+            AddedValue = shape.AddedValue;
+        }
 
         public Shape GetShapeFromUpdateVM()
         {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Shaper.Models.Entities;
 using Shaper.Models.ViewModels.ColorVM;
 using Shaper.Web.Areas.Admin.Services.IService;
 
@@ -24,19 +25,21 @@ namespace Shaper.Web.Areas.Admin.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var color = await _colorService.GetColor(id, HttpContext.Session.GetString("JwToken"));
-            return View();
+            return View(color);
         }
 
         public async Task<IActionResult> Upsert(int? id)
         {
+            ColorUpsertVM colorVM = new();
             if (id == 0)
             {
-                ColorUpsertVM colorVM = new();
                 return View(colorVM);
             }
             else
             {
-                return View(await _colorService.GetColor(id.GetValueOrDefault(), HttpContext.Session.GetString("JwToken")));
+                Color color = await _colorService.GetColor(id.GetValueOrDefault(), HttpContext.Session.GetString("JwToken"));
+                colorVM = new ColorUpsertVM(color);
+                return View(colorVM);
             }
         }
 

@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Shaper.DataAccess.Repo.IRepo;
 using Shaper.Models.Entities;
+using Shaper.Models.ViewModels.ColorVM;
 using Shaper.Models.ViewModels.ShapeVM;
+using System.Drawing;
 
 namespace Shaper.API.Controllers
 {
@@ -22,7 +24,7 @@ namespace Shaper.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetShapes()
         {
-            var result = await _db.Shapes.GetAllAsync(includeProperties:"Products");
+            var result = await _db.Shapes.GetAllAsync(includeProperties: "Products");
             if (result == null)
             {
                 return NotFound();
@@ -33,7 +35,7 @@ namespace Shaper.API.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetShape(int id)
         {
-            var result = await _db.Shapes.GetFirstOrDefaultAsync(x => x.Id == id, includeProperties:"Products");
+            var result = await _db.Shapes.GetFirstOrDefaultAsync(x => x.Id == id, includeProperties: "Products");
             if (result == null)
             {
                 return NotFound();
@@ -73,17 +75,16 @@ namespace Shaper.API.Controllers
             }
             if (ModelState.IsValid)
             {
-                var result = await _db.Shapes.GetFirstOrDefaultAsync(x => x.Name == shape.Name);
-                if (result is not null)
+                Shape conflict = await _db.Shapes.GetFirstOrDefaultAsync(x => x.Id != shape.Id && x.Name == shape.Name && x.HasFrame == shape.HasFrame);
+                if (conflict is not null)
                 {
-                    return Conflict(result);
+                    var feedback = new ShapeUpdateVM(conflict);
+                    return Conflict(feedback);
                 }
-
-                Shape updateShape = shape.GetShapeFromUpdateVM();
-                _db.Shapes.Update(updateShape);
+                Shape s = shape.GetShapeFromUpdateVM();
+                _db.Shapes.Update(s);
                 await _db.SaveAsync();
-                
-                return CreatedAtAction("GetShape", new { id = updateShape.Id }, updateShape);
+                return Ok();
             }
             else
             {
