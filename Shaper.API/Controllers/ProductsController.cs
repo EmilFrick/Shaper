@@ -6,6 +6,7 @@ using Shaper.Models.ViewModels.ProductVM;
 
 namespace Shaper.API.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase
@@ -18,6 +19,40 @@ namespace Shaper.API.Controllers
         }
 
 
+        [HttpGet("UpsertVM")]
+        public async Task<IActionResult> GetProductVMs()
+        {
+            ProductUpsertVM productVM = new(await _db.Colors.GetAllAsync(),
+                                            await _db.Shapes.GetAllAsync(),
+                                            await _db.Transparencies.GetAllAsync());
+
+            
+            if (productVM.Colors == null || productVM.Shapes == null || productVM.Transparencies == null)
+            {
+                return Conflict();
+            }
+            return Ok(productVM);
+        }
+
+        [HttpGet("UpsertVM/{id:int}")]
+        public async Task<IActionResult> GetProductVMs(int id)
+        {
+            var product = await _db.Products.GetFirstOrDefaultAsync(x => x.Id == id, includeProperties: "Color,Shape,Transparency");
+            if (product == null)
+            {
+                return NotFound();
+            }
+            var productVM = new ProductUpsertVM(product,
+                                                await _db.Colors.GetAllAsync(),
+                                                await _db.Shapes.GetAllAsync(),
+                                                await _db.Transparencies.GetAllAsync());
+            
+            if (productVM.Colors == null || productVM.Shapes == null || productVM.Transparencies == null)
+            {
+                return Conflict();
+            }
+            return Ok(productVM);
+        }
         [HttpGet]
         public async Task<IActionResult> GetProducts()
         {
@@ -103,13 +138,10 @@ namespace Shaper.API.Controllers
                     return Conflict(result);
                 }
 
-
-
-                Product updateProduct = product.GetProductFromUpdateVM(result);
-                _db.Products.Update(updateProduct);
+                _db.Products.Update(result);
                 await _db.SaveAsync();
 
-                return CreatedAtAction("GetProduct", new { id = updateProduct.Id }, updateProduct);
+                return CreatedAtAction("GetProduct", new { id = result.Id }, result);
             }
             else
             {

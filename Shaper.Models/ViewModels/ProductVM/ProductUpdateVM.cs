@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Shaper.Models.Entities;
 using System;
 using System.Collections.Generic;
@@ -36,20 +37,28 @@ namespace Shaper.Models.ViewModels.ProductVM
         public int TransparencyId { get; set; }
 
 
-        public Product GetProductFromUpdateVM(Product originalProduct)
+        public ProductUpdateVM(Product product)
+        {
+
+        }
+        public Product GetProductFromUpdateVM(ProductUpdateVM productVM)
         {
             return new()
             {
-                Id = this.Id,
-                Name = this.Name,
-                Description = this.Description,
-                Price = this.Price,
-                Artist = this.Artist,
-                Created = originalProduct.Created,
-                ShapeId = this.ShapeId,
-                ColorId = this.ColorId,
-                TransparencyId = this.TransparencyId
+                Id = productVM.Id,
+                Name = productVM.Name,
+                Description = productVM.Description,
+                Price = productVM.Price,
+                Artist = productVM.Artist,
+                Created = productVM.Created,
+                ColorId = productVM.ColorId,
+                ShapeId = productVM.ShapeId,
+                TransparencyId = productVM.TransparencyId
             };
+
+
+
         }
+
     }
 }

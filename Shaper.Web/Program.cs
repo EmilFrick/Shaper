@@ -5,9 +5,11 @@ using Microsoft.IdentityModel.Tokens;
 using Shaper.DataAccess.Context;
 using Shaper.DataAccess.IdentityContext;
 using Shaper.Web;
+using Shaper.Web.ApiService;
 using Shaper.Web.ApiService.IService;
 using Shaper.Web.Areas.Admin.Services;
 using Shaper.Web.Areas.Admin.Services.IService;
+using Shaper.Web.Areas.Artist.Services.IService;
 using Shaper.Web.Areas.User.Services;
 using Shaper.Web.AuthenticationOptions;
 
@@ -27,7 +29,9 @@ builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IColorService, ColorService>();
 builder.Services.AddScoped<IShapeService, ShapeService>();
 builder.Services.AddScoped<ITransparencyService, TransparencyService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IShaperApiService, ShaperApiService>();
+
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddHttpClient();
 builder.Services.AddSession(options =>

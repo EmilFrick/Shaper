@@ -1,0 +1,49 @@
+﻿@model ProductUpsertVM
+@{
+    var formtype = Model?.Id == 0 ? "Create" : "Upsert";
+
+}
+<form method="post">
+    <input asp-for="@Model.Id" hidden />
+    <input asp-for="@Model.Price" hidden />
+    <input asp-for="@Model.Artist" hidden />
+    <input asp-for="@Model.Created" hidden />
+    <input asp-for="@Model.Transparency.AddedValue" hidden />
+    <input asp-for="@Model.Color.AddedValue" hidden />
+    <input asp-for="@Model.Shape.AddedValue" hidden />
+
+
+
+    <div class="row m-3">
+        <div class="col-5">
+            <label asp-for="Name"></label>
+            <input asp-for="Name" class="form-control">
+            <span asp-validation-for="Name"></span>
+        </div>
+        <div class="col-5">
+            <label asp-for="Description"></label>
+            <input asp-for="Description" class="form-control">
+            <span asp-validation-for="Description"></span>
+        </div>
+        <div class="col-5">
+            <label asp-for="ColorId" class="col-md-2"></label>
+            <select asp-for="ColorId" asp-items="@Model.Colors" class="form-control">
+                <option disabled selected>--Select Color--</option>
+            </select>
+        </div>
+        <div class="col-5">
+            <label asp-for="ShapeId" class="col-md-2"></label>
+            <select asp-for="ShapeId" asp-items="@Model.Shapes" class="form-control">
+                <option disabled selected>--Select Color--</option>
+            </select>
+        </div>
+        <div class="col-5">
+            <label asp-for="TransparencyId" class="col-md-2"></label>
+            <select asp-for="TransparencyId" asp-items="@Model.Transparencies" class="form-control">
+                <option disabled selected>--Select Color--</option>
+            </select>
+        </div>
+
+        <partial name="Buttons/_Confirm" model="formtype" />
+    </div>
+</form>

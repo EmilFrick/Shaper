@@ -13,6 +13,8 @@ namespace Shaper.Utility
             [Description($"{root}Shapes/")] Shapes,
             [Description($"{root}Transparencies/")] Transparencies,
             [Description($"{root}Products/")] Products,
+            [Description($"{root}Products/UpsertVM/")] ProductsVM,
+
         }
 
         public static string GetEndpoint(this ApiPath path, int? id)

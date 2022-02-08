@@ -12,32 +12,49 @@ namespace Shaper.Models.ViewModels.ProductVM
 {
     public class ProductDisplayVM
     {
-        [Required]
         public int Id { get; set; }
-        [Required]
         public string Name { get; set; }
-        [Required]
         public string Description { get; set; }
-        [Required]
-        [Range(1,500)]
         public double Price { get; set; }
-        [Required]
         public string Artist { get; set; }
-        [Required]
         public DateTime Created { get; set; }
-
-
-        [Required]
         public int ShapeId { get; set; }
-        [ValidateNever]
         public Shape Shape { get; set; }
-        [Required]
         public int ColorId { get; set; }
-        [ValidateNever]
         public Color Color { get; set; }
-        [Required]
         public int TransparencyId { get; set; }
-        [ValidateNever]
         public Transparency Transparency { get; set; }
+
+        public ProductDisplayVM()
+        {
+
+        }
+        
+        public ProductDisplayVM(Product product)
+        {
+            Id = product.Id;
+            Name = product.Name;
+            Description = product.Description;
+            Price = product.Price;
+            Artist = product.Artist;
+            Created = product.Created;
+            ColorId = product.ColorId;
+            Color = product.Color;
+            ShapeId = product.ShapeId;
+            Shape = product.Shape;
+            TransparencyId = product.TransparencyId;
+            Transparency = product.Transparency;
+        }
+
+        public static IEnumerable<ProductDisplayVM> GetProductDisplayVMs(IEnumerable<Product> products)
+        {
+            List<ProductDisplayVM> productDisplayVMs = new List<ProductDisplayVM>();
+            foreach (Product product in products)
+            {
+                ProductDisplayVM productDisplayVM = new ProductDisplayVM(product);
+                productDisplayVMs.Add(productDisplayVM);
+            }
+            return productDisplayVMs;
+        }
     }
 }
