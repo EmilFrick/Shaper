@@ -70,5 +70,13 @@ namespace Shaper.Web.Areas.Artist.Controllers
 
             return View(productVM);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _productService.DeleteProduct(id, HttpContext.Session.GetString("JwToken"));
+            return RedirectToAction("Index");
+        }
     }
 }
