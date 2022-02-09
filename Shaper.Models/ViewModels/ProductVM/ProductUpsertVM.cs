@@ -27,22 +27,16 @@ namespace Shaper.Models.ViewModels.ProductVM
         [Required]
         public int ColorId { get; set; }
         [ValidateNever]
-        public Color Color { get; set; }
+        public double ColorCost { get; set; }
         [Required]
         public int ShapeId { get; set; }
         [ValidateNever]
-        public Shape Shape { get; set; }
+        public double ShapeCost { get; set; }
         [Required]
         public int TransparencyId { get; set; }
         [ValidateNever]
-        public Transparency Transparency { get; set; }
+        public double TransparencyCost { get; set; }
 
-        //[ValidateNever]
-        //public IEnumerable<Color> Colors { get; set; }
-        //[ValidateNever]
-        //public IEnumerable<Shape> Shapes { get; set; }
-        //[ValidateNever]
-        //public IEnumerable<Transparency> Transparencies { get; set; }
 
 
         [ValidateNever]
@@ -66,11 +60,11 @@ namespace Shaper.Models.ViewModels.ProductVM
             Artist = product.Artist;
             Created = product.Created;
             ColorId = product.ColorId;
-            Color = product.Color;
+            ColorCost = product.Color.AddedValue;
             ShapeId = product.ShapeId;
-            Shape = product.Shape;
+            ShapeCost = product.Shape.AddedValue;
             TransparencyId = product.TransparencyId;
-            Transparency = product.Transparency;
+            TransparencyCost = product.Transparency.AddedValue;
         }
 
         public ProductUpsertVM(IEnumerable<Color> colors,
@@ -96,11 +90,12 @@ namespace Shaper.Models.ViewModels.ProductVM
             Artist = product.Artist;
             Created = product.Created;
             ColorId = product.ColorId;
-            Color = product.Color;
             ShapeId = product.ShapeId;
-            Shape = product.Shape;
             TransparencyId = product.TransparencyId;
-            Transparency = product.Transparency;
+            ShapeCost = product.Shape.AddedValue;
+            TransparencyId = product.TransparencyId;
+            TransparencyCost = product.Transparency.AddedValue;
+
             Colors = colors.Select(i => new SelectListItem
             { Text = i.Name, Value = i.Id.ToString() }).ToList();
 

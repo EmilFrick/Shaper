@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Shaper.DataAccess.Repo.IRepo;
 using Shaper.Models.Entities;
+using Shaper.Models.ViewModels.ProductComponentsVM;
 using Shaper.Models.ViewModels.ProductVM;
 
 namespace Shaper.API.Controllers
@@ -26,7 +27,7 @@ namespace Shaper.API.Controllers
                                             await _db.Shapes.GetAllAsync(),
                                             await _db.Transparencies.GetAllAsync());
 
-            
+
             if (productVM.Colors == null || productVM.Shapes == null || productVM.Transparencies == null)
             {
                 return Conflict();
@@ -46,13 +47,27 @@ namespace Shaper.API.Controllers
                                                 await _db.Colors.GetAllAsync(),
                                                 await _db.Shapes.GetAllAsync(),
                                                 await _db.Transparencies.GetAllAsync());
-            
+
             if (productVM.Colors == null || productVM.Shapes == null || productVM.Transparencies == null)
             {
                 return Conflict();
             }
             return Ok(productVM);
         }
+
+        [HttpGet("ProductComponents")]
+        public async Task<IActionResult> GetProductComponents(ProductReqComponentsVM request)
+        {
+            ProductResComponentsVM result = new()
+            {
+                ColorComponent = await _db.Colors.GetFirstOrDefaultAsync(x=>x.Id == request.ColorId),
+                ShapeComponent = await _db.Shapes.GetFirstOrDefaultAsync(x=>x.Id == request.ShapeId),
+                TransparencyComponent = await _db.Transparencies.GetFirstOrDefaultAsync(x=>x.Id == request.TransparencyId)
+            };
+            return Ok(result);
+        }
+
+
         [HttpGet]
         public async Task<IActionResult> GetProducts()
         {
