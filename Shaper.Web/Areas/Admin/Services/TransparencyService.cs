@@ -21,12 +21,12 @@ namespace Shaper.Web.Areas.Admin.Services
 
         public async Task<IEnumerable<Transparency>> GetTransparencys(string token)
         {
-            return await _apiService.TransparencyApi.GetAllAsync(ApiPaths.ApiPath.Transparencies.GetEndpoint(null), token);
+            return await _apiService.TransparencyApi.GetAllAsync(ApiPaths.ApiPath.Transparencies.GetEndpoint(), token);
         }
 
         public async Task CreateTransparency(Transparency transparency, string token)
         {
-            await _apiService.TransparencyApi.AddAsync(transparency, ApiPaths.ApiPath.Transparencies.GetEndpoint(null), token);
+            await _apiService.TransparencyApi.AddAsync(transparency, ApiPaths.ApiPath.Transparencies.GetEndpoint(), token);
         }
 
         public async Task UpdateTransparency(int id, Transparency transparency, string token)

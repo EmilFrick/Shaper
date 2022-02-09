@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
+using Shaper.DataAccess.IdentityContext;
 using Shaper.Models.Entities;
+using Shaper.Models.ViewModels.ProductComponentsVM;
 using Shaper.Models.ViewModels.ProductVM;
 using Shaper.Web.Areas.Artist.Services.IService;
+using System.Security.Claims;
 
 namespace Shaper.Web.Areas.Artist.Controllers
 {
@@ -9,10 +13,12 @@ namespace Shaper.Web.Areas.Artist.Controllers
     {
 
         private readonly IProductService _productService;
+        private readonly IdentityAppDbContext _db;
 
-        public ProductController(IProductService productService)
+        public ProductController(IProductService productService, IdentityAppDbContext db)
         {
             _productService = productService;
+            _db = db;
         }
 
         public async Task<IActionResult> Index()
@@ -41,13 +47,18 @@ namespace Shaper.Web.Areas.Artist.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (productVM.Id == null || productVM.Id == 0)
+                var product = await _productService.GetProductWithComponents(productVM, HttpContext.Session.GetString("JwToken"));
+
+                if (productVM.Id == 0)
                 {
-                    
+                    var currentArtistEmail = User.Identity.Name;
+                    product.Artist = _db.ApplicationUsers.FirstOrDefault(x => x.Email == currentArtistEmail).FullName;
+                    product.Created = DateTime.Now;
+                    //Create Product.
                 }
                 else
                 {
-
+                    //Update Product.
                 }
             }
             //not beautiful but will do for the time being.

@@ -21,12 +21,12 @@ namespace Shaper.Web.Areas.Admin.Services
 
         public async Task<IEnumerable<Shape>> GetShapes(string token)
         {
-            return await _apiService.ShapeApi.GetAllAsync(ApiPaths.ApiPath.Shapes.GetEndpoint(null), token);
+            return await _apiService.ShapeApi.GetAllAsync(ApiPaths.ApiPath.Shapes.GetEndpoint(), token);
         }
 
         public async Task CreateShape(Shape shape, string token)
         {
-            await _apiService.ShapeApi.AddAsync(shape, ApiPaths.ApiPath.Shapes.GetEndpoint(null), token);
+            await _apiService.ShapeApi.AddAsync(shape, ApiPaths.ApiPath.Shapes.GetEndpoint(), token);
         }
 
         public async Task UpdateShape(int id, Shape shape, string token)

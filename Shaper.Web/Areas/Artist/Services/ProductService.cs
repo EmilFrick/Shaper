@@ -1,19 +1,23 @@
-﻿using Shaper.Models.Entities;
+﻿using Shaper.DataAccess.IdentityContext;
+using Shaper.Models.Entities;
+using Shaper.Models.ViewModels.ProductComponentsVM;
 using Shaper.Models.ViewModels.ProductVM;
 using Shaper.Utility;
 using Shaper.Web.ApiService.IService;
 using Shaper.Web.Areas.Artist.Services.IService;
+using System.Security.Claims;
 
 namespace Shaper.Web.Areas.Admin.Services
 {
     public class ProductService : IProductService
     {
         private readonly IShaperApiService _apiService;
+        private readonly IdentityAppDbContext _db;
 
-        public ProductService(IShaperApiService apiService)
+        public ProductService(IShaperApiService apiService, IdentityAppDbContext db)
         {
             _apiService = apiService;
-        }
+            _db = db;        }
 
         public async Task<Product> GetProduct(int id, string token)
         {
@@ -45,14 +49,27 @@ namespace Shaper.Web.Areas.Admin.Services
             ProductUpsertVM product = new ProductUpsertVM();
             if (id is null || id == 0)
             {
-                product = await _apiService.ProductApi.FetchVM(ApiPaths.ApiPath.ProductsVM.GetEndpoint(null), token);
-
+                product = await _apiService.ProductApi.FetchVM(ApiPaths.ApiPath.ProductsVM.GetEndpoint(), token);
             }
             else
             {
                 product = await _apiService.ProductApi.FetchVM(ApiPaths.ApiPath.ProductsVM.GetEndpoint(id), token);
             }
 
+            return product;
+
+        }
+
+        public async Task<Product> GetProductWithComponents(ProductUpsertVM upsertVM, string token)
+        {
+            ProductReqComponentsVM requestingComponents = new(upsertVM.ColorId, upsertVM.ShapeId, upsertVM.TransparencyId);
+            var components = await _apiService.ProductApi.FetchProductComponents(requestingComponents, ApiPaths.ApiPath.ProductComponents.GetEndpoint());
+            var product = upsertVM.VmToNewProduct(components);
+            if (product.Id == 0)
+            {
+
+
+            }
             return product;
 
         }

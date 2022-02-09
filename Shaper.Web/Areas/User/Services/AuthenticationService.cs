@@ -55,7 +55,5 @@ namespace Shaper.Web.Areas.User.Services
             var role = await _db.Roles.FirstOrDefaultAsync(x => x.Id == roleId.RoleId);
             user.Role = role.Name;
         }
-
-
     }
 }

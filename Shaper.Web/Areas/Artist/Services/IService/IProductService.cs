@@ -1,4 +1,5 @@
 ﻿using Shaper.Models.Entities;
+using Shaper.Models.ViewModels.ProductComponentsVM;
 using Shaper.Models.ViewModels.ProductVM;
 
 namespace Shaper.Web.Areas.Artist.Services.IService
@@ -7,6 +8,7 @@ namespace Shaper.Web.Areas.Artist.Services.IService
     {
         Task<IEnumerable<Product>> GetProducts(string token);
         Task<ProductUpsertVM> GetProductVMs(string token, int? id = null);
+        Task<Product> GetProductWithComponents(ProductUpsertVM productVM, string token);
 
         Task<Product> GetProduct(int id, string token);
         Task CreateProduct(Product product, string token);

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Shaper.Models.Entities;
+using Shaper.Models.ViewModels.ProductComponentsVM;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -26,16 +27,10 @@ namespace Shaper.Models.ViewModels.ProductVM
         public DateTime Created { get; set; }
         [Required]
         public int ColorId { get; set; }
-        [ValidateNever]
-        public double ColorCost { get; set; }
         [Required]
         public int ShapeId { get; set; }
-        [ValidateNever]
-        public double ShapeCost { get; set; }
         [Required]
         public int TransparencyId { get; set; }
-        [ValidateNever]
-        public double TransparencyCost { get; set; }
 
 
 
@@ -60,11 +55,8 @@ namespace Shaper.Models.ViewModels.ProductVM
             Artist = product.Artist;
             Created = product.Created;
             ColorId = product.ColorId;
-            ColorCost = product.Color.AddedValue;
             ShapeId = product.ShapeId;
-            ShapeCost = product.Shape.AddedValue;
             TransparencyId = product.TransparencyId;
-            TransparencyCost = product.Transparency.AddedValue;
         }
 
         public ProductUpsertVM(IEnumerable<Color> colors,
@@ -91,10 +83,8 @@ namespace Shaper.Models.ViewModels.ProductVM
             Created = product.Created;
             ColorId = product.ColorId;
             ShapeId = product.ShapeId;
+            ShapeId = product.TransparencyId;
             TransparencyId = product.TransparencyId;
-            ShapeCost = product.Shape.AddedValue;
-            TransparencyId = product.TransparencyId;
-            TransparencyCost = product.Transparency.AddedValue;
 
             Colors = colors.Select(i => new SelectListItem
             { Text = i.Name, Value = i.Id.ToString() }).ToList();
@@ -106,22 +96,19 @@ namespace Shaper.Models.ViewModels.ProductVM
             { Text = i.Name, Value = i.Id.ToString() }).ToList();
         }
 
-        //public Product VmToEntity()
-        //{
-        //   return new()
-        //   {
-        //       Id = this.Id,
-        //    Name = this.Name,
-        //    Description = this.Description,
-        //    Price = product.Price;
-        //    Artist = product.Artist;
-        //    Created = product.Created;
-        //    ColorId = product.ColorId;
-        //    Color = product.Color;
-        //    ShapeId = product.ShapeId;
-        //    Shape = product.Shape;
-        //    TransparencyId = product.TransparencyId;
-        //   } 
-        //}
+        public Product VmToNewProduct(ProductResComponentsVM components)
+        {
+            return new()
+            {
+                Name = this.Name,
+                Description = this.Description,
+                Artist = this.Artist,
+                Price = components.ColorComponent.AddedValue + components.TransparencyComponent.AddedValue + components.ShapeComponent.AddedValue,
+                Created = this.Created,
+                ColorId = components.ColorComponent.Id,
+                ShapeId = components.ShapeComponent.Id,
+                TransparencyId = components.TransparencyComponent.Id,
+            };
+        }
     }
 }

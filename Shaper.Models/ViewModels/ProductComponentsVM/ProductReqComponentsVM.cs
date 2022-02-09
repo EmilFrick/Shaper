@@ -11,5 +11,12 @@ namespace Shaper.Models.ViewModels.ProductComponentsVM
         public int ColorId { get; set; }
         public int ShapeId { get; set; }
         public int TransparencyId { get; set; }
+
+        public ProductReqComponentsVM(int color, int shape, int transparency)
+        {
+            ColorId = color;
+            ShapeId = shape;
+            TransparencyId = transparency;
+        }
     }
 }

@@ -6,48 +6,58 @@ namespace Shaper.Utility
     public static class ApiPaths
     {
         private const string root = "https://localhost:7219/api/";
+        private const string Colors = $"{root}Colors/";
+        private const string Shapes = $"{root}Shapes/";
+        private const string Transparencies = $"{root}Transparencies/";
+        private const string Products = $"{root}Products/";
+        private const string ProductsVM = $"{root}Products/UpsertVM/";
+        private const string ProductComponents = $"{root}Products/ProductComponents/";
+
 
         public enum ApiPath
         {
-            [Description($"{root}Colors/")] Colors,
-            [Description($"{root}Shapes/")] Shapes,
-            [Description($"{root}Transparencies/")] Transparencies,
-            [Description($"{root}Products/")] Products,
-            [Description($"{root}Products/UpsertVM/")] ProductsVM,
-
+            Colors,
+            Shapes,
+            Transparencies,
+            Products,
+            ProductsVM,
+            ProductComponents
         }
 
-        public static string GetEndpoint(this ApiPath path, int? id)
+        public static string GetEndpoint(this ApiPath path, int? id = null)
         {
-            string endpoint = path.GetDescription();
+            string endpoint = GetPath(path);
             if (id == null)
             {
                 return endpoint;
             }
             else
             {
-                return endpoint+id.ToString();
+                return endpoint + id.ToString();
             }
         }
 
-        public static string GetDescription(this Enum value)
+        private static string GetPath(ApiPath path)
         {
-            Type type = value.GetType();
-            string name = Enum.GetName(type, value);
-            if (name != null)
+            switch (path)
             {
-                FieldInfo field = type.GetField(name);
-                if (field != null)
-                {
-                    DescriptionAttribute attr = Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute)) as DescriptionAttribute;
-                    if (attr != null)
-                    {
-                        return attr.Description;
-                    }
-                }
+                case ApiPath.Colors:
+                    return Colors;
+                case ApiPath.Shapes:
+                    return Shapes;
+                case ApiPath.Transparencies:
+                    return Transparencies;
+                case ApiPath.Products:
+                    return Products;
+                case ApiPath.ProductsVM:
+                    return ProductsVM;
+                case ApiPath.ProductComponents:
+                    return ProductComponents;
+                default:
+                    return null;
             }
-
-            return null;
         }
+
+
     }
 }
