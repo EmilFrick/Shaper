@@ -54,12 +54,13 @@ namespace Shaper.Web.Areas.Artist.Controllers
                     var currentArtistEmail = User.Identity.Name;
                     product.Artist = _db.ApplicationUsers.FirstOrDefault(x => x.Email == currentArtistEmail).FullName;
                     product.Created = DateTime.Now;
-                    //Create Product.
+                    await _productService.CreateProduct(product, HttpContext.Session.GetString("JwToken"));
                 }
                 else
                 {
-                    //Update Product.
+                    await _productService.UpdateProduct(product, HttpContext.Session.GetString("JwToken"));
                 }
+                return RedirectToAction("Index");
             }
             //not beautiful but will do for the time being.
             var refreshproduct = await _productService.GetProductVMs(HttpContext.Session.GetString("JwToken"));

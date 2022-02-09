@@ -34,9 +34,9 @@ namespace Shaper.Web.Areas.Admin.Services
             await _apiService.ProductApi.AddAsync(product, ApiPaths.ApiPath.Products.GetEndpoint(null), token);
         }
 
-        public async Task UpdateProduct(int id, Product product, string token)
+        public async Task UpdateProduct(Product product, string token)
         {
-            await _apiService.ProductApi.UpdateAsync(product, ApiPaths.ApiPath.Products.GetEndpoint(id), token);
+            await _apiService.ProductApi.UpdateAsync(product, ApiPaths.ApiPath.Products.GetEndpoint(product.Id), token);
         }
 
         public async Task DeleteProduct(int id, string token)
@@ -65,11 +65,6 @@ namespace Shaper.Web.Areas.Admin.Services
             ProductReqComponentsVM requestingComponents = new(upsertVM.ColorId, upsertVM.ShapeId, upsertVM.TransparencyId);
             var components = await _apiService.ProductApi.FetchProductComponents(requestingComponents, ApiPaths.ApiPath.ProductComponents.GetEndpoint());
             var product = upsertVM.VmToNewProduct(components);
-            if (product.Id == 0)
-            {
-
-
-            }
             return product;
 
         }

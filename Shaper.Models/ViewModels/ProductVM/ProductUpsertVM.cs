@@ -100,6 +100,7 @@ namespace Shaper.Models.ViewModels.ProductVM
         {
             return new()
             {
+                Id = this.Id,
                 Name = this.Name,
                 Description = this.Description,
                 Artist = this.Artist,

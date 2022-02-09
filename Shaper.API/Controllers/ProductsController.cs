@@ -60,9 +60,9 @@ namespace Shaper.API.Controllers
         {
             ProductResComponentsVM result = new()
             {
-                ColorComponent = await _db.Colors.GetFirstOrDefaultAsync(x=>x.Id == request.ColorId),
-                ShapeComponent = await _db.Shapes.GetFirstOrDefaultAsync(x=>x.Id == request.ShapeId),
-                TransparencyComponent = await _db.Transparencies.GetFirstOrDefaultAsync(x=>x.Id == request.TransparencyId)
+                ColorComponent = await _db.Colors.GetFirstOrDefaultAsync(x => x.Id == request.ColorId),
+                ShapeComponent = await _db.Shapes.GetFirstOrDefaultAsync(x => x.Id == request.ShapeId),
+                TransparencyComponent = await _db.Transparencies.GetFirstOrDefaultAsync(x => x.Id == request.TransparencyId)
             };
             return Ok(result);
         }
@@ -93,9 +93,9 @@ namespace Shaper.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateProduct(ProductCreateVM product)
         {
-            var colorExists = _db.Colors.GetFirstOrDefaultAsync(x => x.Id == product.ColorId);
-            var shapeExists = _db.Shapes.GetFirstOrDefaultAsync(x => x.Id == product.ShapeId);
-            var transparencyExists = _db.Shapes.GetFirstOrDefaultAsync(x => x.Id == product.TransparencyId);
+            var colorExists = await _db.Colors.GetFirstOrDefaultAsync(x => x.Id == product.ColorId);
+            var shapeExists = await _db.Shapes.GetFirstOrDefaultAsync(x => x.Id == product.ShapeId);
+            var transparencyExists = await _db.Transparencies.GetFirstOrDefaultAsync(x => x.Id == product.TransparencyId);
             if (colorExists is null || shapeExists is null || transparencyExists is null)
             {
                 return Conflict(product);
@@ -104,9 +104,7 @@ namespace Shaper.API.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _db.Products.GetFirstOrDefaultAsync(x => x.Name == product.Name ||
-                                                                           (x.ColorId == product.ColorId &&
-                                                                            x.ShapeId == product.ShapeId &&
-                                                                            x.TransparencyId == product.TransparencyId));
+                                                                            x.ColorId == product.ColorId && x.ShapeId == product.ShapeId && x.TransparencyId == product.TransparencyId);
                 if (result is not null)
                 {
                     return Conflict(result);
@@ -117,7 +115,7 @@ namespace Shaper.API.Controllers
                 await _db.Products.AddAsync(addProduct);
                 await _db.SaveAsync();
 
-                return CreatedAtAction("GetProduct", new { id = addProduct.Id }, addProduct);
+                return Ok(addProduct);
             }
             else
             {
@@ -133,9 +131,10 @@ namespace Shaper.API.Controllers
                 return BadRequest();
             }
 
-            var colorExists = _db.Colors.GetFirstOrDefaultAsync(x => x.Id == product.ColorId);
-            var shapeExists = _db.Shapes.GetFirstOrDefaultAsync(x => x.Id == product.ShapeId);
-            var transparencyExists = _db.Shapes.GetFirstOrDefaultAsync(x => x.Id == product.TransparencyId);
+            var colorExists = await _db.Colors.GetFirstOrDefaultAsync(x => x.Id == product.ColorId);
+            var shapeExists = await _db.Shapes.GetFirstOrDefaultAsync(x => x.Id == product.ShapeId);
+            var transparencyExists = await _db.Shapes.GetFirstOrDefaultAsync(x => x.Id == product.TransparencyId);
+
             if (colorExists is null || shapeExists is null || transparencyExists is null)
             {
                 return Conflict(product);
@@ -143,20 +142,19 @@ namespace Shaper.API.Controllers
 
             if (ModelState.IsValid)
             {
-                var result = await _db.Products.GetFirstOrDefaultAsync(x => x.Name == product.Name ||
-                                                                      (x.Id != product.Id &&
-                                                                       x.ColorId == product.ColorId &&
-                                                                       x.ShapeId == product.ShapeId &&
-                                                                       x.TransparencyId == product.TransparencyId));
+                var result = await _db.Products.GetFirstOrDefaultAsync(x => x.Id != product.Id & x.Name == product.Name ||
+                                                                            x.Id != product.Id && x.ColorId == product.ColorId && x.ShapeId == product.ShapeId && x.TransparencyId == product.TransparencyId);
+
                 if (result is not null)
                 {
                     return Conflict(result);
                 }
 
-                _db.Products.Update(result);
+                var updateProduct = product.GetProductFromUpdateVM(product);
+                _db.Products.Update(updateProduct);
                 await _db.SaveAsync();
 
-                return CreatedAtAction("GetProduct", new { id = result.Id }, result);
+                return Ok(updateProduct);
             }
             else
             {
