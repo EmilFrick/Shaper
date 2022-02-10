@@ -11,5 +11,6 @@ namespace Shaper.DataAccess.Repo.IRepo
     public interface IShapeRepository : IRepository<Shape>
     {
         void Update(Shape shape);
+        Task<Shape> CheckDefaultShape();
     }
 }

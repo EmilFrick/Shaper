@@ -1,4 +1,5 @@
-﻿using Shaper.DataAccess.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using Shaper.DataAccess.Context;
 using Shaper.DataAccess.Repo.IRepo;
 using Shaper.Models.Entities;
 using Shaper.Models.ViewModels.ColorVM;
@@ -19,6 +20,30 @@ namespace Shaper.DataAccess.Repo
         {
             _db = db;
         }
+
+        public async Task<Color> CheckDefaultColor()
+        {
+            var defaultColor= _db.Colors.FirstOrDefault(x => x.Name == "Default");
+            if (defaultColor is null)
+            {
+                defaultColor = new Color
+                {
+                    Name = "Default",
+                    Hex = "#000000",
+                    AddedValue = 0,
+                };
+                await _db.Colors.AddAsync(defaultColor);
+                await _db.SaveChangesAsync();
+            }
+            return defaultColor;
+        }
+
+        //public Task<IEnumerable<Color>> GetAllDetails()
+        //{
+        //    IEnumerable<Color> a = new List<Color>();
+        //    return a;
+            
+        //}
 
         public void Update(Color color)
         {

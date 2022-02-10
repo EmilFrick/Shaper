@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Shaper.DataAccess.Context;
 using Shaper.DataAccess.Repo;
 using Shaper.DataAccess.Repo.IRepo;
 using Shaper.Models.Entities;
@@ -12,7 +14,7 @@ using Color = Shaper.Models.Entities.Color;
 namespace Shaper.API.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     [ApiController]
     public class ColorsController : ControllerBase
     {
@@ -101,17 +103,39 @@ namespace Shaper.API.Controllers
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteColor(int id)
         {
-            var result = await _db.Colors.GetFirstOrDefaultAsync(x => x.Id == id);
-            if (result is not null)
+            var color = await _db.Colors.GetFirstOrDefaultAsync(x => x.Id == id, includeProperties: "Products");
+
+            if (color is not null || color.Name == "Default")
+
             {
-                _db.Colors.Remove(result);
+                if (color.Products?.Count > 0)
+                {
+                    await _db.Colors.CheckDefaultColor();
+                    await _db.Products.RebuildingProducts(color);
+                }
+                _db.Colors.Remove(color);
                 await _db.SaveAsync();
-                return NoContent();
+                return Ok();
             }
             else
             {
                 return BadRequest();
             }
+            //    var defaultColor = await _db.Colors.CheckDefaultColor();
+            //    await _db.Products.UpdateCollectionWithDefaultColor(result.Products, defaultColor);
+
+
+            //var result = await _db.Colors.GetFirstOrDefaultAsync(x => x.Id == id, includeProperties: "Products");
+            //if (result is not null)
+            //{
+            //    if (result.Products.Count > 0)
+            //    {
+            //    }
+
+
+            //_db.Colors.Remove(result);
+            //await _db.SaveAsync();
+
         }
     }
 }

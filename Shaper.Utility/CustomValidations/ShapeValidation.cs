@@ -20,7 +20,7 @@ namespace Shaper.Utility.CustomValidations
             bool match = false;
             foreach (var shape in Enum.GetNames(typeof(SD.Shapes)))
             {
-                if (strValue == shape)
+                if (strValue == shape.ToLower())
                 {
                     match = true;
                 }

@@ -19,6 +19,24 @@ namespace Shaper.DataAccess.Repo
             _db = db;
         }
 
+        public async Task<Transparency> CheckDefaultTransparency()
+        {
+
+            var defaultTransparency = _db.Transparencies.FirstOrDefault(x => x.Name == "Default");
+            {
+                defaultTransparency = new Transparency
+                {
+                    Name = "Default",
+                    Description = "Default Transparency",
+                    Value = 20,
+                    AddedValue = 0,
+                };
+                await _db.Transparencies.AddAsync(defaultTransparency);
+                await _db.SaveChangesAsync();
+            }
+            return defaultTransparency;
+        }
+
         public void Update(Transparency transparency)
         {
             _db.Transparencies.Update(transparency);

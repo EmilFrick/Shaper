@@ -11,5 +11,6 @@ namespace Shaper.DataAccess.Repo.IRepo
     public interface ITransparencyRepository : IRepository<Transparency>
     {
         void Update(Transparency transparency);
+        Task<Transparency> CheckDefaultTransparency();
     }
 }
