@@ -97,12 +97,19 @@ namespace Shaper.API.Controllers
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteTransparency(int id)
         {
-            var result = await _db.Transparencies.GetFirstOrDefaultAsync(x => x.Id == id);
-            if (result is not null)
+            var transparency = await _db.Transparencies.GetFirstOrDefaultAsync(x => x.Id == id, includeProperties: "Products");
+
+            if (transparency is not null || transparency.Name == "Default")
+
             {
-                _db.Transparencies.Remove(result);
+                if (transparency.Products?.Count > 0)
+                {
+                    await _db.Transparencies.CheckDefaultTransparency();
+                    await _db.Products.RebuildingProducts(transparency);
+                }
+                _db.Transparencies.Remove(transparency);
                 await _db.SaveAsync();
-                return NoContent();
+                return Ok();
             }
             else
             {

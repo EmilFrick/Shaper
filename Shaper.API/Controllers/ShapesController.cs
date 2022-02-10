@@ -98,12 +98,19 @@ namespace Shaper.API.Controllers
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteShape(int id)
         {
-            var result = await _db.Shapes.GetFirstOrDefaultAsync(x => x.Id == id);
-            if (result is not null)
+            var shape = await _db.Shapes.GetFirstOrDefaultAsync(x => x.Id == id, includeProperties: "Products");
+
+            if (shape is not null || shape.Name == "Default")
+
             {
-                _db.Shapes.Remove(result);
+                if (shape.Products?.Count > 0)
+                {
+                    await _db.Shapes.CheckDefaultShape();
+                    await _db.Products.RebuildingProducts(shape);
+                }
+                _db.Shapes.Remove(shape);
                 await _db.SaveAsync();
-                return NoContent();
+                return Ok();
             }
             else
             {

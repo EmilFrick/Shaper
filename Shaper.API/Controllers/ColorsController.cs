@@ -121,21 +121,6 @@ namespace Shaper.API.Controllers
             {
                 return BadRequest();
             }
-            //    var defaultColor = await _db.Colors.CheckDefaultColor();
-            //    await _db.Products.UpdateCollectionWithDefaultColor(result.Products, defaultColor);
-
-
-            //var result = await _db.Colors.GetFirstOrDefaultAsync(x => x.Id == id, includeProperties: "Products");
-            //if (result is not null)
-            //{
-            //    if (result.Products.Count > 0)
-            //    {
-            //    }
-
-
-            //_db.Colors.Remove(result);
-            //await _db.SaveAsync();
-
         }
     }
 }

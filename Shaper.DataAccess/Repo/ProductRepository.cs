@@ -71,7 +71,7 @@ namespace Shaper.DataAccess.Repo
         }
 
 
-        public async Task<IEnumerable<Product>> UpdateCollectionWithDefaultShape(IEnumerable<Product> products)
+        public async Task UpdateCollectionWithDefaultShape(IEnumerable<Product> products)
         {
             var defaultShape = await _db.Shapes.FirstOrDefaultAsync(x => x.Name == "Default");
             foreach (var product in products)
@@ -82,12 +82,11 @@ namespace Shaper.DataAccess.Repo
                     product.ShapeId = defaultShape.Id;
                 }
             }
-            //_db.UpdateRange(products);
-            //_db.SaveChangesAsync();
-            return products;
+            _db.UpdateRange(products);
+            _db.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Product>> UpdateCollectionWithDefaultTransparency(IEnumerable<Product> products)
+        public async Task UpdateCollectionWithDefaultTransparency(IEnumerable<Product> products)
         {
             var defaultTransparency = await _db.Transparencies.FirstOrDefaultAsync(x => x.Name == "Default");
 
@@ -100,9 +99,8 @@ namespace Shaper.DataAccess.Repo
                 }
             }
 
-            //_db.UpdateRange(products);
-            //_db.SaveChangesAsync();
-            return products;
+            _db.UpdateRange(products);
+            _db.SaveChangesAsync();
         }
 
 
