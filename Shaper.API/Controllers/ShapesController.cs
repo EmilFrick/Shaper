@@ -105,8 +105,8 @@ namespace Shaper.API.Controllers
             {
                 if (shape.Products?.Count > 0)
                 {
-                    await _db.Shapes.CheckDefaultShape();
-                    await _db.Products.RebuildingProducts(shape);
+                    await _db.Shapes.CheckDefaultShapeAsync();
+                    await _db.Products.RebuildingProductsAsync(shape);
                 }
                 _db.Shapes.Remove(shape);
                 await _db.SaveAsync();

@@ -27,7 +27,7 @@ namespace Shaper.Web.Areas.User.Services
             _db = db;
         }
 
-        public async Task ConfirmingRoles()
+        public async Task ConfirmingRolesAsync()
         {
             if (!await _roleManager.RoleExistsAsync(SD.UserType.Customer.ToString()))
             {
@@ -43,7 +43,7 @@ namespace Shaper.Web.Areas.User.Services
             }
         }
 
-        public async Task<IdentityResult> UserRegistration(UserRegisterVM registerVM)
+        public async Task<IdentityResult> UserRegistrationAsync(UserRegisterVM registerVM)
         {
             ApplicationUser user = registerVM.VMtoUser();
             var result = await _userManager.CreateAsync(user, registerVM.Password);
@@ -60,7 +60,7 @@ namespace Shaper.Web.Areas.User.Services
             await _userManager.AddToRoleAsync(user, user.Role);
         }
 
-        public async Task<ApplicationUser> ShaperLogin(UserLoginVM loginUser)
+        public async Task<ApplicationUser> ShaperLoginAsync(UserLoginVM loginUser)
         {
             var user = await GetApplicationUser(loginUser);
             if (user == null)
@@ -70,7 +70,7 @@ namespace Shaper.Web.Areas.User.Services
             if (!userLogin.Succeeded)
                 return null;
 
-            await _authenticationService.HandingOverToken(user);
+            await _authenticationService.HandingOverTokenAsync(user);
             if (user.Token == null)
                 return null;
 

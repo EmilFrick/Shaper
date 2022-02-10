@@ -23,7 +23,7 @@ namespace Shaper.Web.Areas.User.Services
             _db = db;
         }
 
-        public async Task HandingOverToken(ApplicationUser user)
+        public async Task HandingOverTokenAsync(ApplicationUser user)
         {
             await VerifyingUserRole(user);
             var tokenHandeler = new JwtSecurityTokenHandler();

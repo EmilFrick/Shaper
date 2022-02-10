@@ -6,7 +6,7 @@ namespace Shaper.Web.ApiService.IService
 {
     public interface IProductApiService : IApiService<Product>
     {
-        Task<ProductUpsertVM> FetchVM(string url, string token = "");
-        Task<ProductResComponentsVM> FetchProductComponents(ProductReqComponentsVM reqModel, string url, string token = "");
+        Task<ProductUpsertVM> FetchVMAsync(string url, string token = "");
+        Task<ProductResComponentsVM> FetchProductComponentsAsync(ProductReqComponentsVM reqModel, string url, string token = "");
     }
 }

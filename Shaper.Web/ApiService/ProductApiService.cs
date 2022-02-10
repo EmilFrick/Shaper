@@ -19,7 +19,7 @@ namespace Shaper.Web.ApiService
         {
             _httpClient = httpClient;
         }
-        public async Task<ProductUpsertVM> FetchVM(string url, string token = "")
+        public async Task<ProductUpsertVM> FetchVMAsync(string url, string token = "")
         {
             var client = _httpClient.CreateClient();
             if (token != null && token.Length != 0)
@@ -37,7 +37,7 @@ namespace Shaper.Web.ApiService
             return null;
         }
 
-        public async Task<ProductResComponentsVM> FetchProductComponents(ProductReqComponentsVM reqModel, string url, string token = "")
+        public async Task<ProductResComponentsVM> FetchProductComponentsAsync(ProductReqComponentsVM reqModel, string url, string token = "")
         {
             var client = _httpClient.CreateClient();
             if (token != null && token.Length != 0)

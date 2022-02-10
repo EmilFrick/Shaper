@@ -110,8 +110,8 @@ namespace Shaper.API.Controllers
             {
                 if (color.Products?.Count > 0)
                 {
-                    await _db.Colors.CheckDefaultColor();
-                    await _db.Products.RebuildingProducts(color);
+                    await _db.Colors.CheckDefaultColorAsync();
+                    await _db.Products.RebuildingProductsAsync(color);
                 }
                 _db.Colors.Remove(color);
                 await _db.SaveAsync();

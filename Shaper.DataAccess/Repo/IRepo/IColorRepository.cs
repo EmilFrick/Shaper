@@ -12,7 +12,6 @@ namespace Shaper.DataAccess.Repo.IRepo
     public interface IColorRepository : IRepository<Color>
     {
         void Update(Color color);
-        Task<Color> CheckDefaultColor();
-        //Task<IEnumerable<Color>> GetAllDetails();
+        Task<Color> CheckDefaultColorAsync();
     }
 }

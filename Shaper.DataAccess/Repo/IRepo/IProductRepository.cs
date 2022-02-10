@@ -11,9 +11,9 @@ namespace Shaper.DataAccess.Repo.IRepo
     public interface IProductRepository : IRepository<Product>
     {
         void Update(Product product);
-        Task RebuildingProducts(Color color);
-        Task RebuildingProducts(Shape shape);
-        Task RebuildingProducts(Transparency transparency);
+        Task RebuildingProductsAsync(Color color);
+        Task RebuildingProductsAsync(Shape shape);
+        Task RebuildingProductsAsync(Transparency transparency);
 
 
     }

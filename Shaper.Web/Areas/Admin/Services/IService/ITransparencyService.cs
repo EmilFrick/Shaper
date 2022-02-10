@@ -4,10 +4,10 @@ namespace Shaper.Web.Areas.Admin.Services.IService
 {
     public interface ITransparencyService
     {
-        Task<IEnumerable<Transparency>> GetTransparencys(string token);
-        Task<Transparency> GetTransparency(int id, string token);
-        Task CreateTransparency(Transparency transparency, string token);
-        Task UpdateTransparency(int id, Transparency transparency, string token);
-        Task DeleteTransparency(int id, string token);
+        Task<IEnumerable<Transparency>> GetTransparencysAsync(string token);
+        Task<Transparency> GetTransparencyAsync(int id, string token);
+        Task CreateTransparencyAsync(Transparency transparency, string token);
+        Task UpdateTransparencyAsync(int id, Transparency transparency, string token);
+        Task DeleteTransparencyAsync(int id, string token);
     }
 }

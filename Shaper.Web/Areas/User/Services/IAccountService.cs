@@ -6,8 +6,8 @@ namespace Shaper.Web.Areas.User.Services
 {
     public interface IAccountService
     {
-        Task ConfirmingRoles();
-        Task<IdentityResult> UserRegistration(UserRegisterVM registerVM);
-        Task<ApplicationUser> ShaperLogin(UserLoginVM loginUser);
+        Task ConfirmingRolesAsync();
+        Task<IdentityResult> UserRegistrationAsync(UserRegisterVM registerVM);
+        Task<ApplicationUser> ShaperLoginAsync(UserLoginVM loginUser);
     }
 }

@@ -6,13 +6,13 @@ namespace Shaper.Web.Areas.Artist.Services.IService
 {
     public interface IProductService
     {
-        Task<IEnumerable<Product>> GetProducts(string token);
-        Task<ProductUpsertVM> GetProductVMs(string token, int? id = null);
-        Task<Product> GetProductWithComponents(ProductUpsertVM productVM, string token);
+        Task<IEnumerable<Product>> GetProductsAsync(string token);
+        Task<ProductUpsertVM> GetProductVMsAsync(string token, int? id = null);
+        Task<Product> GetProductWithComponentsAsync(ProductUpsertVM productVM, string token);
 
-        Task<Product> GetProduct(int id, string token);
-        Task CreateProduct(Product product, string token);
-        Task UpdateProduct(Product product, string token);
-        Task DeleteProduct(int id, string token);
+        Task<Product> GetProductAsync(int id, string token);
+        Task CreateProductAsync(Product product, string token);
+        Task UpdateProductAsync(Product product, string token);
+        Task DeleteProductAsync(int id, string token);
     }
 }

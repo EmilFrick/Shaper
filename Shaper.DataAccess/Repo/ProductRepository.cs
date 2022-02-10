@@ -25,7 +25,7 @@ namespace Shaper.DataAccess.Repo
             products.ForEach(fix => fix.Price = fix.Color.AddedValue + fix.Shape.AddedValue + fix.Transparency.AddedValue);
         }
 
-        public async Task RebuildingProducts(Color color)
+        public async Task RebuildingProductsAsync(Color color)
         {
             var products = await _db.Products.Include(c => c.Color).Include(s => s.Shape).Include(t => t.Transparency).Where(x => x.ColorId == color.Id).ToListAsync();
             await UpdateCollectionWithDefaultColor(products);
@@ -34,7 +34,7 @@ namespace Shaper.DataAccess.Repo
             await _db.SaveChangesAsync();
         }
 
-        public async Task RebuildingProducts(Shape shape)
+        public async Task RebuildingProductsAsync(Shape shape)
         {
             var products = await _db.Products.Include(c => c.Color).Include(s => s.Shape).Include(t => t.Transparency).Where(x => x.ShapeId == shape.Id).ToListAsync();
             await UpdateCollectionWithDefaultShape(products);
@@ -43,7 +43,7 @@ namespace Shaper.DataAccess.Repo
             await _db.SaveChangesAsync();
         }
 
-        public async Task RebuildingProducts(Transparency transparency)
+        public async Task RebuildingProductsAsync(Transparency transparency)
         {
             var products = await _db.Products.Include(c => c.Color).Include(s => s.Shape).Include(t => t.Transparency).Where(x => x.TransparencyId == transparency.Id).ToListAsync();
             await UpdateCollectionWithDefaultTransparency(products);

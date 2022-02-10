@@ -104,8 +104,8 @@ namespace Shaper.API.Controllers
             {
                 if (transparency.Products?.Count > 0)
                 {
-                    await _db.Transparencies.CheckDefaultTransparency();
-                    await _db.Products.RebuildingProducts(transparency);
+                    await _db.Transparencies.CheckDefaultTransparencyAsync();
+                    await _db.Products.RebuildingProductsAsync(transparency);
                 }
                 _db.Transparencies.Remove(transparency);
                 await _db.SaveAsync();

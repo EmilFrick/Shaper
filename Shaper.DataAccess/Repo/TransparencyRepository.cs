@@ -19,7 +19,7 @@ namespace Shaper.DataAccess.Repo
             _db = db;
         }
 
-        public async Task<Transparency> CheckDefaultTransparency()
+        public async Task<Transparency> CheckDefaultTransparencyAsync()
         {
 
             var defaultTransparency = _db.Transparencies.FirstOrDefault(x => x.Name == "Default");

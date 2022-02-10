@@ -18,14 +18,14 @@ namespace Shaper.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var colors = await _colorService.GetColors(HttpContext.Session.GetString("JwToken"));
+            var colors = await _colorService.GetColorsAsync(HttpContext.Session.GetString("JwToken"));
             var colorVMs = ColorDisplayVM.ColorDisplayVMs(colors);
             return View(colorVMs);
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            var color = await _colorService.GetColor(id, HttpContext.Session.GetString("JwToken"));
+            var color = await _colorService.GetColorAsync(id, HttpContext.Session.GetString("JwToken"));
             return View(color);
         }
 
@@ -38,7 +38,7 @@ namespace Shaper.Web.Areas.Admin.Controllers
             }
             else
             {
-                Color color = await _colorService.GetColor(id.GetValueOrDefault(), HttpContext.Session.GetString("JwToken"));
+                Color color = await _colorService.GetColorAsync(id.GetValueOrDefault(), HttpContext.Session.GetString("JwToken"));
                 colorVM = new ColorUpsertVM(color);
                 return View(colorVM);
             }
@@ -53,11 +53,11 @@ namespace Shaper.Web.Areas.Admin.Controllers
                 var color = colorVM.GetColorFromUpdateVM();
                 if (colorVM.Id == 0)
                 {
-                    await _colorService.CreateColor(color, HttpContext.Session.GetString("JwToken"));
+                    await _colorService.CreateColorAsync(color, HttpContext.Session.GetString("JwToken"));
                 }
                 else
                 {
-                    await _colorService.UpdateColor(color.Id, color, HttpContext.Session.GetString("JwToken"));
+                    await _colorService.UpdateColorAsync(color.Id, color, HttpContext.Session.GetString("JwToken"));
                 }
             }
             else
@@ -71,7 +71,7 @@ namespace Shaper.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            await _colorService.DeleteColor(id, HttpContext.Session.GetString("JwToken"));
+            await _colorService.DeleteColorAsync(id, HttpContext.Session.GetString("JwToken"));
             return RedirectToAction("Index");
         }
     }

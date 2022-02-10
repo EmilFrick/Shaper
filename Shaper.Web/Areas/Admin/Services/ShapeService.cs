@@ -14,27 +14,27 @@ namespace Shaper.Web.Areas.Admin.Services
             _apiService = apiService;
         }
 
-        public async Task<Shape> GetShape(int id, string token)
+        public async Task<Shape> GetShapeAsync(int id, string token)
         {
             return await _apiService.ShapeApi.GetFirstOrDefaultAsync(ApiPaths.ApiPath.Shapes.GetEndpoint(id), token);
         }
 
-        public async Task<IEnumerable<Shape>> GetShapes(string token)
+        public async Task<IEnumerable<Shape>> GetShapesAsync(string token)
         {
             return await _apiService.ShapeApi.GetAllAsync(ApiPaths.ApiPath.Shapes.GetEndpoint(), token);
         }
 
-        public async Task CreateShape(Shape shape, string token)
+        public async Task CreateShapeAsync(Shape shape, string token)
         {
             await _apiService.ShapeApi.AddAsync(shape, ApiPaths.ApiPath.Shapes.GetEndpoint(), token);
         }
 
-        public async Task UpdateShape(int id, Shape shape, string token)
+        public async Task UpdateShapeAsync(int id, Shape shape, string token)
         {
             await _apiService.ShapeApi.UpdateAsync(shape, ApiPaths.ApiPath.Shapes.GetEndpoint(id), token);
         }
 
-        public async Task DeleteShape(int id, string token)
+        public async Task DeleteShapeAsync(int id, string token)
         {
             await _apiService.ShapeApi.RemoveAsync(ApiPaths.ApiPath.Shapes.GetEndpoint(id), token);
         }

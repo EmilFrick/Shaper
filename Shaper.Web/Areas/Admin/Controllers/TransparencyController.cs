@@ -18,14 +18,14 @@ namespace Shaper.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var transparencies = await _transparencyService.GetTransparencys(HttpContext.Session.GetString("JwToken"));
+            var transparencies = await _transparencyService.GetTransparencysAsync(HttpContext.Session.GetString("JwToken"));
             var transparenciesVM = TransparencyDisplayVM.TransparencyDisplayVMs(transparencies);
             return View(transparenciesVM);
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            var transparency = await _transparencyService.GetTransparency(id, HttpContext.Session.GetString("JwToken"));
+            var transparency = await _transparencyService.GetTransparencyAsync(id, HttpContext.Session.GetString("JwToken"));
             return View();
         }
 
@@ -38,7 +38,7 @@ namespace Shaper.Web.Areas.Admin.Controllers
             }
             else
             {
-                Transparency transparency = await _transparencyService.GetTransparency(id.GetValueOrDefault(), HttpContext.Session.GetString("JwToken"));
+                Transparency transparency = await _transparencyService.GetTransparencyAsync(id.GetValueOrDefault(), HttpContext.Session.GetString("JwToken"));
                 transparencyVM = new TransparencyUpsertVM(transparency);
                 return View(transparencyVM);
             }
@@ -53,11 +53,11 @@ namespace Shaper.Web.Areas.Admin.Controllers
                 var transparency = transparencyVM.GetTransparencyFromUpdateVM();
                 if (transparencyVM.Id == 0)
                 {
-                    await _transparencyService.CreateTransparency(transparency, HttpContext.Session.GetString("JwToken"));
+                    await _transparencyService.CreateTransparencyAsync(transparency, HttpContext.Session.GetString("JwToken"));
                 }
                 else
                 {
-                    await _transparencyService.UpdateTransparency(transparency.Id, transparency, HttpContext.Session.GetString("JwToken"));
+                    await _transparencyService.UpdateTransparencyAsync(transparency.Id, transparency, HttpContext.Session.GetString("JwToken"));
                 }
             }
             else
@@ -71,7 +71,7 @@ namespace Shaper.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            await _transparencyService.DeleteTransparency(id, HttpContext.Session.GetString("JwToken"));
+            await _transparencyService.DeleteTransparencyAsync(id, HttpContext.Session.GetString("JwToken"));
             return RedirectToAction("Index");
         }
     }

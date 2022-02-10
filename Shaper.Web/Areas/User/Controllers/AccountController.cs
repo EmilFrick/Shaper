@@ -32,8 +32,8 @@ namespace Shaper.Web.Areas.User.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _accountService.ConfirmingRoles();
-                var registration = await _accountService.UserRegistration(userVM);
+                await _accountService.ConfirmingRolesAsync();
+                var registration = await _accountService.UserRegistrationAsync(userVM);
                 if (registration.Succeeded)
                 {
                     return LocalRedirect(Url.Content("~/User/Home"));
@@ -60,7 +60,7 @@ namespace Shaper.Web.Areas.User.Controllers
             var urlDirection = returnurl ?? Url.Content("~/User/Home");
             if (ModelState.IsValid)
             {
-                var loginResult = await _accountService.ShaperLogin(loginUser);
+                var loginResult = await _accountService.ShaperLoginAsync(loginUser);
                 if (loginResult != null && loginResult.Token != null)
                 {
                     HttpContext.Session.SetString("JwToken", loginResult.Token);

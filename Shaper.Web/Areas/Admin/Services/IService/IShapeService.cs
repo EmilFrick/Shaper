@@ -4,10 +4,10 @@ namespace Shaper.Web.Areas.Admin.Services.IService
 {
     public interface IShapeService
     {
-        Task<IEnumerable<Shape>> GetShapes(string token);
-        Task<Shape> GetShape(int id, string token);
-        Task CreateShape(Shape shape, string token);
-        Task UpdateShape(int id, Shape shape, string token);
-        Task DeleteShape(int id, string token);
+        Task<IEnumerable<Shape>> GetShapesAsync(string token);
+        Task<Shape> GetShapeAsync(int id, string token);
+        Task CreateShapeAsync(Shape shape, string token);
+        Task UpdateShapeAsync(int id, Shape shape, string token);
+        Task DeleteShapeAsync(int id, string token);
     }
 }

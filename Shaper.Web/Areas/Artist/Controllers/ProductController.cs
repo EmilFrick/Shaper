@@ -23,7 +23,7 @@ namespace Shaper.Web.Areas.Artist.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var products = await _productService.GetProducts(HttpContext.Session.GetString("JwToken"));
+            var products = await _productService.GetProductsAsync(HttpContext.Session.GetString("JwToken"));
             var productVMs = ProductDisplayVM.GetProductDisplayVMs(products);
             return View(productVMs);
         }
@@ -33,11 +33,11 @@ namespace Shaper.Web.Areas.Artist.Controllers
             ProductUpsertVM productVM = new ProductUpsertVM();
             if (id == null)
             {
-                productVM = await _productService.GetProductVMs(HttpContext.Session.GetString("JwToken"));
+                productVM = await _productService.GetProductVMsAsync(HttpContext.Session.GetString("JwToken"));
             }
             else
             {
-                productVM = await _productService.GetProductVMs(HttpContext.Session.GetString("JwToken"), id);
+                productVM = await _productService.GetProductVMsAsync(HttpContext.Session.GetString("JwToken"), id);
             }
             return View(productVM);
         }
@@ -47,23 +47,23 @@ namespace Shaper.Web.Areas.Artist.Controllers
         {
             if (ModelState.IsValid)
             {
-                var product = await _productService.GetProductWithComponents(productVM, HttpContext.Session.GetString("JwToken"));
+                var product = await _productService.GetProductWithComponentsAsync(productVM, HttpContext.Session.GetString("JwToken"));
 
                 if (productVM.Id == 0)
                 {
                     var currentArtistEmail = User.Identity.Name;
                     product.Artist = _db.ApplicationUsers.FirstOrDefault(x => x.Email == currentArtistEmail).FullName;
                     product.Created = DateTime.Now;
-                    await _productService.CreateProduct(product, HttpContext.Session.GetString("JwToken"));
+                    await _productService.CreateProductAsync(product, HttpContext.Session.GetString("JwToken"));
                 }
                 else
                 {
-                    await _productService.UpdateProduct(product, HttpContext.Session.GetString("JwToken"));
+                    await _productService.UpdateProductAsync(product, HttpContext.Session.GetString("JwToken"));
                 }
                 return RedirectToAction("Index");
             }
             //not beautiful but will do for the time being.
-            var refreshproduct = await _productService.GetProductVMs(HttpContext.Session.GetString("JwToken"));
+            var refreshproduct = await _productService.GetProductVMsAsync(HttpContext.Session.GetString("JwToken"));
             productVM.Colors = refreshproduct.Colors;
             productVM.Shapes = refreshproduct.Shapes;
             productVM.Transparencies = refreshproduct.Transparencies;
@@ -75,7 +75,7 @@ namespace Shaper.Web.Areas.Artist.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            await _productService.DeleteProduct(id, HttpContext.Session.GetString("JwToken"));
+            await _productService.DeleteProductAsync(id, HttpContext.Session.GetString("JwToken"));
             return RedirectToAction("Index");
         }
     }

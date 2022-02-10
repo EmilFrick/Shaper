@@ -19,7 +19,7 @@ namespace Shaper.DataAccess.Repo
             _db = db;
         }
 
-        public async Task<Shape> CheckDefaultShape()
+        public async Task<Shape> CheckDefaultShapeAsync()
         {
             var defaultShape = _db.Shapes.FirstOrDefault(x => x.Name == "Default");
             if (defaultShape is null)

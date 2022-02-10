@@ -18,14 +18,14 @@ namespace Shaper.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var shapes = await _shapeService.GetShapes(HttpContext.Session.GetString("JwToken"));
+            var shapes = await _shapeService.GetShapesAsync(HttpContext.Session.GetString("JwToken"));
             var shapeVMs = ShapeDisplayVM.ShapeDisplayVMs(shapes);
             return View(shapeVMs);
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            var shape = await _shapeService.GetShape(id, HttpContext.Session.GetString("JwToken"));
+            var shape = await _shapeService.GetShapeAsync(id, HttpContext.Session.GetString("JwToken"));
             return View();
         }
 
@@ -38,7 +38,7 @@ namespace Shaper.Web.Areas.Admin.Controllers
             }
             else
             {
-                Shape shape = await _shapeService.GetShape(id.GetValueOrDefault(), HttpContext.Session.GetString("JwToken"));
+                Shape shape = await _shapeService.GetShapeAsync(id.GetValueOrDefault(), HttpContext.Session.GetString("JwToken"));
                 shapeVM = new ShapeUpsertVM(shape);
                 return View(shapeVM);
             }
@@ -53,11 +53,11 @@ namespace Shaper.Web.Areas.Admin.Controllers
                 var shape = shapeVM.GetShapeFromUpdateVM();
                 if (shapeVM.Id == 0)
                 {
-                    await _shapeService.CreateShape(shape, HttpContext.Session.GetString("JwToken"));
+                    await _shapeService.CreateShapeAsync(shape, HttpContext.Session.GetString("JwToken"));
                 }
                 else
                 {
-                    await _shapeService.UpdateShape(shape.Id, shape, HttpContext.Session.GetString("JwToken"));
+                    await _shapeService.UpdateShapeAsync(shape.Id, shape, HttpContext.Session.GetString("JwToken"));
                 }
             }
             else
@@ -71,7 +71,7 @@ namespace Shaper.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            await _shapeService.DeleteShape(id, HttpContext.Session.GetString("JwToken"));
+            await _shapeService.DeleteShapeAsync(id, HttpContext.Session.GetString("JwToken"));
             return RedirectToAction("Index");
         }
     }
