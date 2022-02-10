@@ -20,14 +20,14 @@ namespace Shaper.DataAccess.Repo
             _db = db;
         }
 
-        private void EvaluateProductPrices(List<Product> products)
+        public void EvaluateProductPrices(List<Product> products)
         {
             products.ForEach(fix => fix.Price = fix.Color.AddedValue + fix.Shape.AddedValue + fix.Transparency.AddedValue);
         }
 
         public async Task RebuildingProductsAsync(Color color)
         {
-            var products = await _db.Products.Include(c => c.Color).Include(s => s.Shape).Include(t => t.Transparency).Where(x => x.ColorId == color.Id).ToListAsync();
+            var products = await GetProductsAssociatedWith(color);
             await UpdateCollectionWithDefaultColor(products);
             EvaluateProductPrices(products);
             _db.UpdateRange(products);
@@ -36,7 +36,7 @@ namespace Shaper.DataAccess.Repo
 
         public async Task RebuildingProductsAsync(Shape shape)
         {
-            var products = await _db.Products.Include(c => c.Color).Include(s => s.Shape).Include(t => t.Transparency).Where(x => x.ShapeId == shape.Id).ToListAsync();
+            var products = await GetProductsAssociatedWith(shape);
             await UpdateCollectionWithDefaultShape(products);
             EvaluateProductPrices(products);
             _db.UpdateRange(products);
@@ -45,11 +45,24 @@ namespace Shaper.DataAccess.Repo
 
         public async Task RebuildingProductsAsync(Transparency transparency)
         {
-            var products = await _db.Products.Include(c => c.Color).Include(s => s.Shape).Include(t => t.Transparency).Where(x => x.TransparencyId == transparency.Id).ToListAsync();
+            var products = await GetProductsAssociatedWith(transparency);
             await UpdateCollectionWithDefaultTransparency(products);
             EvaluateProductPrices(products);
             _db.UpdateRange(products);
             await _db.SaveChangesAsync();
+        }
+
+        public async Task<List<Product>> GetProductsAssociatedWith(Color color)
+        {
+            return await _db.Products.Include(c => c.Color).Include(s => s.Shape).Include(t => t.Transparency).Where(x => x.ColorId == color.Id).ToListAsync();
+        }
+        public async Task<List<Product>> GetProductsAssociatedWith(Shape shape)
+        {
+            return await _db.Products.Include(c => c.Color).Include(s => s.Shape).Include(t => t.Transparency).Where(x => x.ShapeId == shape.Id).ToListAsync();
+        }
+        public async Task<List<Product>> GetProductsAssociatedWith(Transparency transparency)
+        {
+            return await _db.Products.Include(c => c.Color).Include(s => s.Shape).Include(t => t.Transparency).Where(x => x.TransparencyId == transparency.Id).ToListAsync();
         }
 
         public void Update(Product product)
@@ -66,8 +79,8 @@ namespace Shaper.DataAccess.Repo
                 product.ColorId = defaultColor.Id;
             }
 
-            //_db.UpdateRange(products);
-            //_db.SaveChangesAsync();
+            _db.UpdateRange(products);
+            _db.SaveChangesAsync();
         }
 
 
@@ -103,6 +116,10 @@ namespace Shaper.DataAccess.Repo
             _db.SaveChangesAsync();
         }
 
-
+        public async Task UpdateProductPrices(List<Product> products)
+        {
+            _db.UpdateRange(products);
+            await _db.SaveChangesAsync();
+        }
     }
 }

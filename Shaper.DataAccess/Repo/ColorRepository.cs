@@ -23,7 +23,7 @@ namespace Shaper.DataAccess.Repo
 
         public async Task<Color> CheckDefaultColorAsync()
         {
-            var defaultColor= _db.Colors.FirstOrDefault(x => x.Name == "Default");
+            var defaultColor = _db.Colors.FirstOrDefault(x => x.Name == "Default");
             if (defaultColor is null)
             {
                 defaultColor = new Color
@@ -39,7 +39,7 @@ namespace Shaper.DataAccess.Repo
         }
 
 
-        public void Update(Color color)
+        public async void Update(Color color)
         {
             _db.Colors.Update(color);
         }

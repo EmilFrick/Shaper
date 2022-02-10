@@ -89,9 +89,19 @@ namespace Shaper.API.Controllers
                     var feedback = new ColorUpdateVM(conflict);
                     return Conflict(feedback);
                 }
+
                 Color c = color.GetColorFromUpdateVM();
                 _db.Colors.Update(c);
                 await _db.SaveAsync();
+
+                var productsAssociated = await _db.Products.GetProductsAssociatedWith(c);
+                if (productsAssociated.Count > 0)
+                {
+                    _db.Products.EvaluateProductPrices(productsAssociated);
+                    _db.Products.UpdateProductPrices(productsAssociated);
+                }
+
+
                 return Ok();
             }
             else

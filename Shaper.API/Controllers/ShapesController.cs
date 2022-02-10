@@ -61,6 +61,14 @@ namespace Shaper.API.Controllers
                 Shape s = shape.GetShapeFromCreateVM();
                 _db.Shapes.Update(s);
                 await _db.SaveAsync();
+
+                var productsAssociated = await _db.Products.GetProductsAssociatedWith(s);
+                if (productsAssociated.Count > 0)
+                {
+                    _db.Products.EvaluateProductPrices(productsAssociated);
+                    _db.Products.UpdateProductPrices(productsAssociated);
+                }
+
                 return Ok();
             }
             else

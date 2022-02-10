@@ -14,7 +14,11 @@ namespace Shaper.DataAccess.Repo.IRepo
         Task RebuildingProductsAsync(Color color);
         Task RebuildingProductsAsync(Shape shape);
         Task RebuildingProductsAsync(Transparency transparency);
-
+        Task<List<Product>> GetProductsAssociatedWith(Color color);
+        Task<List<Product>> GetProductsAssociatedWith(Shape shape);
+        Task<List<Product>> GetProductsAssociatedWith(Transparency transparency);
+        void EvaluateProductPrices(List<Product> products);
+        Task UpdateProductPrices(List<Product> products);
 
     }
 }

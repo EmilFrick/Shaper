@@ -83,9 +83,17 @@ namespace Shaper.API.Controllers
                     var feedback = new TransparencyUpdateVM(conflict);
                     return Conflict(feedback);
                 }
-                Transparency c = transparency.GetTransparencyFromUpdateVM();
-                _db.Transparencies.Update(c);
+                Transparency t = transparency.GetTransparencyFromUpdateVM();
+                _db.Transparencies.Update(t);
                 await _db.SaveAsync();
+
+                var productsAssociated = await _db.Products.GetProductsAssociatedWith(t);
+                if (productsAssociated.Count > 0)
+                {
+                    _db.Products.EvaluateProductPrices(productsAssociated);
+                    _db.Products.UpdateProductPrices(productsAssociated);
+                }
+
                 return Ok();
             }
             else
