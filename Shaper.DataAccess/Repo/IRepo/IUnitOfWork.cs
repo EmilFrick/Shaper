@@ -13,7 +13,10 @@ namespace Shaper.DataAccess.Repo.IRepo
         ITransparencyRepository Transparencies { get; }
         IProductRepository Products{ get; }
         IShoppingCartRepository ShoppingCarts{ get; }
+        ICartProductRepository CartProducts { get; }
         IOrderRepository Orders{ get; }
+        IShaperUserRepository ShaperUsers{ get; }
+
 
         Task SaveAsync();
     }
