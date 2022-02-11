@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shaper.DataAccess.Repo.IRepo;
+using Shaper.Models.Entities;
 using Shaper.Models.ViewModels.ShoppingCartVM;
 
 namespace Shaper.API.Controllers
@@ -19,7 +20,14 @@ namespace Shaper.API.Controllers
         [HttpGet]
         public async Task<IActionResult> AddItemToCart(CartProductAddModel cartproduct)
         {
-            AddItemToCart(cartproduct);
+            var user = await _db.ShaperUsers.GetFirstOrDefaultAsync(x=>x.IdentityId == cartproduct.ShaperUserDetails.IdentityId);
+            if (user is null)
+            {
+                user = cartproduct.ShaperUserDetails.GetEntity();
+                await _db.ShaperUsers.AddAsync(user);
+                
+            }
+
             return Ok();
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Shaper.Models.ViewModels.ShaperUser;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,6 @@ namespace Shaper.Models.ViewModels.ShoppingCartVM
     {
         public int ProductId { get; set; }
         public int ProductQuantity { get; set; }
-        public string CustomerIdentity { get; set; }
+        public ShaperUserDetails ShaperUserDetails{ get; set; }
     }
 }
