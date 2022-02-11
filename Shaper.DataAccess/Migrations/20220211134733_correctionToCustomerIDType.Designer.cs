@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shaper.DataAccess.Context;
 
@@ -11,9 +12,10 @@ using Shaper.DataAccess.Context;
 namespace Shaper.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220211134733_correctionToCustomerIDType")]
+    partial class correctionToCustomerIDType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,9 +34,6 @@ namespace Shaper.DataAccess.Migrations
 
                     b.Property<int>("ProductQuantity")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("UnitPrice")
-                        .HasColumnType("money");
 
                     b.HasKey("ShoppingCartId", "ProductId");
 
@@ -101,9 +100,6 @@ namespace Shaper.DataAccess.Migrations
 
                     b.Property<int>("ProductQuantity")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("UnitPrice")
-                        .HasColumnType("money");
 
                     b.HasKey("OrderId", "ProductId");
 

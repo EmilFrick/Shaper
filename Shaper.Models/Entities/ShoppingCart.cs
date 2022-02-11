@@ -14,14 +14,14 @@ namespace Shaper.Models.Entities
         [Key]
         public int Id { get; set; }
         public bool CheckedOut { get; set; }
-        public DateTime OrderStarted { get; set; }
+        public DateTime OrderStarted { get; set; } = DateTime.Now;
         [Column(TypeName ="money")]
-        public decimal OrderValue { get; set; }
+        public double OrderValue { get; set; } = 0;
 
         //Navigation Props
         [Required]
         [ForeignKey("CustomerId")]
-        public string CustomerId { get; set; }
+        public int CustomerId { get; set; }
         [ValidateNever]
         public ShaperUser Customer { get; set; }
         [ValidateNever]

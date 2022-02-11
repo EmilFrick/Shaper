@@ -1,4 +1,5 @@
 ﻿using Shaper.Models.Entities;
+using Shaper.Models.ViewModels.ShoppingCartVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,7 @@ namespace Shaper.DataAccess.Repo.IRepo
     public interface IShoppingCartRepository : IRepository<ShoppingCart>
     {
         void Update(ShoppingCart shoppingCart);
+        Task<ShoppingCart> GetShoppingCartAsync(ShaperUser user, Product product);
+        Task CalulatingShoppingCartValue(ShoppingCart cart);
     }
 }

@@ -17,12 +17,12 @@ namespace Shaper.Models.Entities
         public DateTime OrderPlaced { get; set; }
         [Required]
         [Column(TypeName ="money")]
-        public decimal OrderValue { get; set; }
+        public double OrderValue { get; set; }
 
         //Navigation Props
         [Required]
         [ForeignKey("CustomerId")]
-        public string CustomerId { get; set; }
+        public int CustomerId { get; set; }
         [ValidateNever]
         public ShaperUser Customer { get; set; }
         [ValidateNever]

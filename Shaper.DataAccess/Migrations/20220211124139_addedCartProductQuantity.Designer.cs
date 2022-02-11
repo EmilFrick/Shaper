@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shaper.DataAccess.Context;
 
@@ -11,9 +12,10 @@ using Shaper.DataAccess.Context;
 namespace Shaper.DataAccess.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220211124139_addedCartProductQuantity")]
+    partial class addedCartProductQuantity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,9 +34,6 @@ namespace Shaper.DataAccess.Migrations
 
                     b.Property<int>("ProductQuantity")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("UnitPrice")
-                        .HasColumnType("money");
 
                     b.HasKey("ShoppingCartId", "ProductId");
 
@@ -75,7 +74,11 @@ namespace Shaper.DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CustomerId")
+                    b.Property<string>("CustomerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CustomerId1")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("OrderPlaced")
@@ -86,7 +89,7 @@ namespace Shaper.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("CustomerId1");
 
                     b.ToTable("Orders");
                 });
@@ -101,9 +104,6 @@ namespace Shaper.DataAccess.Migrations
 
                     b.Property<int>("ProductQuantity")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("UnitPrice")
-                        .HasColumnType("money");
 
                     b.HasKey("OrderId", "ProductId");
 
@@ -225,7 +225,11 @@ namespace Shaper.DataAccess.Migrations
                     b.Property<bool>("CheckedOut")
                         .HasColumnType("bit");
 
-                    b.Property<int>("CustomerId")
+                    b.Property<string>("CustomerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CustomerId1")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("OrderStarted")
@@ -236,7 +240,7 @@ namespace Shaper.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("CustomerId1");
 
                     b.ToTable("ShoppingCarts");
                 });
@@ -290,7 +294,7 @@ namespace Shaper.DataAccess.Migrations
                 {
                     b.HasOne("Shaper.Models.Entities.ShaperUser", "Customer")
                         .WithMany("Orders")
-                        .HasForeignKey("CustomerId")
+                        .HasForeignKey("CustomerId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -347,7 +351,7 @@ namespace Shaper.DataAccess.Migrations
                 {
                     b.HasOne("Shaper.Models.Entities.ShaperUser", "Customer")
                         .WithMany("ShoppingCarts")
-                        .HasForeignKey("CustomerId")
+                        .HasForeignKey("CustomerId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
