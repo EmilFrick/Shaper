@@ -19,6 +19,7 @@ namespace Shaper.API.Controllers
         [HttpPost]
         public async Task<IActionResult> PlacingOrder(string identity)
         {
+            
             //Get Shapercustomer ShoppingCart
             var userShoppingCart = await _db.ShoppingCarts.GetFirstOrDefaultAsync(x => x.Customer.IdentityId == identity && x.CheckedOut == false, includeProperties:"CartProducts");
             if (userShoppingCart == null)

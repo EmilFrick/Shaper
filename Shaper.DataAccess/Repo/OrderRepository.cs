@@ -24,13 +24,5 @@ namespace Shaper.DataAccess.Repo
             _db.Orders.Update(order);
         }
 
-        public async Task<Order> PrepareOrder(int customerId)
-        {
-            Order order = new()
-            {
-                CustomerId =customerId,
-            };
-            return order;
-        }
     }
 }
