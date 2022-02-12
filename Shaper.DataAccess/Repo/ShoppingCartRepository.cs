@@ -32,10 +32,10 @@ namespace Shaper.DataAccess.Repo
             await _db.SaveChangesAsync();
         }
 
-        public Task<Order> CheckOutShoppingCart(ShoppingCart cart)
-        {
-
-        }
+        //public Task<Order> CheckOutShoppingCart(ShoppingCart cart)
+        //{
+        //    return new Order();
+        //}
 
         public async Task<ShoppingCart> GetShoppingCartAsync(ShaperUser user, Product product)
         {

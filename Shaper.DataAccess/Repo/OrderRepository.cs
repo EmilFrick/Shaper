@@ -30,6 +30,7 @@ namespace Shaper.DataAccess.Repo
             {
                 CustomerId =customerId,
             };
+            return order;
         }
     }
 }

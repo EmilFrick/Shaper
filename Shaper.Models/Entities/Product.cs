@@ -49,7 +49,5 @@ namespace Shaper.Models.Entities
         [ValidateNever]
         public ICollection<CartProduct> CartProducts { get; set; }
 
-        [ValidateNever]
-        public ICollection<OrderProduct> OrderProducts { get; set; }
     }
 }

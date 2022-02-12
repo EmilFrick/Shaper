@@ -26,7 +26,7 @@ namespace Shaper.API.Controllers
                 return NotFound();
             }
 
-
+            return Ok();
         }
     }
 }

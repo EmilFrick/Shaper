@@ -8,12 +8,11 @@ using System.Threading.Tasks;
 
 namespace Shaper.Models.Entities
 {
-    public class OrderProduct
+    public class OrderDetail
     {
-        [ForeignKey("Product")]
+        [Key]
+        public int Id { get; set; }
         public int ProductId { get; set; }
-        public Product Product { get; set; }
-        [Range(1, 100)]
         public int ProductQuantity { get; set; }
         [Column(TypeName = "money")]
         public double UnitPrice { get; set; }

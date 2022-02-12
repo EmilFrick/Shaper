@@ -26,7 +26,7 @@ namespace Shaper.Models.Entities
         [ValidateNever]
         public ShaperUser Customer { get; set; }
         [ValidateNever]
-        public ICollection<OrderProduct> OrderProducts { get; set; }
+        public ICollection<OrderDetail> OrderProducts { get; set; }
 
     }
 }

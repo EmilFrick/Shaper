@@ -20,7 +20,7 @@ namespace Shaper.Models.ViewModels.OrderVM
         [Required]
         public string CustomerId { get; set; }
         [ValidateNever]
-        public ICollection<OrderProduct> OrderProducts { get; set; }
+        public ICollection<OrderDetail> OrderProducts { get; set; }
 
     }
 }

@@ -26,12 +26,11 @@ namespace Shaper.DataAccess.Context
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<CartProduct> CartProducts { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderProduct> OrderProducts { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<CartProduct>().HasKey(cp=> new {cp.ShoppingCartId,cp.ProductId});
-            builder.Entity<OrderProduct>().HasKey(op=> new {op.OrderId,op.ProductId});
             base.OnModelCreating(builder);
         }
     }
