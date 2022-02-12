@@ -4,6 +4,6 @@ namespace Shaper.API.RequestHandlers.IRequestHandlers
 {
     public interface IShaperUserHandler
     {
-        Task<ShaperUser> FindShaperUserByIdentity(string identity);
+        Task<ShaperUser> FindShaperUserByIdentityAsync(string identity);
     }
 }

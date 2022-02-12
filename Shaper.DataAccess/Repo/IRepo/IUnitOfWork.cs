@@ -15,6 +15,7 @@ namespace Shaper.DataAccess.Repo.IRepo
         IShoppingCartRepository ShoppingCarts{ get; }
         ICartProductRepository CartProducts { get; }
         IOrderRepository Orders{ get; }
+        IOrderDetailRepository OrderDetails{ get; }
         IShaperUserRepository ShaperUsers{ get; }
 
 

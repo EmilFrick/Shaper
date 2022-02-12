@@ -26,7 +26,7 @@ namespace Shaper.Models.Entities
 
         //Transparency
         public string TransparencyName { get; set; }
-        public string TransparencyDescription { get; set; }
+        public string? TransparencyDescription { get; set; }
         public int TransparencyValue { get; set; }
 
         //OrderFinanace
@@ -34,7 +34,7 @@ namespace Shaper.Models.Entities
         [Column(TypeName = "money")]
         public double ProductUnitPrice { get; set; }
         [Column(TypeName = "money")]
-        public double OrderTotalValue { get; set; }
+        public double EntryTotalValue { get; set; }
 
 
         [ForeignKey("Order")]

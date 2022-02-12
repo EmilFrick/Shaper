@@ -4,6 +4,7 @@ namespace Shaper.API.RequestHandlers
 {
     public interface IOrderHandler
     {
-        Task<Order> PrepareOrder(string identityID);
+        Task<Order> InitateOrderAsync(ShaperUser user);
+        Task CheckOutCartProducts(ShoppingCart cart, Order order);
     }
 }

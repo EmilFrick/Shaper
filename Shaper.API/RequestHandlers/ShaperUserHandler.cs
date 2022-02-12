@@ -1,4 +1,5 @@
-﻿using Shaper.DataAccess.Repo.IRepo;
+﻿using Shaper.API.RequestHandlers.IRequestHandlers;
+using Shaper.DataAccess.Repo.IRepo;
 using Shaper.Models.Entities;
 
 namespace Shaper.API.RequestHandlers
@@ -12,7 +13,7 @@ namespace Shaper.API.RequestHandlers
             _db = db;
         }
 
-        public Task<ShaperUser> FindShaperUserByIdentity(string identity)
+        public Task<ShaperUser> FindShaperUserByIdentityAsync(string identity)
         {
             return _db.ShaperUsers.GetFirstOrDefaultAsync(x => x.IdentityId == identity);
         }
