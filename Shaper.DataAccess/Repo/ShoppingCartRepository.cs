@@ -32,6 +32,11 @@ namespace Shaper.DataAccess.Repo
             await _db.SaveChangesAsync();
         }
 
+        public Task<Order> CheckOutShoppingCart(ShoppingCart cart)
+        {
+
+        }
+
         public async Task<ShoppingCart> GetShoppingCartAsync(ShaperUser user, Product product)
         {
             var userShoppingCart = await GetFirstOrDefaultAsync(x => x.Customer.IdentityId == user.IdentityId && x.CheckedOut == false, includeProperties:"CartProducts");

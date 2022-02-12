@@ -14,10 +14,10 @@ namespace Shaper.Models.Entities
         [Key]
         public int Id { get; set; }
         [Required]
-        public DateTime OrderPlaced { get; set; }
+        public DateTime OrderPlaced { get; set; } = DateTime.Now;
         [Required]
         [Column(TypeName ="money")]
-        public double OrderValue { get; set; }
+        public double OrderValue { get; set; } = 0;
 
         //Navigation Props
         [Required]
