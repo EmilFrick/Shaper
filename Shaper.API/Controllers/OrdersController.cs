@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Shaper.API.RequestHandlers.IRequestHandlers;
 using Shaper.DataAccess.Repo.IRepo;
+using Shaper.Models.ViewModels.Order;
 using Shaper.Models.ViewModels.ShoppingCartVM;
 
 namespace Shaper.API.Controllers
@@ -10,12 +11,10 @@ namespace Shaper.API.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly IUnitOfWork _db;
         private readonly IRequestHandler _requestHandler;
 
-        public OrdersController(IUnitOfWork db, IRequestHandler requestHandler)
+        public OrdersController(IRequestHandler requestHandler)
         {
-            _db = db;
             _requestHandler = requestHandler;
         }
 
@@ -29,7 +28,8 @@ namespace Shaper.API.Controllers
             }
             return Ok(orders);
         }
-        
+
+
         [HttpPost("PlaceOrder")]
         public async Task<IActionResult> PlacingOrder(string identity)
         {
@@ -43,6 +43,23 @@ namespace Shaper.API.Controllers
             await _requestHandler.Orders.ReconciliatingOrder(order.Id);
             await _requestHandler.ShoppingCarts.CheckOutShoppingCart(identity);
             return Ok();
+        }
+
+
+        [HttpPut]
+        public async Task<IActionResult> PutUserOrders(OrderUpdateModel order)
+        {
+            if (ModelState.IsValid)
+            {
+
+                var originalOrder = await _requestHandler.Orders.GetOrder(order.OrderId);
+                if (originalOrder is null)
+                    return NotFound();
+
+                await _requestHandler.Orders.UpdateOrder(order, originalOrder);
+                return Ok();
+            }
+            return BadRequest();
         }
     }
 }

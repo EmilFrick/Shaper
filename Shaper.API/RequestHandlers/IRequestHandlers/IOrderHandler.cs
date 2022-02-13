@@ -1,4 +1,5 @@
 ﻿using Shaper.Models.Entities;
+using Shaper.Models.ViewModels.Order;
 
 namespace Shaper.API.RequestHandlers
 {
@@ -8,5 +9,7 @@ namespace Shaper.API.RequestHandlers
         Task CheckOutCartProducts(ShoppingCart cart, Order order);
         Task ReconciliatingOrder(int id);
         Task<IEnumerable<Order>> GetUserOrders(string user);
+        Task<Order> GetOrder(int orderId);
+        Task UpdateOrder(OrderUpdateModel order, Order originalOrder);
     }
 }
