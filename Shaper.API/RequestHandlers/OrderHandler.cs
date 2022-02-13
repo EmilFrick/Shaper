@@ -16,7 +16,7 @@ namespace Shaper.API.RequestHandlers
 
         public async Task<Order> InitateOrderAsync(ShaperUser user)
         {
-            Order order = new() { Id = user.Id };
+            Order order = new() { CustomerId = user.Id };
             await _db.Orders.AddAsync(order);
             await _db.SaveAsync();
             return order;
@@ -25,7 +25,7 @@ namespace Shaper.API.RequestHandlers
         public async Task CheckOutCartProducts(ShoppingCart cart, Order order)
         {
             List<OrderDetail> productDetails = new();
-
+            double orderTotalValue = 0;
             foreach (var item in cart.CartProducts)
             {
                 OrderDetail detail = new()
@@ -45,8 +45,10 @@ namespace Shaper.API.RequestHandlers
                     ProductUnitPrice = item.UnitPrice,
                     EntryTotalValue = (item.ProductQuantity * item.UnitPrice),
                 };
+                orderTotalValue += detail.EntryTotalValue;
                 productDetails.Add(detail);
             }
+            order.OrderValue = orderTotalValue;
             await _db.OrderDetails.AddRangeAsync(productDetails);
             await _db.SaveAsync();
         }

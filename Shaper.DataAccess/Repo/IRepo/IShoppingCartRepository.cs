@@ -14,6 +14,6 @@ namespace Shaper.DataAccess.Repo.IRepo
         void Update(ShoppingCart shoppingCart);
         Task<ShoppingCart> GetShoppingCartAsync(ShaperUser user, Product product);
         Task CalulatingShoppingCartValue(ShoppingCart cart);
-        //Task<Order> CheckOutShoppingCart(ShoppingCart cart);
+        Task<ShoppingCart> GetDetailedShoppingCart(string id);
     }
 }

@@ -23,7 +23,7 @@ namespace Shaper.API.RequestHandlers
 
         public async Task<ShoppingCart> GetUserShoppingCartAsync(ShaperUser user)
         {
-            return await _db.ShoppingCarts.GetFirstOrDefaultAsync(x => x.Id == user.Id && x.CheckedOut == false, includeProperties: "CartProducts");
+            return await _db.ShoppingCarts.GetDetailedShoppingCart(user.IdentityId);
         }
     }
 }
