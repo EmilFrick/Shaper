@@ -2,7 +2,6 @@
 {
     public interface IRequestHandler
     {
-        IShaperUserHandler ShaperUsers { get; }
         IOrderHandler Orders { get; }
         IShoppingCartHandler ShoppingCarts { get; }
 

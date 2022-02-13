@@ -1,4 +1,5 @@
-﻿using Shaper.DataAccess.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using Shaper.DataAccess.Context;
 using Shaper.DataAccess.Repo.IRepo;
 using Shaper.Models.Entities;
 using SnutteBook.DataAccess.Repository;
@@ -12,13 +13,17 @@ namespace Shaper.DataAccess.Repo
 {
     public class OrderDetailRepository : Repository<OrderDetail>, IOrderDetailRepository
     {
+
+        private readonly AppDbContext _db;
         public OrderDetailRepository(AppDbContext db) : base(db)
         {
+            _db = db;
         }
 
-        public async Task AddRangeAsync(IEnumerable<OrderDetail> creatingOrderDetails)
+        public async Task AddRangeAsync(IEnumerable<OrderDetail> items)
         {
-            await AddRangeAsync(creatingOrderDetails);
+            await _db.AddRangeAsync(items);
         }
+
     }
 }

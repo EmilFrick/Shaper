@@ -10,6 +10,7 @@ namespace Shaper.DataAccess.Repo.IRepo
 {
     public interface IOrderRepository : IRepository<Order>
     {
+        Task<IEnumerable<Order>> GetUserOrders(string user);
         void Update(Order order);
     }
 }

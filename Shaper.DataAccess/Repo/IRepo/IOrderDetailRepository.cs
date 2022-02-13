@@ -9,6 +9,6 @@ namespace Shaper.DataAccess.Repo.IRepo
 {
     public interface IOrderDetailRepository : IRepository<OrderDetail>
     {
-        Task AddRangeAsync(IEnumerable<OrderDetail> creatingOrderDetails);
+        Task AddRangeAsync(IEnumerable<OrderDetail> items);
     }
 }

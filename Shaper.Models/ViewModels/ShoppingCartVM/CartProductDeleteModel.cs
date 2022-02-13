@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace Shaper.Models.ViewModels.ShoppingCartVM
 {
-    public class CartProductAddModel
+    public class CartProductDeleteModel
     {
         public int ProductId { get; set; }
-        [Range(1,100)]
-        public int ProductQuantity { get; set; }
+
         public string ShaperCustomer { get; set; }
     }
 }

@@ -13,17 +13,14 @@ namespace Shaper.Models.Entities
     {
         [Key]
         public int Id { get; set; }
+        [Required]
+        public string CustomerIdentity { get; set; }
         public bool CheckedOut { get; set; }
         public DateTime OrderStarted { get; set; } = DateTime.Now;
-        [Column(TypeName ="money")]
+        [Column(TypeName = "money")]
         public double OrderValue { get; set; } = 0;
 
         //Navigation Props
-        [Required]
-        [ForeignKey("CustomerId")]
-        public int CustomerId { get; set; }
-        [ValidateNever]
-        public ShaperUser Customer { get; set; }
         [ValidateNever]
         public ICollection<CartProduct> CartProducts { get; set; }
     }

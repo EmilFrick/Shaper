@@ -18,7 +18,6 @@ namespace Shaper.DataAccess.Repo
         public IOrderRepository Orders { get; private set; }
         public ICartProductRepository CartProducts { get; private set; }
         public IOrderDetailRepository OrderDetails { get; private set; }
-        public IShaperUserRepository ShaperUsers { get; private set; }
 
         private readonly AppDbContext _db;
 
@@ -32,7 +31,7 @@ namespace Shaper.DataAccess.Repo
             ShoppingCarts = new ShoppingCartRepository(_db);
             Orders = new OrderRepository(_db);
             CartProducts = new CartProductRepository(_db);
-            ShaperUsers = new ShaperUserRepository(_db);
+            OrderDetails = new OrderDetailRepository(_db);
         }
 
 

@@ -14,9 +14,9 @@ namespace Shaper.API.RequestHandlers
             _db = db;
         }
 
-        public async Task<Order> InitateOrderAsync(ShaperUser user)
+        public async Task<Order> InitateOrderAsync(string user)
         {
-            Order order = new() { CustomerId = user.Id };
+            Order order = new() { CustomerIdentity = user };
             await _db.Orders.AddAsync(order);
             await _db.SaveAsync();
             return order;
@@ -24,12 +24,13 @@ namespace Shaper.API.RequestHandlers
 
         public async Task CheckOutCartProducts(ShoppingCart cart, Order order)
         {
-            List<OrderDetail> productDetails = new();
             double orderTotalValue = 0;
+            List<OrderDetail> orderDetails = new();
             foreach (var item in cart.CartProducts)
             {
                 OrderDetail detail = new()
                 {
+                    OrderId = order.Id,
                     ProductId = item.ProductId,
                     ColorName = item.Product.Color.Name,
                     ColorHex = item.Product.Color.Hex,
@@ -45,12 +46,28 @@ namespace Shaper.API.RequestHandlers
                     ProductUnitPrice = item.UnitPrice,
                     EntryTotalValue = (item.ProductQuantity * item.UnitPrice),
                 };
-                orderTotalValue += detail.EntryTotalValue;
-                productDetails.Add(detail);
+                orderDetails.Add(detail);
+            }
+            await _db.OrderDetails.AddRangeAsync(orderDetails);
+            await _db.SaveAsync();
+        }
+
+        public async Task ReconciliatingOrder(int orderId)
+        {
+            double orderTotalValue = 0;
+            var order = await _db.Orders.GetFirstOrDefaultAsync(a => a.Id == orderId, includeProperties: "OrderProducts");
+            foreach (var item in order.OrderProducts)
+            {
+                orderTotalValue += item.EntryTotalValue;
             }
             order.OrderValue = orderTotalValue;
-            await _db.OrderDetails.AddRangeAsync(productDetails);
+            _db.Orders.Update(order);
             await _db.SaveAsync();
+        }
+
+        public async Task<IEnumerable<Order>> GetUserOrders(string user)
+        {
+            return await _db.Orders.GetUserOrders(user);
         }
     }
 }

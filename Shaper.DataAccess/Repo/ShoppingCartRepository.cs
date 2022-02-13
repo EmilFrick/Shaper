@@ -22,6 +22,11 @@ namespace Shaper.DataAccess.Repo
             _db = db;
         }
 
+        public void Update(ShoppingCart shoppingCart)
+        {
+            _db.ShoppingCarts.Update(shoppingCart);
+        }
+
         public async Task<ShoppingCart> GetDetailedShoppingCart(string id)
         {
             var cartProductsResult = await _db.CartProducts.Include(p => p.Product)
@@ -32,7 +37,7 @@ namespace Shaper.DataAccess.Repo
                                              .ThenInclude(t => t.Transparency)
                                              .Include(sc=>sc.ShoppingCart)
                                              .Where(x => x.ShoppingCart.CartProducts
-                                                .Any(y => y.ShoppingCart.Customer.IdentityId == id && y.ShoppingCart.CheckedOut == false))
+                                                .Any(y => y.ShoppingCart.CustomerIdentity == id && y.ShoppingCart.CheckedOut == false))
                                              .ToListAsync();
             List<CartProduct> cartProducts = new List<CartProduct>();
             foreach (var item in cartProductsResult)
@@ -42,41 +47,6 @@ namespace Shaper.DataAccess.Repo
             ShoppingCart shoppingCart = new();
             shoppingCart.CartProducts = cartProducts;
             return shoppingCart;
-
-        }
-
-        public async Task CalulatingShoppingCartValue(ShoppingCart cart)
-        {
-            double cartValue = 0;
-            foreach (var item in cart.CartProducts)
-            {
-                cartValue += (item.ProductQuantity * item.UnitPrice);
-            }
-            cart.OrderValue = cartValue;
-            Update(cart);
-            await _db.SaveChangesAsync();
-        }
-
-        public async Task<ShoppingCart> GetShoppingCartAsync(ShaperUser user, Product product)
-        {
-            var userShoppingCart = await GetFirstOrDefaultAsync(x => x.Customer.IdentityId == user.IdentityId && x.CheckedOut == false, includeProperties: "CartProducts");
-            if (userShoppingCart is null)
-            {
-                userShoppingCart = new()
-                {
-                    CustomerId = user.Id,
-                    CheckedOut = false,
-                    OrderValue = 0,
-                };
-                await _db.ShoppingCarts.AddAsync(userShoppingCart);
-                await _db.SaveChangesAsync();
-            }
-            return userShoppingCart;
-        }
-
-        public void Update(ShoppingCart shoppingCart)
-        {
-            _db.ShoppingCarts.Update(shoppingCart);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Shaper.DataAccess.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using Shaper.DataAccess.Context;
 using Shaper.DataAccess.Repo.IRepo;
 using Shaper.Models.Entities;
 using SnutteBook.DataAccess.Repository;
@@ -24,5 +25,9 @@ namespace Shaper.DataAccess.Repo
             _db.Orders.Update(order);
         }
 
+        public async Task<IEnumerable<Order>> GetUserOrders(string user)
+        {
+            return await _db.Orders.Include(a=>a.OrderProducts).Where(b => b.CustomerIdentity == user).ToListAsync();
+        }
     }
 }

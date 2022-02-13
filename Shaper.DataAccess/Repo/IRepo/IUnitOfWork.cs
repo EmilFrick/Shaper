@@ -16,7 +16,6 @@ namespace Shaper.DataAccess.Repo.IRepo
         ICartProductRepository CartProducts { get; }
         IOrderRepository Orders{ get; }
         IOrderDetailRepository OrderDetails{ get; }
-        IShaperUserRepository ShaperUsers{ get; }
 
 
         Task SaveAsync();

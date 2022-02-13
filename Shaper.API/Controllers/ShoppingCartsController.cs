@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Shaper.API.RequestHandlers;
+using Shaper.API.RequestHandlers.IRequestHandlers;
 using Shaper.DataAccess.Repo.IRepo;
 using Shaper.Models.Entities;
 using Shaper.Models.ViewModels.ShoppingCartVM;
@@ -11,58 +13,72 @@ namespace Shaper.API.Controllers
     public class ShoppingCartsController : ControllerBase
     {
         private readonly IUnitOfWork _db;
+        private readonly IRequestHandler _requestHandler;
 
-        public ShoppingCartsController(IUnitOfWork db)
+        public ShoppingCartsController(IUnitOfWork db, IRequestHandler requestHandler)
         {
             _db = db;
+            _requestHandler = requestHandler;
         }
 
-        [HttpPost]
+
+        [HttpPost("AddToCart")]
         public async Task<IActionResult> AddItemToCart(CartProductAddModel cartProductModel)
         {
             if (ModelState.IsValid)
             {
-                //Getting user or Creating a new Shaper User.
-                var user = await _db.ShaperUsers.GetCustomerAsync(cartProductModel.ShaperUserDetails);
-                
-                //Getting Product details(for pricing)
-                var productDetails = await _db.Products.GetFirstOrDefaultAsync(x=> x.Id == cartProductModel.ProductId);
-                if (productDetails == null)
-                {
+                //Product
+                var productDetails = await _db.Products.GetFirstOrDefaultAsync(x => x.Id == cartProductModel.ProductId);
+                if (productDetails is null)
                     return BadRequest();
-                }
-                
-                //Getting current or new shopping cart.
-                var userShoppingCart = await _db.ShoppingCarts.GetShoppingCartAsync(user, productDetails);
-                
-                //Getting possible CartProduct. if null, create new entry. If there is an entry, update the entry.
-                var cartProduct = userShoppingCart.CartProducts.FirstOrDefault(x => x.ProductId == cartProductModel.ProductId);
-                if (cartProduct is not null)
-                {
-                    cartProduct.ProductQuantity = cartProductModel.ProductQuantity;
-                    _db.CartProducts.Update(cartProduct);
-                    await _db.SaveAsync();
-                }
-                else
-                {
-                    cartProduct = new()
-                    {
-                        ProductId = cartProductModel.ProductId,
-                        ProductQuantity = cartProductModel.ProductQuantity,
-                        ShoppingCartId = userShoppingCart.Id,
-                        UnitPrice = productDetails.Price
-                    };
-                    await _db.CartProducts.AddAsync(cartProduct);
-                    await _db.SaveAsync();
-                }
 
-                _db.ShoppingCarts.CalulatingShoppingCartValue(userShoppingCart);
-                return Ok(cartProduct);
+                CartProduct cartProduct = new CartProduct();
+                //ShoppingCart
+                var shoppingcart = await _requestHandler.ShoppingCarts.ShoppingCartExistAsync(cartProductModel.ShaperCustomer);
+                if (shoppingcart is null)
+                    shoppingcart = await _requestHandler.ShoppingCarts.GetFreshShoppingCartAsync(cartProductModel.ShaperCustomer);
+                else
+                    cartProduct = await _db.CartProducts.GetFirstOrDefaultAsync(x => x.ShoppingCartId == shoppingcart.Id && x.ProductId == productDetails.Id);
+
+                //Add Or Update CartProduct
+                if (cartProduct?.ProductId is 0 || cartProduct is null)
+                    await _requestHandler.ShoppingCarts.AddNewCartProductAsync(cartProductModel, productDetails.Price, shoppingcart.Id);
+                else
+                    await _requestHandler.ShoppingCarts.UpdateCartProductAsync(cartProduct, cartProductModel.ProductQuantity);
+
+                await _requestHandler.ShoppingCarts.CalulatingShoppingCartValue(shoppingcart);
+
+                //Revize what this return.
+                return Ok(shoppingcart);
             }
             else
             {
                 return BadRequest();
             }
         }
+
+        [HttpDelete("RemoveCartProduct")]
+        public async Task<IActionResult> RemoveItemFromCart(CartProductDeleteModel cartProductModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var productDetails = await _db.Products.GetFirstOrDefaultAsync(x => x.Id == cartProductModel.ProductId);
+                if (productDetails is null)
+                    return BadRequest();
+                
+                var shoppingcart = await _requestHandler.ShoppingCarts.ShoppingCartExistAsync(cartProductModel.ShaperCustomer);
+                if (shoppingcart is null)
+                    return BadRequest();
+
+                await _requestHandler.ShoppingCarts.RemoveItemFromShoppingCart(shoppingcart.Id, productDetails.Id);
+
+                await _requestHandler?.ShoppingCarts.CalulatingShoppingCartValue(shoppingcart);
+
+                return Ok();
+            }
+            else
+                return BadRequest();
+        }
+
     }
 }

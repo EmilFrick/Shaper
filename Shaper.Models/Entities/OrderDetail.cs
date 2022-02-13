@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace Shaper.Models.Entities
 {
@@ -39,6 +40,7 @@ namespace Shaper.Models.Entities
 
         [ForeignKey("Order")]
         public int OrderId { get; set; }
+        [ValidateNever]
         public Order Order { get; set; }
     }
 }

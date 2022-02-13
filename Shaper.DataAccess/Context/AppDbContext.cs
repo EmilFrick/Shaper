@@ -18,7 +18,6 @@ namespace Shaper.DataAccess.Context
 
         }
 
-        public DbSet<ShaperUser> ShaperUsers { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Shape> Shapes { get; set; }
         public DbSet<Color> Colors { get; set; }

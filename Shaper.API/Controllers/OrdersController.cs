@@ -19,22 +19,29 @@ namespace Shaper.API.Controllers
             _requestHandler = requestHandler;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> PlacingOrder(string identity)
+        [HttpGet]
+        public async Task<IActionResult> GetUserOrders(string user)
         {
-            var user = await _requestHandler.ShaperUsers.FindShaperUserByIdentityAsync(identity);
-            if (user == null)
+            var orders = await _requestHandler.Orders.GetUserOrders(user);
+            if (orders is null)
             {
                 return NotFound();
             }
-            var userShoppingCart = await _requestHandler.ShoppingCarts.GetUserShoppingCartAsync(user);
-            if (userShoppingCart == null)
+            return Ok(orders);
+        }
+        
+        [HttpPost("PlaceOrder")]
+        public async Task<IActionResult> PlacingOrder(string identity)
+        {
+            var userShoppingCart = await _requestHandler.ShoppingCarts.GetUserShoppingCartAsync(identity);
+            if (userShoppingCart is null || userShoppingCart.CartProducts.Count is 0)
             {
                 return BadRequest();
             }
-            var order = await _requestHandler.Orders.InitateOrderAsync(user);
+            var order = await _requestHandler.Orders.InitateOrderAsync(identity);
             await _requestHandler.Orders.CheckOutCartProducts(userShoppingCart, order);
-            await _requestHandler.ShoppingCarts.CheckOutShoppingCart(userShoppingCart);
+            await _requestHandler.Orders.ReconciliatingOrder(order.Id);
+            await _requestHandler.ShoppingCarts.CheckOutShoppingCart(identity);
             return Ok();
         }
     }
