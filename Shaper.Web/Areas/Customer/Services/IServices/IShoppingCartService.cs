@@ -2,5 +2,6 @@
 {
     public interface IShoppingCartService
     {
+        Task AddProductToUsersCartAsync(int id, int quantity, string user, string token);
     }
 }

@@ -12,7 +12,8 @@ namespace Shaper.Utility
         private const string Products = $"{root}Products/";
         private const string ProductsVM = $"{root}Products/UpsertVM/";
         private const string ProductComponents = $"{root}Products/ProductComponents/";
-
+        private const string ShoppingCartsAddItem = $"{root}ShoppingCarts/AddToCart";
+        private const string ShoppingCartsRemoveItem = $"{root}ShoppingCarts/RemoveCartProduct";
 
         public enum ApiPath
         {
@@ -21,7 +22,9 @@ namespace Shaper.Utility
             Transparencies,
             Products,
             ProductsVM,
-            ProductComponents
+            ProductComponents,
+            ShoppingCartsAddItem,
+            ShoppingCartsRemoveItem,
         }
 
         public static string GetEndpoint(this ApiPath path, int? id = null)
@@ -53,6 +56,10 @@ namespace Shaper.Utility
                     return ProductsVM;
                 case ApiPath.ProductComponents:
                     return ProductComponents;
+                case ApiPath.ShoppingCartsAddItem:
+                    return ShoppingCartsAddItem;
+                case ApiPath.ShoppingCartsRemoveItem:
+                    return ShoppingCartsRemoveItem;
                 default:
                     return null;
             }

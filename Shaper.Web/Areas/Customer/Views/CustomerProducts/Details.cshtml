@@ -13,6 +13,7 @@
     <p>@userDetail</p>
 
     <form asp-controller="ShoppingCart" asp-action="AddToCart">
+        <input asp-for="Id" hidden/>
         <div class="input-group" style="width:200px;">
             <button class="btn btn-danger" type="button" id="decreasequantity">&nbsp;-&nbsp;</button>
             <button class="btn btn-success" type="button" id="increasequantity">&nbsp;+&nbsp;</button>
