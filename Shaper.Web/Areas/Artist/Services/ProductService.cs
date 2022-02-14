@@ -68,5 +68,12 @@ namespace Shaper.Web.Areas.Admin.Services
             return product;
 
         }
+
+        public async Task<IEnumerable<Product>> GetProductsByColorAsync(int colorId, string token)
+        {
+            var products = await _apiService.ProductApi.GetAllAsync(ApiPaths.ApiPath.Products.GetEndpoint(), token);
+            var filteredProducts = products.Where(a=>a.Color.Id == colorId).ToList();
+            return filteredProducts;
+        }
     }
 }

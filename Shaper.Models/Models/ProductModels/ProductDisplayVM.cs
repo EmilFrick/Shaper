@@ -25,6 +25,8 @@ namespace Shaper.Models.Models.ProductModels
         public int TransparencyId { get; set; }
         public Transparency Transparency { get; set; }
 
+        public int Quantity { get; set; } = 1;
+
         public ProductDisplayVM()
         {
 

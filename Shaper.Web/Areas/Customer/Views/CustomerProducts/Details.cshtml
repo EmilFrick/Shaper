@@ -1,0 +1,18 @@
+﻿@model ProductDisplayVM
+
+<div>
+    <p>@Model.Id</p>
+    <p>@Model.Name</p>
+    <p>@Model.Shape.Name</p>
+    <p>@Model.Color.Name</p>
+    <p>@Model.Color.Hex</p>
+    <p>@Model.Transparency.Value</p>
+    <p>@Model.Price</p>
+
+
+    <div class="input-group" style="width:145px;">
+        <button class="btn btn-outline-secondary" type="button" id="decreasequantity">&nbsp;-&nbsp;</button>
+        <button class="btn btn-outline-secondary" type="button" id="increasequantity">&nbsp;+&nbsp;</button>
+        <input asp-for="Quantity" type="number" class="form-control text-center" id="productquantity" readonly>
+    </div>
+</div>

@@ -10,6 +10,7 @@ using Shaper.Web.ApiService.IService;
 using Shaper.Web.Areas.Admin.Services;
 using Shaper.Web.Areas.Admin.Services.IService;
 using Shaper.Web.Areas.Artist.Services.IService;
+using Shaper.Web.Areas.Customer.Services;
 using Shaper.Web.Areas.User.Services;
 using Shaper.Web.AuthenticationOptions;
 

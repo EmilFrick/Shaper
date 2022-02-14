@@ -1,14 +1,23 @@
-﻿@model IEnumerable<ProductDisplayVM>
+﻿@model ProductCustomerIndexVM
+
+@{
+    var formtype = "Filter";
+}
 
 @if (Model != null)
 {
     <div class="container">
         <div class="row pt-4 my-2">
-            <div class="col-4">
-                <h2 class="text-primary">Color List</h2>
-            </div>
-            <div class="col-8 text-end">
-                <a asp-action="Upsert" class="btn btn-primary"><i class="bi bi-folder-plus">&nbsp; New Product</i></a>
+            <div class="col-3 text-end">
+                <form method="post">
+                    <label>Filter by Color:</label>
+                    <select asp-for="ColorIdFilter" asp-items="@Model.Colors" class="form-control">
+                        <option disabled selected>--Select Color--</option>
+                    </select>
+                    <div class="text-end">
+                        <partial name="Buttons/_Confirm" model="formtype" />
+                    </div>
+                </form>
             </div>
         </div>
         <table class="table table-bordered table-striped">
@@ -21,28 +30,23 @@
                     <th>Color Name</th>
                     <th>Shape Name</th>
                     <th>Transparency Value</th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var product in Model)
+                @foreach (var product in Model.Products)
                 {
                     <tr>
-                        <td>@product.Name</td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@product.Id" class="btn">
+                                @product.Name
+                            </a>
+                        </td>
                         <td>@product.Price.ToString("c")</td>
                         <td>@product.Artist</td>
                         <td>@product.Created</td>
                         <td>@product.Color.Name</td>
                         <td>@product.Shape.Name</td>
                         <td>@product.Transparency.Value %</td>
-                        <td>
-                            <div class="w-100 btn-group" role="group">
-                                <a asp-action="Upsert" asp-route-id="@product.Id" class="btn btn-primary mx-1"><i class="bi bi-pencil-square"></i>&nbsp;&nbsp;Edit</a>
-                                <form method="post">
-                                    <button type="submit" asp-action="Delete" asp-route-id="@product.Id" class="btn btn-secondary"><i class="bi bi-x-circle"></i>&nbsp;&nbsp;Delete</button>
-                                </form>
-                            </div>
-                        </td>
                     </tr>
                 }
             </tbody>
