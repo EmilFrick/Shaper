@@ -11,5 +11,6 @@ namespace Shaper.API.RequestHandlers
         Task<IEnumerable<Order>> GetUserOrders(string user);
         Task<Order> GetOrder(int orderId);
         Task UpdateOrder(OrderUpdateModel order, Order originalOrder);
+        Task DeleteOrder(Order order);
     }
 }

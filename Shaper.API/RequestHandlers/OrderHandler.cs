@@ -133,5 +133,11 @@ namespace Shaper.API.RequestHandlers
                 }
             }
         }
+
+        public async Task DeleteOrder(Order order)
+        {
+            _db.Orders.Remove(order);
+            await _db.SaveAsync();
+        }
     }
 }
