@@ -1,5 +1,7 @@
 ﻿@model ProductDisplayVM
-
+@{
+    var userDetail = User.Identity.Name;
+}
 <div>
     <p>@Model.Id</p>
     <p>@Model.Name</p>
@@ -8,11 +10,19 @@
     <p>@Model.Color.Hex</p>
     <p>@Model.Transparency.Value</p>
     <p>@Model.Price</p>
+    <p>@userDetail</p>
 
-
-    <div class="input-group" style="width:145px;">
-        <button class="btn btn-outline-secondary" type="button" id="decreasequantity">&nbsp;-&nbsp;</button>
-        <button class="btn btn-outline-secondary" type="button" id="increasequantity">&nbsp;+&nbsp;</button>
-        <input asp-for="Quantity" type="number" class="form-control text-center" id="productquantity" readonly>
-    </div>
+    <form asp-controller="ShoppingCart" asp-action="AddToCart">
+        <div class="input-group" style="width:200px;">
+            <button class="btn btn-danger" type="button" id="decreasequantity">&nbsp;-&nbsp;</button>
+            <button class="btn btn-success" type="button" id="increasequantity">&nbsp;+&nbsp;</button>
+            <input asp-for="Quantity" type="number" class="form-control text-center pe-1" id="productquantity" readonly>
+            <button type="submit" class="btn btn-primary"><i class="bi bi-cart-plus"></i></button>
+        </div>
+    </form>
 </div>
+
+
+@section Scripts{
+<script src="~/js/quantity.js"></script>
+}

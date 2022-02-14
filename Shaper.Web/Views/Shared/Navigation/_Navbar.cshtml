@@ -15,7 +15,7 @@
 
                 @if (contextAcc.HttpContext.Session.GetString("JwToken") != null && contextAcc.HttpContext.Session.GetString("JwToken").ToString().Length > 0)
                 {
-                @if (User.IsInRole("Admin"))
+                    @if (User.IsInRole("Admin"))
                     {
                         <partial name="Navigation/_NavAdmin" />
                     }

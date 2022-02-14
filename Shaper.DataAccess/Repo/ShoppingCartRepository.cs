@@ -29,15 +29,15 @@ namespace Shaper.DataAccess.Repo
         public async Task<ShoppingCart> GetDetailedShoppingCart(string id)
         {
             var cartProductsResult = await _db.CartProducts.Include(p => p.Product)
-                                             .ThenInclude(c => c.Color)
-                                             .Include(p => p.Product)
-                                             .ThenInclude(s => s.Shape)
-                                             .Include(p => p.Product)
-                                             .ThenInclude(t => t.Transparency)
-                                             .Include(sc=>sc.ShoppingCart)
-                                             .Where(x => x.ShoppingCart.CartProducts
-                                                .Any(y => y.ShoppingCart.CustomerIdentity == id && y.ShoppingCart.CheckedOut == false))
-                                             .ToListAsync();
+                                                                .ThenInclude(c => c.Color)
+                                                             .Include(p => p.Product)
+                                                             .  ThenInclude(s => s.Shape)
+                                                             .Include(p => p.Product)
+                                                                .ThenInclude(t => t.Transparency)
+                                                             .Include(sc=>sc.ShoppingCart)
+                                                                 .Where(x => x.ShoppingCart.CartProducts
+                                                                    .Any(y => y.ShoppingCart.CustomerIdentity == id && y.ShoppingCart.CheckedOut == false))
+                                                             .ToListAsync();
             List<CartProduct> cartProducts = new List<CartProduct>();
             foreach (var item in cartProductsResult)
             {
