@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shaper.DataAccess.Repo.IRepo;
 using Shaper.Models.Entities;
-using Shaper.Models.ViewModels.TransparencyVM;
+using Shaper.Models.Models.TransparencyModels;
 using System.Data;
 
 namespace Shaper.API.Controllers
@@ -45,7 +45,7 @@ namespace Shaper.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTransparency(TransparencyCreateVM transparency)
+        public async Task<IActionResult> CreateTransparency(TransparencyCreateModel transparency)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +68,7 @@ namespace Shaper.API.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateTransparency(int id, TransparencyUpdateVM transparency)
+        public async Task<IActionResult> UpdateTransparency(int id, TransparencyUpdateModel transparency)
         {
             if (transparency.Id != id)
             {
@@ -80,7 +80,7 @@ namespace Shaper.API.Controllers
                                                                                         x.Id != transparency.Id && x.Value == transparency.Value);
                 if (conflict is not null)
                 {
-                    var feedback = new TransparencyUpdateVM(conflict);
+                    var feedback = new TransparencyUpdateModel(conflict);
                     return Conflict(feedback);
                 }
                 Transparency t = transparency.GetTransparencyFromUpdateVM();

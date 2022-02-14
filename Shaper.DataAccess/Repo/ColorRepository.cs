@@ -2,7 +2,6 @@
 using Shaper.DataAccess.Context;
 using Shaper.DataAccess.Repo.IRepo;
 using Shaper.Models.Entities;
-using Shaper.Models.ViewModels.ColorVM;
 using SnutteBook.DataAccess.Repository;
 using System;
 using System.Collections.Generic;

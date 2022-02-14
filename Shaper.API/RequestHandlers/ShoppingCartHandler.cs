@@ -1,7 +1,7 @@
 ﻿using Shaper.API.RequestHandlers.IRequestHandlers;
 using Shaper.DataAccess.Repo.IRepo;
 using Shaper.Models.Entities;
-using Shaper.Models.ViewModels.ShoppingCartVM;
+using Shaper.Models.Models.ShoppingCartModels;
 using System.Web.Helpers;
 
 namespace Shaper.API.RequestHandlers

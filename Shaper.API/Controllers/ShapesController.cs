@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shaper.DataAccess.Repo.IRepo;
 using Shaper.Models.Entities;
-using Shaper.Models.ViewModels.ColorVM;
-using Shaper.Models.ViewModels.ShapeVM;
+using Shaper.Models.Models.ShapeModels;
 using System.Data;
 using System.Drawing;
 
@@ -48,14 +47,14 @@ namespace Shaper.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateShape(ShapeCreateVM shape)
+        public async Task<IActionResult> CreateShape(ShapeCreateModel shape)
         {
             if (ModelState.IsValid)
             {
                 Shape conflict = await _db.Shapes.GetFirstOrDefaultAsync(x => x.Name == shape.Name && x.HasFrame == shape.HasFrame);
                 if (conflict is not null)
                 {
-                    var feedback = new ShapeUpdateVM(conflict);
+                    var feedback = new ShapeUpdateModel(conflict);
                     return Conflict(feedback);
                 }
                 Shape s = shape.GetShapeFromCreateVM();
@@ -78,7 +77,7 @@ namespace Shaper.API.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateShape(int id, ShapeUpdateVM shape)
+        public async Task<IActionResult> UpdateShape(int id, ShapeUpdateModel shape)
         {
             if (shape.Id != id)
             {
@@ -89,7 +88,7 @@ namespace Shaper.API.Controllers
                 Shape conflict = await _db.Shapes.GetFirstOrDefaultAsync(x => x.Id != shape.Id && x.Name == shape.Name && x.HasFrame == shape.HasFrame);
                 if (conflict is not null)
                 {
-                    var feedback = new ShapeUpdateVM(conflict);
+                    var feedback = new ShapeUpdateModel(conflict);
                     return Conflict(feedback);
                 }
                 Shape s = shape.GetShapeFromUpdateVM();

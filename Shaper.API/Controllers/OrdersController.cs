@@ -2,8 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Shaper.API.RequestHandlers.IRequestHandlers;
 using Shaper.DataAccess.Repo.IRepo;
-using Shaper.Models.ViewModels.Order;
-using Shaper.Models.ViewModels.ShoppingCartVM;
+using Shaper.Models.Models.OrderModels;
 
 namespace Shaper.API.Controllers
 {

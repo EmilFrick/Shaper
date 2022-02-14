@@ -1,7 +1,7 @@
 ﻿using Shaper.DataAccess.IdentityContext;
 using Shaper.Models.Entities;
-using Shaper.Models.ViewModels.ProductComponentsVM;
-using Shaper.Models.ViewModels.ProductVM;
+using Shaper.Models.Models.ProductComponentsModels;
+using Shaper.Models.Models.ProductModels;
 using Shaper.Utility;
 using Shaper.Web.ApiService.IService;
 using Shaper.Web.Areas.Artist.Services.IService;
@@ -44,9 +44,9 @@ namespace Shaper.Web.Areas.Admin.Services
             await _apiService.ProductApi.RemoveAsync(ApiPaths.ApiPath.Products.GetEndpoint(id), token);
         }
 
-        public async Task<ProductUpsertVM> GetProductVMsAsync(string token, int? id = null)
+        public async Task<ProductUpsertModel> GetProductVMsAsync(string token, int? id = null)
         {
-            ProductUpsertVM product = new ProductUpsertVM();
+            ProductUpsertModel product = new ProductUpsertModel();
             if (id is null || id == 0)
             {
                 product = await _apiService.ProductApi.FetchVMAsync(ApiPaths.ApiPath.ProductsVM.GetEndpoint(), token);
@@ -60,9 +60,9 @@ namespace Shaper.Web.Areas.Admin.Services
 
         }
 
-        public async Task<Product> GetProductWithComponentsAsync(ProductUpsertVM upsertVM, string token)
+        public async Task<Product> GetProductWithComponentsAsync(ProductUpsertModel upsertVM, string token)
         {
-            ProductReqComponentsVM requestingComponents = new(upsertVM.ColorId, upsertVM.ShapeId, upsertVM.TransparencyId);
+            ProductReqComponentsModel requestingComponents = new(upsertVM.ColorId, upsertVM.ShapeId, upsertVM.TransparencyId);
             var components = await _apiService.ProductApi.FetchProductComponentsAsync(requestingComponents, ApiPaths.ApiPath.ProductComponents.GetEndpoint());
             var product = upsertVM.VmToNewProduct(components);
             return product;

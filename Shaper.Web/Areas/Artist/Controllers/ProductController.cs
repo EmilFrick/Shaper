@@ -2,8 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Shaper.DataAccess.IdentityContext;
 using Shaper.Models.Entities;
-using Shaper.Models.ViewModels.ProductComponentsVM;
-using Shaper.Models.ViewModels.ProductVM;
+using Shaper.Models.Models.ProductModels;
 using Shaper.Web.Areas.Artist.Services.IService;
 using System.Security.Claims;
 
@@ -30,7 +29,7 @@ namespace Shaper.Web.Areas.Artist.Controllers
 
         public async Task<IActionResult> Upsert(int? id)
         {
-            ProductUpsertVM productVM = new ProductUpsertVM();
+            ProductUpsertModel productVM = new ProductUpsertModel();
             if (id == null)
             {
                 productVM = await _productService.GetProductVMsAsync(HttpContext.Session.GetString("JwToken"));
@@ -43,7 +42,7 @@ namespace Shaper.Web.Areas.Artist.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Upsert(ProductUpsertVM productVM)
+        public async Task<IActionResult> Upsert(ProductUpsertModel productVM)
         {
             if (ModelState.IsValid)
             {

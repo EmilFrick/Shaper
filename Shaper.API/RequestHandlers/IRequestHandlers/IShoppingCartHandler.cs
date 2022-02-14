@@ -1,5 +1,5 @@
 ﻿using Shaper.Models.Entities;
-using Shaper.Models.ViewModels.ShoppingCartVM;
+using Shaper.Models.Models.ShoppingCartModels;
 
 namespace Shaper.API.RequestHandlers.IRequestHandlers
 {

@@ -1,5 +1,4 @@
 ﻿using Shaper.Models.Entities;
-using Shaper.Models.ViewModels.ColorVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;

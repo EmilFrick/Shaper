@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shaper.Models.Entities;
-using Shaper.Models.ViewModels.ColorVM;
+using Shaper.Models.Models.ColorModels;
 using Shaper.Web.Areas.Admin.Services.IService;
 
 namespace Shaper.Web.Areas.Admin.Controllers
@@ -31,7 +31,7 @@ namespace Shaper.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> Upsert(int? id)
         {
-            ColorUpsertVM colorVM = new();
+            ColorUpsertModel colorVM = new();
             if (id == 0 || id == null)
             {
                 return View(colorVM);
@@ -39,14 +39,14 @@ namespace Shaper.Web.Areas.Admin.Controllers
             else
             {
                 Color color = await _colorService.GetColorAsync(id.GetValueOrDefault(), HttpContext.Session.GetString("JwToken"));
-                colorVM = new ColorUpsertVM(color);
+                colorVM = new ColorUpsertModel(color);
                 return View(colorVM);
             }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Upsert(ColorUpsertVM colorVM)
+        public async Task<IActionResult> Upsert(ColorUpsertModel colorVM)
         {
             if (ModelState.IsValid)
             {

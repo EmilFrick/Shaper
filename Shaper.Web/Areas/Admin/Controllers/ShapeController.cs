@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shaper.Models.Entities;
-using Shaper.Models.ViewModels.ShapeVM;
+using Shaper.Models.Models.ShapeModels;
 using Shaper.Web.Areas.Admin.Services.IService;
 
 namespace Shaper.Web.Areas.Admin.Controllers
@@ -31,7 +31,7 @@ namespace Shaper.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> Upsert(int? id)
         {
-            ShapeUpsertVM shapeVM = new();
+            ShapeUpsertModel shapeVM = new();
             if (id == 0 || id == null)
             {
                 return View(shapeVM);
@@ -39,14 +39,14 @@ namespace Shaper.Web.Areas.Admin.Controllers
             else
             {
                 Shape shape = await _shapeService.GetShapeAsync(id.GetValueOrDefault(), HttpContext.Session.GetString("JwToken"));
-                shapeVM = new ShapeUpsertVM(shape);
+                shapeVM = new ShapeUpsertModel(shape);
                 return View(shapeVM);
             }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Upsert(ShapeUpsertVM shapeVM)
+        public async Task<IActionResult> Upsert(ShapeUpsertModel shapeVM)
         {
             if (ModelState.IsValid)
             {

@@ -1,6 +1,6 @@
 ﻿using Shaper.DataAccess.Repo.IRepo;
 using Shaper.Models.Entities;
-using Shaper.Models.ViewModels.Order;
+using Shaper.Models.Models.OrderModels;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 

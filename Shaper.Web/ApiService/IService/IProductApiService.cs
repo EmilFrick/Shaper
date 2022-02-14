@@ -1,12 +1,12 @@
 ﻿using Shaper.Models.Entities;
-using Shaper.Models.ViewModels.ProductComponentsVM;
-using Shaper.Models.ViewModels.ProductVM;
+using Shaper.Models.Models.ProductComponentsModels;
+using Shaper.Models.Models.ProductModels;
 
 namespace Shaper.Web.ApiService.IService
 {
     public interface IProductApiService : IApiService<Product>
     {
-        Task<ProductUpsertVM> FetchVMAsync(string url, string token = "");
-        Task<ProductResComponentsVM> FetchProductComponentsAsync(ProductReqComponentsVM reqModel, string url, string token = "");
+        Task<ProductUpsertModel> FetchVMAsync(string url, string token = "");
+        Task<ProductResComponentsModel> FetchProductComponentsAsync(ProductReqComponentsModel reqModel, string url, string token = "");
     }
 }

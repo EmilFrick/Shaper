@@ -1,5 +1,4 @@
 ﻿using Shaper.Models.Entities;
-using Shaper.Models.ViewModels.ShoppingCartVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;

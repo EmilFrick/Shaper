@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Shaper.DataAccess.Repo.IRepo;
 using Shaper.Models.Entities;
-using Shaper.Models.ViewModels.ProductComponentsVM;
-using Shaper.Models.ViewModels.ProductVM;
+using Shaper.Models.Models.ProductComponentsModels;
+using Shaper.Models.Models.ProductModels;
 
 namespace Shaper.API.Controllers
 {
@@ -23,7 +23,7 @@ namespace Shaper.API.Controllers
         [HttpGet("UpsertVM")]
         public async Task<IActionResult> GetProductVMs()
         {
-            ProductUpsertVM productVM = new(await _db.Colors.GetAllAsync(),
+            ProductUpsertModel productVM = new(await _db.Colors.GetAllAsync(),
                                             await _db.Shapes.GetAllAsync(),
                                             await _db.Transparencies.GetAllAsync());
 
@@ -43,7 +43,7 @@ namespace Shaper.API.Controllers
             {
                 return NotFound();
             }
-            var productVM = new ProductUpsertVM(product,
+            var productVM = new ProductUpsertModel(product,
                                                 await _db.Colors.GetAllAsync(),
                                                 await _db.Shapes.GetAllAsync(),
                                                 await _db.Transparencies.GetAllAsync());
@@ -56,9 +56,9 @@ namespace Shaper.API.Controllers
         }
 
         [HttpGet("ProductComponents")]
-        public async Task<IActionResult> GetProductComponents(ProductReqComponentsVM request)
+        public async Task<IActionResult> GetProductComponents(ProductReqComponentsModel request)
         {
-            ProductResComponentsVM result = new()
+            ProductResComponentsModel result = new()
             {
                 ColorComponent = await _db.Colors.GetFirstOrDefaultAsync(x => x.Id == request.ColorId),
                 ShapeComponent = await _db.Shapes.GetFirstOrDefaultAsync(x => x.Id == request.ShapeId),
@@ -91,7 +91,7 @@ namespace Shaper.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateProduct(ProductCreateVM product)
+        public async Task<IActionResult> CreateProduct(ProductCreateModel product)
         {
             var colorExists = await _db.Colors.GetFirstOrDefaultAsync(x => x.Id == product.ColorId);
             var shapeExists = await _db.Shapes.GetFirstOrDefaultAsync(x => x.Id == product.ShapeId);
@@ -124,7 +124,7 @@ namespace Shaper.API.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateProduct(int id, ProductUpdateVM product)
+        public async Task<IActionResult> UpdateProduct(int id, ProductUpdateModel product)
         {
             if (product.Id != id)
             {

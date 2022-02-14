@@ -1,5 +1,5 @@
 ﻿using Shaper.Models.Entities;
-using Shaper.Models.ViewModels.Order;
+using Shaper.Models.Models.OrderModels;
 
 namespace Shaper.API.RequestHandlers
 {

@@ -6,7 +6,7 @@ using Shaper.DataAccess.Context;
 using Shaper.DataAccess.Repo;
 using Shaper.DataAccess.Repo.IRepo;
 using Shaper.Models.Entities;
-using Shaper.Models.ViewModels.ColorVM;
+using Shaper.Models.Models.ColorModels;
 using System.Data;
 using System.Drawing;
 using Color = Shaper.Models.Entities.Color;
@@ -51,7 +51,7 @@ namespace Shaper.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateColor(ColorCreateVM color)
+        public async Task<IActionResult> CreateColor(ColorCreateModel color)
         {
             if (ModelState.IsValid)
             {
@@ -74,7 +74,7 @@ namespace Shaper.API.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> UpdateColor(int id, ColorUpdateVM color)
+        public async Task<IActionResult> UpdateColor(int id, ColorUpdateModel color)
         {
             if (color.Id != id)
             {
@@ -86,7 +86,7 @@ namespace Shaper.API.Controllers
                                                                           x.Id != color.Id && x.Name == color.Name);
                 if (conflict is not null)
                 {
-                    var feedback = new ColorUpdateVM(conflict);
+                    var feedback = new ColorUpdateModel(conflict);
                     return Conflict(feedback);
                 }
 

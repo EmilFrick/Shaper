@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 using NuGet.Common;
 using Shaper.Models.Entities;
-using Shaper.Models.ViewModels.ProductComponentsVM;
-using Shaper.Models.ViewModels.ProductVM;
+using Shaper.Models.Models.ProductComponentsModels;
+using Shaper.Models.Models.ProductModels;
 using Shaper.Web.ApiService.IService;
 using System.Net.Http.Headers;
 using System.Security.Policy;
@@ -19,7 +19,7 @@ namespace Shaper.Web.ApiService
         {
             _httpClient = httpClient;
         }
-        public async Task<ProductUpsertVM> FetchVMAsync(string url, string token = "")
+        public async Task<ProductUpsertModel> FetchVMAsync(string url, string token = "")
         {
             var client = _httpClient.CreateClient();
             if (token != null && token.Length != 0)
@@ -32,12 +32,12 @@ namespace Shaper.Web.ApiService
             if (res.IsSuccessStatusCode)
             {
                 var jsonString = await res.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<ProductUpsertVM>(jsonString);
+                return JsonConvert.DeserializeObject<ProductUpsertModel>(jsonString);
             }
             return null;
         }
 
-        public async Task<ProductResComponentsVM> FetchProductComponentsAsync(ProductReqComponentsVM reqModel, string url, string token = "")
+        public async Task<ProductResComponentsModel> FetchProductComponentsAsync(ProductReqComponentsModel reqModel, string url, string token = "")
         {
             var client = _httpClient.CreateClient();
             if (token != null && token.Length != 0)
@@ -51,7 +51,7 @@ namespace Shaper.Web.ApiService
             if (res.IsSuccessStatusCode)
             {
                 var jsonString = await res.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<ProductResComponentsVM>(jsonString);
+                return JsonConvert.DeserializeObject<ProductResComponentsModel>(jsonString);
             }
             return null;
         }

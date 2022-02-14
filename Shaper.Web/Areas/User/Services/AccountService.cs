@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Shaper.DataAccess.IdentityContext;
 using Shaper.Models.Entities;
-using Shaper.Models.ViewModels.UserVM;
 using Shaper.Utility;
 using Microsoft.AspNetCore.Http;
+using Shaper.Models.Models.UserModels;
 
 namespace Shaper.Web.Areas.User.Services
 {
@@ -43,7 +43,7 @@ namespace Shaper.Web.Areas.User.Services
             }
         }
 
-        public async Task<IdentityResult> UserRegistrationAsync(UserRegisterVM registerVM)
+        public async Task<IdentityResult> UserRegistrationAsync(UserRegisterModel registerVM)
         {
             ApplicationUser user = registerVM.VMtoUser();
             var result = await _userManager.CreateAsync(user, registerVM.Password);
@@ -60,7 +60,7 @@ namespace Shaper.Web.Areas.User.Services
             await _userManager.AddToRoleAsync(user, user.Role);
         }
 
-        public async Task<ApplicationUser> ShaperLoginAsync(UserLoginVM loginUser)
+        public async Task<ApplicationUser> ShaperLoginAsync(UserLoginModel loginUser)
         {
             var user = await GetApplicationUser(loginUser);
             if (user == null)
@@ -77,7 +77,7 @@ namespace Shaper.Web.Areas.User.Services
             return user;
         }
 
-        private async Task<ApplicationUser> GetApplicationUser(UserLoginVM loginUser)
+        private async Task<ApplicationUser> GetApplicationUser(UserLoginModel loginUser)
         {
             return await _db.ApplicationUsers.FirstOrDefaultAsync(x => x.Email == loginUser.Email);
         }

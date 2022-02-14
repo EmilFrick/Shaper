@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shaper.Models.Entities;
-using Shaper.Models.ViewModels.TransparencyVM;
+using Shaper.Models.Models.TransparencyModels;
 using Shaper.Web.Areas.Admin.Services.IService;
 
 namespace Shaper.Web.Areas.Admin.Controllers
@@ -31,7 +31,7 @@ namespace Shaper.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> Upsert(int? id)
         {
-            TransparencyUpsertVM transparencyVM = new();
+            TransparencyUpsertModel transparencyVM = new();
             if (id == 0 || id == null)
             {
                 return View(transparencyVM);
@@ -39,14 +39,14 @@ namespace Shaper.Web.Areas.Admin.Controllers
             else
             {
                 Transparency transparency = await _transparencyService.GetTransparencyAsync(id.GetValueOrDefault(), HttpContext.Session.GetString("JwToken"));
-                transparencyVM = new TransparencyUpsertVM(transparency);
+                transparencyVM = new TransparencyUpsertModel(transparency);
                 return View(transparencyVM);
             }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Upsert(TransparencyUpsertVM transparencyVM)
+        public async Task<IActionResult> Upsert(TransparencyUpsertModel transparencyVM)
         {
             if (ModelState.IsValid)
             {

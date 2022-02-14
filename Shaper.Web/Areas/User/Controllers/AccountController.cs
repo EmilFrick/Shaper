@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Shaper.Models.Entities;
-using Shaper.Models.ViewModels.UserVM;
+using Shaper.Models.Models.UserModels;
 using Shaper.Utility;
 using Shaper.Web.Areas.User.Services;
 using Shaper.Web.Controllers;
@@ -22,13 +22,13 @@ namespace Shaper.Web.Areas.User.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-            UserRegisterVM registerUserVM = new();
+            UserRegisterModel registerUserVM = new();
             return View(registerUserVM);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(UserRegisterVM userVM)
+        public async Task<IActionResult> Register(UserRegisterModel userVM)
         {
             if (ModelState.IsValid)
             {
@@ -55,7 +55,7 @@ namespace Shaper.Web.Areas.User.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(UserLoginVM loginUser, string? returnurl = null)
+        public async Task<IActionResult> Login(UserLoginModel loginUser, string? returnurl = null)
         {
             var urlDirection = returnurl ?? Url.Content("~/User/Home");
             if (ModelState.IsValid)
