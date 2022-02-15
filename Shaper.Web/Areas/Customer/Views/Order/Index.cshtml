@@ -1,0 +1,18 @@
+﻿@model IEnumerable<OrderDisplayVM>
+
+
+
+@foreach (var orderDisplayVM in Model)
+{
+    <p>@orderDisplayVM.Id</p>
+    <p>@orderDisplayVM.OrderValue</p>
+    <p>@orderDisplayVM.OrderPlaced</p>
+    foreach (var entries in orderDisplayVM.OrderProducts)
+    {
+        <p>@entries.ColorName</p>
+        <p>@entries.ShapeName</p>
+        <p>@entries.TransparencyName</p>
+    }
+
+}
+

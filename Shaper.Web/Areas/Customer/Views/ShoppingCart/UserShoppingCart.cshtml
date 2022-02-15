@@ -1,0 +1,21 @@
+﻿@model ShoppingCartDisplayVM
+
+
+
+@if(Model.Id is not 0)
+{
+    @foreach (var entry in Model.CartProducts)
+    {
+        <p>@entry.Product.Name @entry.ProductQuantity x</p>
+        <p>@entry.ProductQuantity @entry.UnitPrice</p>
+        double totalPrice = (entry.ProductQuantity * entry.UnitPrice);
+        <p> @totalPrice.ToString("c")</p>
+    }
+    <form method="post" asp-action="Checkout">
+        <button type="submit" class="btn btn-Primary">Checkout</button>
+    </form>
+}
+else
+{
+    <p>There are no products in your shopping cart.</p>
+}

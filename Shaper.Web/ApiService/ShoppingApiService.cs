@@ -9,7 +9,7 @@ namespace Shaper.Web.ApiService
 {
     public class ShoppingApiService : ApiService<ShoppingCart>, IShoppingCartApiService
     {
-        
+
         private readonly IHttpClientFactory _httpClient;
 
         public ShoppingApiService(IHttpClientFactory httpClient) : base(httpClient)
@@ -39,6 +39,31 @@ namespace Shaper.Web.ApiService
                 }
             }
             return false;
+        }
+
+        public async Task<ShoppingCart> GetUserShoppingCart(string user, string url, string token = "")
+        {
+            if (user is not null)
+            {
+                var client = _httpClient.CreateClient();
+                var req = new HttpRequestMessage(HttpMethod.Post, url);
+                req.Content = new StringContent(JsonConvert.SerializeObject(new ShoppingCartRequestModel() { Identity= user}), Encoding.UTF8, "application/json");
+                if (token != null && token.Length != 0)
+                {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                }
+                var res = await client.SendAsync(req);
+                if (res.IsSuccessStatusCode)
+                {
+                    var jsonString = await res.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<ShoppingCart>(jsonString);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            return null;
         }
     }
 }

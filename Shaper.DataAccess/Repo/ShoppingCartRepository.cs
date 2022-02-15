@@ -28,13 +28,14 @@ namespace Shaper.DataAccess.Repo
 
         public async Task<ShoppingCart> GetDetailedShoppingCart(string id)
         {
+            var cart = await _db.ShoppingCarts.FirstOrDefaultAsync(y => y.CustomerIdentity == id && y.CheckedOut == false);
             var cartProductsResult = await _db.CartProducts.Include(p => p.Product)
                                                                 .ThenInclude(c => c.Color)
                                                              .Include(p => p.Product)
-                                                             .  ThenInclude(s => s.Shape)
+                                                             .ThenInclude(s => s.Shape)
                                                              .Include(p => p.Product)
                                                                 .ThenInclude(t => t.Transparency)
-                                                             .Include(sc=>sc.ShoppingCart)
+                                                             .Include(sc => sc.ShoppingCart)
                                                                  .Where(x => x.ShoppingCart.CartProducts
                                                                     .Any(y => y.ShoppingCart.CustomerIdentity == id && y.ShoppingCart.CheckedOut == false))
                                                              .ToListAsync();
@@ -43,9 +44,10 @@ namespace Shaper.DataAccess.Repo
             {
                 cartProducts.Add(item);
             }
-            ShoppingCart shoppingCart = new();
-            shoppingCart.CartProducts = cartProducts;
-            return shoppingCart;
+            if(cartProductsResult.Count > 0)
+                cart.CartProducts = cartProductsResult;                
+
+            return cart;
         }
-    }
+}
 }

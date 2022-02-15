@@ -3,16 +3,18 @@
 
 @if (contextAcc.HttpContext.Session.GetString("JwToken") != null && contextAcc.HttpContext.Session.GetString("JwToken").ToString().Length > 0)
 {
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="User" asp-controller="Account" asp-action="Logout">Logout</a>
+    <li class="nav-item mx-4 texteffect">
+        <a class="nav-link text-light" asp-area="User" asp-controller="Account" asp-action="Logout">Logout</a>
     </li>
 }
 else
 {
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="User" asp-controller="Account" asp-action="Register">Register</a>
+    <li class="nav-item mx-4 texteffect">
+        <a class="nav-link text-light" asp-area="User" asp-controller="Account" asp-action="Register">Register</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="User" asp-controller="Account" asp-action="Login">Login</a>
+    <div class="indigo-light-border"></div>
+
+    <li class="nav-item mx-4 texteffect">
+        <a class="nav-link text-light" asp-area="User" asp-controller="Account" asp-action="Login">Login</a>
     </li>
 }

@@ -1,18 +1,57 @@
-html {
-  font-size: 14px;
+.shaper-logo {
+    font-size: 24px;
+    color: #E0CFFC;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+.shaper-container {
+    border-radius: 10px;
+    margin-left: 150px;
+    padding: 10px 70px;
+    margin-right: 150px;
+    background-color: indigo;
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+.shaper-title {
+    margin-left: 150px;
+    margin-top: 150px;
+    margin-bottom: 20px;
+    padding-left: 10px;
+    border-left: dotted 9px indigo;
 }
 
-body {
-  margin-bottom: 60px;
+.indigo {
+    background-color: indigo;
+}
+
+.indigo-light-text {
+    color: #E0CFFC;
+}
+
+.indigo-light-border {
+    border-right: 5px dotted;
+    border-color: #E0CFFC;
+}
+
+.texteffect {
+    position: relative;
+    top: 0;
+    transition: top ease 0.5s;
+}
+
+    .texteffect:hover {
+        top: -10px;
+    }
+
+a.shaper-logo:hover {
+    color: #E0CFFC;
+}
+
+label {
+    color: #E0CFFC;
+}
+
+span {
+    color: red;
 }

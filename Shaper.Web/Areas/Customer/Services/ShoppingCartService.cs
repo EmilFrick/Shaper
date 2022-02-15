@@ -27,6 +27,13 @@ namespace Shaper.Web.Areas.Customer.Services
             _apiService.ShoppingApi.AddingProductToUserShoppingCart(addProduct, ApiPath.ShoppingCartsAddItem.GetEndpoint(), token);
         }
 
+        public async Task<Order> CheckoutShoppingCartAsync(string user, string token)
+        {
+            return await _apiService.OrderApi.CheckoutUserShoppingCartAsync(user, ApiPath.OrdersPlace.GetEndpoint(), token);        }
 
+        public async Task<ShoppingCart> GetUserShoppingCartAsync(string user, string token)
+        {
+            return await _apiService.ShoppingApi.GetUserShoppingCart(user, ApiPath.ShoppingCarts.GetEndpoint(), token);
+        }
     }
 }

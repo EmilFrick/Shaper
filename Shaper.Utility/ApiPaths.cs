@@ -14,6 +14,11 @@ namespace Shaper.Utility
         private const string ProductComponents = $"{root}Products/ProductComponents/";
         private const string ShoppingCartsAddItem = $"{root}ShoppingCarts/AddToCart";
         private const string ShoppingCartsRemoveItem = $"{root}ShoppingCarts/RemoveCartProduct";
+        private const string ShoppingCarts = $"{root}ShoppingCarts";
+        private const string Orders = $"{root}Orders";
+        private const string OrdersPlace = $"{root}Orders/PlaceOrder";
+
+
 
         public enum ApiPath
         {
@@ -25,6 +30,9 @@ namespace Shaper.Utility
             ProductComponents,
             ShoppingCartsAddItem,
             ShoppingCartsRemoveItem,
+            ShoppingCarts,
+            Orders,
+            OrdersPlace
         }
 
         public static string GetEndpoint(this ApiPath path, int? id = null)
@@ -60,6 +68,12 @@ namespace Shaper.Utility
                     return ShoppingCartsAddItem;
                 case ApiPath.ShoppingCartsRemoveItem:
                     return ShoppingCartsRemoveItem;
+                case ApiPath.ShoppingCarts:
+                    return ShoppingCarts;
+                case ApiPath.Orders:
+                    return Orders;
+                case ApiPath.OrdersPlace:
+                    return OrdersPlace;
                 default:
                     return null;
             }

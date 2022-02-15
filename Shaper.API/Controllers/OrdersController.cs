@@ -17,10 +17,10 @@ namespace Shaper.API.Controllers
             _requestHandler = requestHandler;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetUserOrders(string user)
+        [HttpPost]
+        public async Task<IActionResult> GetUserOrders(OrdersRequestModel user)
         {
-            var orders = await _requestHandler.Orders.GetUserOrders(user);
+            var orders = await _requestHandler.Orders.GetUserOrders(user.Identity);
             if (orders is null)
             {
                 return NotFound(new { message = "This user does not have any Orders with us." });
@@ -29,21 +29,20 @@ namespace Shaper.API.Controllers
         }
 
 
-        [HttpPost("PlaceOrder/{identity}")]
-        public async Task<IActionResult> PlacingOrder(string identity)
+        [HttpPost("PlaceOrder")]
+        public async Task<IActionResult> PlacingOrder(OrdersRequestModel user)
         {
-            var userShoppingCart = await _requestHandler.ShoppingCarts.GetUserShoppingCartAsync(identity);
+            var userShoppingCart = await _requestHandler.ShoppingCarts.GetUserShoppingCartAsync(user.Identity);
             if (userShoppingCart is null || userShoppingCart.CartProducts.Count is 0)
             {
                 return NotFound( new { message = "User does not have a shopping cart to process." } );
             }
-            var order = await _requestHandler.Orders.InitateOrderAsync(identity);
+            var order = await _requestHandler.Orders.InitateOrderAsync(user.Identity);
             await _requestHandler.Orders.CheckOutCartProducts(userShoppingCart, order);
             await _requestHandler.Orders.ReconciliatingOrder(order.Id);
-            await _requestHandler.ShoppingCarts.CheckOutShoppingCart(identity);
+            await _requestHandler.ShoppingCarts.CheckOutShoppingCart(user.Identity);
             return Ok(order);
         }
-
 
         [HttpPut]
         public async Task<IActionResult> PutUserOrders(OrderUpdateModel order)
@@ -59,7 +58,6 @@ namespace Shaper.API.Controllers
             }
             return BadRequest();
         }
-
 
         [HttpDelete("{orderid:int}")]
         public async Task<IActionResult> DeleteOrder(int orderid)

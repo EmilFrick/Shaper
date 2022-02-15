@@ -6,5 +6,6 @@ namespace Shaper.Web.ApiService.IService
     public interface IShoppingCartApiService : IApiService<ShoppingCart>
     {
         Task<bool> AddingProductToUserShoppingCart(CartProductAddModel productToAdd, string url, string token = "");
+        Task<ShoppingCart> GetUserShoppingCart(string user, string url, string token = "");
     }
 }

@@ -34,6 +34,7 @@ builder.Services.AddScoped<ITransparencyService, TransparencyService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IShaperApiService, ShaperApiService>();
 builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddHttpClient();
 builder.Services.AddSession(options =>

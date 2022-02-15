@@ -21,6 +21,14 @@ namespace Shaper.API.Controllers
             _requestHandler = requestHandler;
         }
 
+        [HttpPost]
+        public async Task<IActionResult> GetUserShoppingCart(ShoppingCartRequestModel user)
+        {
+            var shoppingCart = await _requestHandler.ShoppingCarts.GetUserShoppingCartAsync(user.Identity);
+            if(shoppingCart is null)
+                return NotFound();
+            return Ok(shoppingCart);
+        }
 
         [HttpPost("AddToCart")]
         public async Task<IActionResult> AddItemToCart(CartProductAddModel cartProductModel)
