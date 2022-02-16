@@ -6,7 +6,6 @@
         IShapeApiService ShapeApi { get; }
         ITransparencyApiService TransparencyApi { get; }
         IProductApiService ProductApi { get; }
-        IShoppingCartApiService ShoppingApi { get; }
         IOrderApiService OrderApi { get; }
     }
 }

@@ -24,11 +24,7 @@ namespace Shaper.Web.Areas.Customer.Controllers
         public async Task<IActionResult> UserShoppingCart()
         {
             var userShoppingCart = await _shoppingService.GetUserShoppingCartAsync(User.Identity.Name, HttpContext.Session.GetString("JwToken"));
-            var shoppingcart = new ShoppingCartDisplayVM();
-            if (userShoppingCart is not null)
-                shoppingcart = new ShoppingCartDisplayVM(userShoppingCart);
-            
-            return View(shoppingcart);
+            return View(userShoppingCart);
         }
 
         [ValidateAntiForgeryToken]

@@ -6,7 +6,6 @@
         public IShapeApiService ShapeApi { get; private set; }
         public ITransparencyApiService TransparencyApi { get; private set; }
         public IProductApiService ProductApi { get; private set; }
-        public IShoppingCartApiService ShoppingApi { get; private set; }
         public IOrderApiService OrderApi { get; private set; }
         private readonly IHttpClientFactory _httpClient;
 
@@ -17,7 +16,6 @@
             ShapeApi = new ShapeApiService(httpClient);
             TransparencyApi = new TransparencyApiService(httpClient);
             ProductApi = new ProductApiService(httpClient);
-            ShoppingApi = new ShoppingApiService(httpClient);
             OrderApi = new OrderApiService(httpClient);
         }
     }

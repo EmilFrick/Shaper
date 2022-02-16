@@ -33,6 +33,7 @@ namespace Shaper.API.RequestHandlers
                 OrderDetail detail = new()
                 {
                     OrderId = order.Id,
+                    ProductName = item.Product.Name,
                     ProductId = item.ProductId,
                     ColorName = item.Product.Color.Name,
                     ColorHex = item.Product.Color.Hex,
@@ -95,10 +96,12 @@ namespace Shaper.API.RequestHandlers
                 {
                     if (updatedOrderEntry.Id == orderDetail.Id)
                     {
-                        orderDetail.ShapeName = updatedOrderEntry?.ShapeName is not null ? updatedOrderEntry.ShapeName : orderDetail.ShapeName;
 
                         if (updatedOrderEntry?.ProductId is not null)
                             orderDetail.ProductId = updatedOrderEntry.ProductId.GetValueOrDefault();
+
+                        if (updatedOrderEntry?.ProductName is not null)
+                            orderDetail.ProductName = updatedOrderEntry.ProductName;
 
                         if (updatedOrderEntry?.ColorName is not null)
                             orderDetail.ColorName = updatedOrderEntry.ColorName;

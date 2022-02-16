@@ -16,6 +16,7 @@ namespace Shaper.Models.Entities
 
         //Created to keep tabs on how many of a certain products has been sold. Can monitor to see when it was doing best. Useful for the Artist.
         public int ProductId { get; set; }
+        public string ProductName { get; set; }
 
         //Color
         public string ColorName { get; set; }

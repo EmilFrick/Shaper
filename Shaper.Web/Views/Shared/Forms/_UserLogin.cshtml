@@ -2,18 +2,26 @@
 @{
     var formtype = "Login";
 }
-<form method="post" asp-route-returnurl="@ViewData["ReturnUrl"]">
-    <div class="row m-3">
-        <div class="col-5">
-            <label asp-for="Email"></label>
-            <input asp-for="Email" class="form-control">
-            <span asp-validation-for="Email"></span>
-        </div>
-        <div class="col-5">
-            <label asp-for="Password"></label>
-            <input asp-for="Password" class="form-control">
-            <span asp-validation-for="Password"></span>
-        </div>
+
+
+<div class="shaper-login-baground">
+
+    <h1 class="shaper-title">@formtype.ToUpper() TO SHAPER</h1>
+    <div class="shaper-container">
+        <form method="post" asp-route-returnurl="@ViewData["ReturnUrl"]">
+            <div class="row my-2">
+                <div class="col">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control">
+                    <span asp-validation-for="Email"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" class="form-control">
+                    <span asp-validation-for="Password"></span>
+                </div>
+            </div>
+            <partial name="Buttons/_Confirm" model="formtype" />
+        </form>
     </div>
-    <partial name="Buttons/_Confirm" model="formtype" />
-</form>
+</div>

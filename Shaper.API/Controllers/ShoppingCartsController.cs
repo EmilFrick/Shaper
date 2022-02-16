@@ -26,8 +26,9 @@ namespace Shaper.API.Controllers
         {
             var shoppingCart = await _requestHandler.ShoppingCarts.GetUserShoppingCartAsync(user.Identity);
             if(shoppingCart is null)
-                return NotFound();
-            return Ok(shoppingCart);
+                return NotFound(new { message = "User does not have a shopping cart to process." } );
+            var shoppingCartModel = new UserShoppingCartModel(shoppingCart);
+            return Ok(shoppingCartModel);
         }
 
         [HttpPost("AddToCart")]
@@ -38,7 +39,7 @@ namespace Shaper.API.Controllers
                 //Product
                 var productDetails = await _db.Products.GetFirstOrDefaultAsync(x => x.Id == cartProductModel.ProductId);
                 if (productDetails is null)
-                    return BadRequest();
+                    return BadRequest(new { message = "The product you're trying to add to the cart does not exist." } );
 
                 CartProduct cartProduct = new CartProduct();
                 //ShoppingCart
@@ -72,11 +73,11 @@ namespace Shaper.API.Controllers
             {
                 var productDetails = await _db.Products.GetFirstOrDefaultAsync(x => x.Id == cartProductModel.ProductId);
                 if (productDetails is null)
-                    return BadRequest();
+                    return BadRequest(new { message = "The product you're trying to remove from the cart does not exist." } );
                 
                 var shoppingcart = await _requestHandler.ShoppingCarts.ShoppingCartExistAsync(cartProductModel.ShaperCustomer);
                 if (shoppingcart is null)
-                    return BadRequest();
+                    return BadRequest(new { message = "We are not able to remove this item from this users ShoppingCart since the user does not have an active shoppingcart." } );
 
                 await _requestHandler.ShoppingCarts.RemoveItemFromShoppingCart(shoppingcart.Id, productDetails.Id);
 

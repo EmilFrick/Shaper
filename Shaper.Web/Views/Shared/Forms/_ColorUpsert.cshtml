@@ -1,25 +1,30 @@
 ﻿@model ColorUpsertModel
 @{
-    var formtype = Model?.Id == 0? "Create" : "Update";
+    var formtype = Model?.Id == 0 ? "Create" : "Update";
 }
-<form method="post">
-    <input asp-for="Id" hidden />
-    <div class="row m-3">
-        <div class="col-5">
-            <label asp-for="Name"></label>
-            <input asp-for="Name" class="form-control">
-            <span asp-validation-for="Name"></span>
+
+<h1 class="shaper-title">@formtype.ToUpper() COLOR</h1>
+<div class="shaper-container">
+    <form method="post">
+        <input asp-for="Id" hidden />
+        <div class="row my-2">
+            <div class="col">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="form-control">
+                <span asp-validation-for="Name"></span>
+            </div>
+            <div class="col">
+                <label asp-for="Hex"></label>
+                <input asp-for="Hex" class="form-control">
+                <span asp-validation-for="Hex"></span>
+            </div>
         </div>
-        <div class="col-5">
-            <label asp-for="Hex"></label>
-            <input asp-for="Hex" class="form-control">
-            <span asp-validation-for="Hex"></span>
-        </div>
-        <div class="col-5">
-            <label asp-for="AddedValue"></label>
-            <input asp-for="AddedValue" class="form-control">
-            <span asp-validation-for="AddedValue"></span>
-        </div>
-    </div>
-    <partial name="Buttons/_Confirm" model="formtype" />
-</form>
+            <div class="col-4">
+                <label asp-for="AddedValue"></label>
+                <input asp-for="AddedValue" class="form-control">
+                <span asp-validation-for="AddedValue"></span>
+            </div>
+        <partial name="Buttons/_Confirm" model="formtype" />
+    </form>
+</div>
+

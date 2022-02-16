@@ -133,7 +133,7 @@ namespace Shaper.API.Controllers
 
             var colorExists = await _db.Colors.GetFirstOrDefaultAsync(x => x.Id == product.ColorId);
             var shapeExists = await _db.Shapes.GetFirstOrDefaultAsync(x => x.Id == product.ShapeId);
-            var transparencyExists = await _db.Shapes.GetFirstOrDefaultAsync(x => x.Id == product.TransparencyId);
+            var transparencyExists = await _db.Transparencies.GetFirstOrDefaultAsync(x => x.Id == product.TransparencyId);
 
             if (colorExists is null || shapeExists is null || transparencyExists is null)
             {

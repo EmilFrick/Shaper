@@ -5,6 +5,7 @@ using Shaper.Models.Models.ProductComponentsModels;
 using Shaper.Models.Models.ProductModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -27,10 +28,13 @@ namespace Shaper.Models.Models.ProductModels
         [Required]
         public DateTime Created { get; set; }
         [Required]
+        [DisplayName("Color")]
         public int ColorId { get; set; }
         [Required]
+        [DisplayName("Shape")]
         public int ShapeId { get; set; }
         [Required]
+        [DisplayName("Transparency")]
         public int TransparencyId { get; set; }
 
 
@@ -84,7 +88,6 @@ namespace Shaper.Models.Models.ProductModels
             Created = product.Created;
             ColorId = product.ColorId;
             ShapeId = product.ShapeId;
-            ShapeId = product.TransparencyId;
             TransparencyId = product.TransparencyId;
 
             Colors = colors.Select(i => new SelectListItem

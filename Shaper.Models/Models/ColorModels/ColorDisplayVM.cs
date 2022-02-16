@@ -17,7 +17,7 @@ namespace Shaper.Models.Models.ColorModels
         public string Hex { get; set; }
         public double AddedValue { get; set; }
 
-        ColorDisplayVM(Color color)
+        public ColorDisplayVM(Color color)
         {
             Id = color.Id;
             Name = color.Name;

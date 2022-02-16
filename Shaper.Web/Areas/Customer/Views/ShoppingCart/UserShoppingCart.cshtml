@@ -1,8 +1,8 @@
-﻿@model ShoppingCartDisplayVM
+﻿@model UserShoppingCartModel
 
 
 
-@if(Model.Id is not 0)
+@if(Model is not null)
 {
     @foreach (var entry in Model.CartProducts)
     {

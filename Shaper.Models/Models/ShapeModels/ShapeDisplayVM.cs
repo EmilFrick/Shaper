@@ -18,6 +18,8 @@ namespace Shaper.Models.Models.ShapeModels
         public string Name { get; set; }
         public bool HasFrame { get; set; }
         public double AddedValue { get; set; }
+
+
         public ShapeDisplayVM(Shape shape)
         {
             Id = shape.Id;

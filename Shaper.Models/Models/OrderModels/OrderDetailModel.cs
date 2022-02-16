@@ -17,7 +17,8 @@ namespace Shaper.Models.Models.OrderModels
         public int Id { get; set; }
 
         public int? ProductId { get; set; }
-
+        public string? ProductName { get; set; }
+        
         //Color
         public string? ColorName { get; set; }
         public string? ColorHex { get; set; }

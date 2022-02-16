@@ -1,3 +1,4 @@
+
 .shaper-logo {
     font-size: 24px;
     color: #E0CFFC;
@@ -7,20 +8,24 @@
 
 .shaper-container {
     border-radius: 10px;
-    margin-left: 150px;
-    padding: 10px 70px;
-    margin-right: 150px;
+    margin-left: 30vh;
+    margin-right:30vh;
+    padding: 20px 40px;
     background-color: indigo;
 }
 
 .shaper-title {
-    margin-left: 150px;
-    margin-top: 150px;
+    margin-left: 30vh;
     margin-bottom: 20px;
     padding-left: 10px;
     border-left: dotted 9px indigo;
 }
-
+.shaper-login-baground {
+    background-color: #E0CFFC;
+    padding-top:10px;
+    height: 80vh;
+    border-radius: 0px 2000px 0px 0px;
+}
 .indigo {
     background-color: indigo;
 }
@@ -46,6 +51,10 @@
 
 a.shaper-logo:hover {
     color: #E0CFFC;
+}
+
+input[type=checkbox] {
+    transform: scale(1.5);
 }
 
 label {
