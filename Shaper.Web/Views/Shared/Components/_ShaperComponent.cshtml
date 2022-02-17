@@ -1,0 +1,9 @@
+﻿@model ShaperModel
+@{
+    var shaperStyle = @Model.Shape.GetShapeStyle(@Model.Color);
+    var shaperFrame = @Model.HasFrame is true ? "frame" : "";
+}
+
+<div class="@shaperFrame">
+    <div id="@Model.Shape" style="@shaperStyle" class="shaper-center"></div>
+</div>

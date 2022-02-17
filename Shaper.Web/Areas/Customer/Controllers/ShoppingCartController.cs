@@ -26,6 +26,13 @@ namespace Shaper.Web.Areas.Customer.Controllers
             var userShoppingCart = await _shoppingService.GetUserShoppingCartAsync(User.Identity.Name, HttpContext.Session.GetString("JwToken"));
             return View(userShoppingCart);
         }
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<IActionResult> DeleteProductFromShoppingCart(string itemname)
+        {
+            await _shoppingService.DeleteProductFromShoppingCart(itemname, User.Identity.Name, HttpContext.Session.GetString("JwToken"));
+            return RedirectToAction("UserShoppingCart");
+        }
 
         [ValidateAntiForgeryToken]
         [HttpPost]

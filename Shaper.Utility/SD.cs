@@ -15,8 +15,7 @@ namespace Shaper.Utility
         public enum UserType { Customer, Admin, Artist }
         public enum Shapes { square, rectangle, circle, oval, triangleup, triangledown, triangleleft,
                              triangleright, triangletopleft, triangletopright, trianglebottomleft,
-                             trianglebottomright, trapezoid, pentagon, hexagon, octagon, heart,
-                             diamond, cone, cross, Default }
+                             trianglebottomright, trapezoid, cone, Default }
         public static IEnumerable<SelectListItem> UserTypeSelection()
         {
             return Enum.GetNames(typeof(UserType)).Select(i => new SelectListItem

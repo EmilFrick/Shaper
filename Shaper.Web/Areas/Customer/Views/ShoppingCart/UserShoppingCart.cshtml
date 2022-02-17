@@ -1,21 +1,80 @@
 ﻿@model UserShoppingCartModel
+@{
+    ShaperModel shaperModel = new ShaperModel();
+}
 
-
-
-@if(Model is not null)
+@if(Model is not null || Model?.CartProducts.Count > 0)
 {
-    @foreach (var entry in Model.CartProducts)
-    {
-        <p>@entry.Product.Name @entry.ProductQuantity x</p>
-        <p>@entry.ProductQuantity @entry.UnitPrice</p>
-        double totalPrice = (entry.ProductQuantity * entry.UnitPrice);
-        <p> @totalPrice.ToString("c")</p>
-    }
-    <form method="post" asp-action="Checkout">
-        <button type="submit" class="btn btn-Primary">Checkout</button>
-    </form>
+<div class="row ms-5">
+    <div class="col-md-8 mt-3">
+            @foreach (var item in @Model.CartProducts)
+            {
+                shaperModel.Color = item.Product.Color.Hex.GetRGBA(item.Product.Transparency.TransparencyValue);
+                shaperModel.HasFrame = item.Product.Shape.HasFrame;
+                shaperModel.Shape = item.Product.Shape.Name;
+                var itemName = item.Product.Name;
+
+        <div class="shoppingcart-container mb-3">
+            <div class="row">
+                
+                <div class="col-4">
+                    <div class="ms-5 mt-3">
+                        <p class="shaper-logo lineheight-tight">@item.Product.Name</p>
+                        <p class="indigo-light-text lineheight-tight">Created by: @item.Product.Artist</p>
+                        <p class="indigo-light-text lineheight-tight">UnitPrice: @item.UnitPrice</p>
+                        <p class="indigo-light-text lineheight-tight">Created: @item.Product.Created.ToString("yyyy-d-MMMM")</p>
+                        <br>
+                        <br>
+                        <p class="text-danger">Total Price: @(item.ProductQuantity*item.UnitPrice) SEK (@($"{item.ProductQuantity} x {item.UnitPrice} SEK"))</p>
+                    </div>
+                </div>
+                <div class="col-4 my-3">
+                    <div class="shaper-textbox-colors">
+                        <partial name="Components/_ColorComponent" model="item.Product.Color" />
+                    </div>
+                    <div class="shaper-textbox-colors">
+                        <partial name="Components/_ShapeComponent" model="item.Product.Shape" />
+                    </div>
+                    <div class="shaper-textbox-colors">
+                        <partial name="Components/_TransparencyComponent" model="item.Product.Transparency" />
+
+                    </div>
+                </div>
+                <div class="col-3 align-self-center content-box my-3">
+                    <div class="shaper-center">
+                        <partial name="Components/_ShaperComponent" model="shaperModel" />
+                    </div>
+                </div>
+
+                <div class="col-1">
+                    <form method="post" asp-action="DeleteProductFromShoppingCart" asp-route-itemname="@item.Product.Name">
+                        <button type="submit" class="btn btn-danger shaper-trash"><i class="bi bi-trash-fill"></i></button>
+                    </form>
+                </div>
+
+            </div>
+        </div> @*ShoppingCart Container Ends here*@
+            }
+    </div> @*ShoppingCart Column Ends here*@
+    <div class="col-md-2 offset-md-1">
+        <div class="indigo shoppingcart-pricetag">
+            @foreach (var item in Model.CartProducts)
+            {
+            <p class="indigo-light-text mt-4">@item.Product.Name.ToUpper()</p>
+            <p class="text-light">@(item.UnitPrice*item.ProductQuantity) (@item.ProductQuantity x @item.UnitPrice SEK)</p>
+            <div class="shaper-linebreak"></div>                
+            }
+            <div class="text-end mt-3"><p class="text text-warning">TOTAL: @Model.OrderValue SEK</p></div>
+            <form method="post" asp-action="Checkout">
+                <div class="text-end mt-5">
+                    <button type="submit" class="btn-lg btn-dark">Checkout</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 }
 else
 {
-    <p>There are no products in your shopping cart.</p>
+    <h2 class="shaper-logo ms-5">The shoppingcart is empty..</h2>
 }

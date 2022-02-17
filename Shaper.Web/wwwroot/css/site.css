@@ -14,6 +14,40 @@
     background-color: indigo;
 }
 
+.shoppingcart-container {
+    border-radius: 10px;
+    background-color: indigo;
+}
+
+.shaper-marketplace-container {
+    min-height: 900px;
+    border-radius: 10px;
+    margin-left: 30vh;
+    margin-right: 30vh;
+    padding: 20px 40px;
+    background-color: indigo;
+}
+
+.shoppingcart-pricetag {
+    border-radius: 10px;
+    padding: 10px;
+    position: relative;
+    top: -100px;
+}
+
+.shaper-textbox-colors {
+    background: #E0CFFC;
+    color: indigo;
+    padding: 3px 3px 3px 10px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+.shaper-trash {
+    font-size: 36px;
+    margin-left: 35px;
+}
+
 .shaper-title {
     margin-left: 30vh;
     margin-bottom: 20px;
@@ -63,4 +97,31 @@ label {
 
 span {
     color: red;
+}
+
+/*ComponentDetails*/
+.detail-button {
+    color: #E0CFFC;
+    background-color: indigo;
+    border: solid 2px white;
+}
+
+.content-box {
+    background-color: #F8F9FA;
+    border-radius: 10px;
+    padding: 13px;
+}
+
+.shaper-center {
+text-align: center;
+margin-left: auto;
+margin-right:auto;
+}
+
+.lineheight-tight{
+    line-height: 0.5;
+}
+
+.shaper-linebreak {
+    border-bottom: solid 3px white;
 }

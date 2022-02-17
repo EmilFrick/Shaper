@@ -8,5 +8,6 @@ namespace Shaper.Web.Areas.Customer.Services.IServices
         Task AddProductToUsersCartAsync(int id, int quantity, string user, string token);
         Task<UserShoppingCartModel> GetUserShoppingCartAsync(string user, string token);
         Task<Order> CheckoutShoppingCartAsync(string user, string token);
+        Task DeleteProductFromShoppingCart(string itemname, string name, string? v);
     }
 }

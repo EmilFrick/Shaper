@@ -18,7 +18,7 @@ namespace Shaper.Models.Models.ShapeModels
         }
         public ShapeComponentModel(Shape shape)
         {
-            Name = shape.Name;
+            Name = shape.Name.ToLower();
             HasFrame = shape.HasFrame;
         }
     }

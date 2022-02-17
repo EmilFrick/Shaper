@@ -1,0 +1,11 @@
+﻿@model TransparencyComponentModel
+
+<p>Transparency Name: @Model.Name</p>
+<p>Transparency @Model.TransparencyValue.ToString(" %")</p>
+@if (@Model.Description is not null)
+{
+    <p>@Model.Description</p>
+}
+
+
+

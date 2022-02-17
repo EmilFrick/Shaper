@@ -6,8 +6,8 @@
 
 @if (Model != null)
 {
-    <div class="container">
-        <div class="row pt-4 my-2">
+    <div class="shaper-marketplace-container">
+        <div class="row pt-4 mb-5">
             <div class="col-3 text-end">
                 <form method="post">
                     <label>Filter by Color:</label>
@@ -20,38 +20,21 @@
                 </form>
             </div>
         </div>
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th>Product Name</th>
-                    <th>Product Price</th>
-                    <th>Created By</th>
-                    <th>Time Created</th>
-                    <th>Color Name</th>
-                    <th>Shape Name</th>
-                    <th>Transparency Value</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var product in Model.Products)
-                {
-                    <tr>
-                        <td>
-                            <a asp-action="Details" asp-route-id="@product.Id" class="btn">
-                                @product.Name
-                            </a>
-                        </td>
-                        <td>@product.Price.ToString("c")</td>
-                        <td>@product.Artist</td>
-                        <td>@product.Created</td>
-                        <td>@product.Color.Name</td>
-                        <td>@product.Shape.Name</td>
-                        <td>@product.Transparency.Value %</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        <br>
+        <br>
+        <div class="row mt-5">
+            @foreach (var product in Model.Products)
+            {
+            <div class="col-4">
+                <partial name="Components/_MarketplaceProductCard" model="@product">
+            </div>   
+
+            }
+        </div>     
+
+                            
     </div>
+
 }
 else
 {

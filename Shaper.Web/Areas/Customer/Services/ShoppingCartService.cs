@@ -79,6 +79,22 @@ namespace Shaper.Web.Areas.Customer.Services
             return null;
         }
 
+        public async Task DeleteProductFromShoppingCart(string itemname, string user, string? token)
+        {
+            if (user != null)
+            {
+                var client = _httpClient.CreateClient();
+                var req = new HttpRequestMessage(HttpMethod.Delete, ApiPath.ShoppingCartsRemoveItem.GetEndpoint());
+                req.Content = new StringContent(JsonConvert.SerializeObject(new CartProductDeleteModel { ShaperCustomer = user, ProductName= itemname}), Encoding.UTF8, "application/json");
+                if (token != null && token.Length != 0)
+                {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                }
+
+                var res = await client.SendAsync(req);
+            }
+        }
+
         public async Task<UserShoppingCartModel> GetUserShoppingCartAsync(string user, string token)
         {
             var client = _httpClient.CreateClient();

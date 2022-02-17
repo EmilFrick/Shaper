@@ -27,6 +27,8 @@ namespace Shaper.API.Controllers
             var shoppingCart = await _requestHandler.ShoppingCarts.GetUserShoppingCartAsync(user.Identity);
             if(shoppingCart is null)
                 return NotFound(new { message = "User does not have a shopping cart to process." } );
+            if( shoppingCart.CartProducts is null || shoppingCart.CartProducts?.Count<1)
+                return NotFound(new { message = "There is a shoppingcart but its empty." } );
             var shoppingCartModel = new UserShoppingCartModel(shoppingCart);
             return Ok(shoppingCartModel);
         }
@@ -71,7 +73,7 @@ namespace Shaper.API.Controllers
         {
             if (ModelState.IsValid)
             {
-                var productDetails = await _db.Products.GetFirstOrDefaultAsync(x => x.Id == cartProductModel.ProductId);
+                var productDetails = await _db.Products.GetFirstOrDefaultAsync(x => x.Name.ToLower() == cartProductModel.ProductName.ToLower());
                 if (productDetails is null)
                     return BadRequest(new { message = "The product you're trying to remove from the cart does not exist." } );
                 

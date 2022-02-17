@@ -9,7 +9,7 @@ namespace Shaper.Models.Models.ShoppingCartModels
 {
     public class CartProductDeleteModel
     {
-        public int ProductId { get; set; }
+        public string ProductName { get; set; }
 
         public string ShaperCustomer { get; set; }
     }
