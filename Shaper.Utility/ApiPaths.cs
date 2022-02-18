@@ -15,7 +15,7 @@ namespace Shaper.Utility
         private const string ShoppingCartsAddItem = $"{root}ShoppingCarts/AddToCart";
         private const string ShoppingCartsRemoveItem = $"{root}ShoppingCarts/RemoveCartProduct";
         private const string ShoppingCarts = $"{root}ShoppingCarts";
-        private const string Orders = $"{root}Orders";
+        private const string Orders = $"{root}Orders/";
         private const string OrdersPlace = $"{root}Orders/PlaceOrder";
 
 

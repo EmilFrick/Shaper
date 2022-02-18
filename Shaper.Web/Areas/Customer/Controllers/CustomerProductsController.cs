@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Shaper.Models.Entities;
 using Shaper.Models.Models.ProductModels;
 using Shaper.Web.Areas.Admin.Services.IService;
 using Shaper.Web.Areas.Artist.Services.IService;
+using System.Data;
 
 namespace Shaper.Web.Areas.Customer.Controllers
 {
+    [Authorize(Roles = "Customer")]
     public class CustomerProductsController : Controller
     {
         private readonly IProductService _productService;

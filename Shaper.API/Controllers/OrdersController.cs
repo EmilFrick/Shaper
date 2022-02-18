@@ -17,6 +17,7 @@ namespace Shaper.API.Controllers
             _requestHandler = requestHandler;
         }
 
+
         [HttpPost]
         public async Task<IActionResult> GetUserOrders(OrdersRequestModel user)
         {
@@ -28,6 +29,21 @@ namespace Shaper.API.Controllers
             return Ok(orders);
         }
 
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetUserOrder(int id, OrdersRequestModel orderreq)
+        {
+            if(id == 0 || id != orderreq.OrderId)
+                return BadRequest();
+
+            var order = await _requestHandler.Orders.GetOrder(orderreq.OrderId.GetValueOrDefault());
+            
+            if (order is null)
+            {
+                return NotFound(new { message = "The order that you're trying retrieve is not with us." });
+            }
+            return Ok(order);
+        }
+
 
         [HttpPost("PlaceOrder")]
         public async Task<IActionResult> PlacingOrder(OrdersRequestModel user)
@@ -35,7 +51,7 @@ namespace Shaper.API.Controllers
             var userShoppingCart = await _requestHandler.ShoppingCarts.GetUserShoppingCartAsync(user.Identity);
             if (userShoppingCart is null || userShoppingCart.CartProducts.Count is 0)
             {
-                return NotFound( new { message = "User does not have a shopping cart to process." } );
+                return NotFound(new { message = "User does not have a shopping cart to process." });
             }
             var order = await _requestHandler.Orders.InitateOrderAsync(user.Identity);
             await _requestHandler.Orders.CheckOutCartProducts(userShoppingCart, order);
@@ -66,11 +82,11 @@ namespace Shaper.API.Controllers
             {
                 var order = await _requestHandler.Orders.GetOrder(orderid);
                 if (order is null)
-                    return NotFound(new { message = $"We cannot find the with Order ID: {orderid}." } );
+                    return NotFound(new { message = $"We cannot find the with Order ID: {orderid}." });
 
                 await _requestHandler.Orders.DeleteOrder(order);
 
-                return Ok( new { message = "Entry was deleted successfully." } );
+                return Ok(new { message = "Entry was deleted successfully." });
             }
             return BadRequest();
         }

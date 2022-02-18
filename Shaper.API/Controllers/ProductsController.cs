@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shaper.DataAccess.Repo.IRepo;
 using Shaper.Models.Entities;
@@ -9,6 +10,7 @@ namespace Shaper.API.Controllers
 {
 
     [Route("api/[controller]")]
+    [Authorize(Roles = "Artist")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
@@ -19,7 +21,7 @@ namespace Shaper.API.Controllers
             _db = db;
         }
 
-
+        [AllowAnonymous]
         [HttpGet("UpsertVM")]
         public async Task<IActionResult> GetProductVMs()
         {
@@ -35,6 +37,7 @@ namespace Shaper.API.Controllers
             return Ok(productVM);
         }
 
+        [AllowAnonymous]
         [HttpGet("UpsertVM/{id:int}")]
         public async Task<IActionResult> GetProductVMs(int id)
         {
@@ -55,6 +58,7 @@ namespace Shaper.API.Controllers
             return Ok(productVM);
         }
 
+        [AllowAnonymous]
         [HttpGet("ProductComponents")]
         public async Task<IActionResult> GetProductComponents(ProductReqComponentsModel request)
         {
@@ -67,7 +71,7 @@ namespace Shaper.API.Controllers
             return Ok(result);
         }
 
-
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetProducts()
         {
@@ -79,6 +83,7 @@ namespace Shaper.API.Controllers
             return Ok(result);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetProduct(int id)
         {

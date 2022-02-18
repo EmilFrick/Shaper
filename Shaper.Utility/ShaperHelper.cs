@@ -54,21 +54,22 @@ namespace Shaper.Utility
                 case "oval":
                     return $"background:{color}";
 
-                case "triangle-down":
-                case "triangle-topleft":
-                case "triangle-topright":
+                case "triangledown":
+                case "triangletopleft":
+                case "triangletopright":
                     return $"border-top: 100px solid {color}";
 
-                case "triangle-left":
+                case "triangleleft":
                     return $"border-right: 100px solid {color}";
 
                 case "triangle":
-                case "triangle-up":
-                case "triangle-bottomleft":
-                case "triangle-bottomright":
+                case "triangleup":
+                case "trianglebottomleft":
+                case "trianglebottomright":
+                case "trapezoid":
                     return $"border-bottom: 100px solid {color}";
 
-                case "triangle-right":
+                case "triangleright":
                     return $"border-left: 100px solid {color}";
                 
                 default:

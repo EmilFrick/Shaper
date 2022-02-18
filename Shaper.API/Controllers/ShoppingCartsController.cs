@@ -1,14 +1,18 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Shaper.API.RequestHandlers;
 using Shaper.API.RequestHandlers.IRequestHandlers;
 using Shaper.DataAccess.Repo.IRepo;
 using Shaper.Models.Entities;
 using Shaper.Models.Models.ShoppingCartModels;
+using System.Data;
 
 namespace Shaper.API.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize(Roles = "Customer")]
+
     [ApiController]
     public class ShoppingCartsController : ControllerBase
     {

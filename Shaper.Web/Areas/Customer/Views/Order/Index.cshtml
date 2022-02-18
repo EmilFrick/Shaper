@@ -1,4 +1,4 @@
-﻿@model IEnumerable<OrderDisplayVM>
+﻿@model IEnumerable<OrderEntryVM>
 
 
 <div style="margin-left:auto">
@@ -10,7 +10,7 @@
             <div class="row indigo m-2 " style="width:1000px;">
                 <div class="col-3 pt-3">
                     <p class="shaper">
-                        @order.OrderPlaced
+                        @order.OrderDate
                     </p>
                 </div>
                 <div class="col-3 pt-3">
@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-3 pt-3">
                     <p class="shaper">
-                        @order.OrderProducts.Count Articles
+                        @order.AmountOfArticles Articles
                     </p>
                 </div>
                 <div class="col-3 pt-3">

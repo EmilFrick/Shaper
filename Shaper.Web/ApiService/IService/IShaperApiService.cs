@@ -6,6 +6,5 @@
         IShapeApiService ShapeApi { get; }
         ITransparencyApiService TransparencyApi { get; }
         IProductApiService ProductApi { get; }
-        IOrderApiService OrderApi { get; }
     }
 }

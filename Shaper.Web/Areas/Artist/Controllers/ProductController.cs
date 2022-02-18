@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Shaper.DataAccess.IdentityContext;
 using Shaper.Models.Entities;
 using Shaper.Models.Models.ProductModels;
 using Shaper.Web.Areas.Artist.Services.IService;
+using System.Data;
 using System.Security.Claims;
 
 namespace Shaper.Web.Areas.Artist.Controllers
 {
+    [Authorize(Roles = "Artist")]
     public class ProductController : Controller
     {
 

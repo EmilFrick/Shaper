@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Shaper.Models.Models.OrderModels;
 using Shaper.Models.Models.ProductModels;
 using Shaper.Models.Models.ShoppingCartModels;
 using Shaper.Web.Areas.Customer.Services.IServices;
+using System.Data;
 
 namespace Shaper.Web.Areas.Customer.Controllers
 {
+    [Authorize(Roles = "Customer")]
     public class ShoppingCartController : Controller
     {
         private readonly IShoppingCartService _shoppingService;

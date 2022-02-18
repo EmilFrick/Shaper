@@ -1,0 +1,12 @@
+﻿@model OrderDisplayVM
+
+<div class="shaper-orderdetails-container">
+    <div class="row mt-5">
+            @foreach (var product in Model.OrderProducts)
+            {
+                <div class="col-4 p-5">
+                        <partial name="Components/_OrderProductCard" model="@product">
+                </div>
+            }
+        </div>
+</div>

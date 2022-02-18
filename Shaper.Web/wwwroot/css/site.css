@@ -47,6 +47,16 @@
     background-color: indigo;
 }
 
+.shaper-orderdetails-container {
+    min-height: 900px;
+    border-radius: 10px;
+    margin-left: 20vh;
+    margin-right: 20vh;
+    padding: 20px 40px;
+    background-color: indigo;
+}
+
+
 .shoppingcart-pricetag {
     border-radius: 10px;
     padding: 10px;
@@ -177,3 +187,11 @@ a:hover, a:visited, a:link, a:active {
     .shaper-underline:hover {
         color: #E0CFFC;
     }
+
+.shaper-quantity-indicator {
+    background-color: forestgreen;
+    display:inline-block;
+    position:relative;
+    left: 90%;
+    top: -30px;
+}

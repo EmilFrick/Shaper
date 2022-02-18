@@ -13,14 +13,10 @@ namespace Shaper.Models.Models.OrderModels
     {
         [Required]
         public int Id { get; set; }
-        public string Name { get; set; }
-
         [Required]
         public DateTime OrderPlaced { get; set; }
         [Required]
         public double OrderValue { get; set; }
-        [Required]
-        public string CustomerId { get; set; }
         [ValidateNever]
         public ICollection<OrderDetail> OrderProducts { get; set; }
 
@@ -35,17 +31,6 @@ namespace Shaper.Models.Models.OrderModels
             OrderPlaced = order.OrderPlaced;
             OrderValue = order.OrderValue;
             OrderProducts = order.OrderProducts;
-        }
-
-        public static IEnumerable<OrderDisplayVM> GetOrderDisplayVMs(IEnumerable<Order> orders)
-        {
-            List<OrderDisplayVM> orderDisplayVMs = new();
-            foreach (var order in orders)
-            {
-                OrderDisplayVM vm = new OrderDisplayVM(order);
-                orderDisplayVMs.Add(vm);
-            }
-            return orderDisplayVMs;
         }
     }
 }

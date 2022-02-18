@@ -80,40 +80,38 @@ namespace Shaper.DataAccess.Repo
             }
 
             _db.UpdateRange(products);
-            _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
         }
 
 
-        public async Task UpdateCollectionWithDefaultShape(IEnumerable<Product> products)
+        public async Task UpdateCollectionWithDefaultShape(List<Product> products)
         {
             var defaultShape = await _db.Shapes.FirstOrDefaultAsync(x => x.Name == "Default");
             foreach (var product in products)
             {
-                if (product.ShapeId == 0)
-                {
-                    product.Shape = defaultShape;
-                    product.ShapeId = defaultShape.Id;
-                }
+
+                product.Shape = defaultShape;
+                product.ShapeId = defaultShape.Id;
+
             }
             _db.UpdateRange(products);
-            _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
         }
 
-        public async Task UpdateCollectionWithDefaultTransparency(IEnumerable<Product> products)
+        public async Task UpdateCollectionWithDefaultTransparency(List<Product> products)
         {
             var defaultTransparency = await _db.Transparencies.FirstOrDefaultAsync(x => x.Name == "Default");
 
             foreach (var product in products)
             {
-                if (product.TransparencyId == 0)
-                {
-                    product.Transparency = defaultTransparency;
-                    product.TransparencyId = defaultTransparency.Id;
-                }
+
+                product.Transparency = defaultTransparency;
+                product.TransparencyId = defaultTransparency.Id;
+
             }
 
             _db.UpdateRange(products);
-            _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
         }
 
         public async Task UpdateProductPrices(List<Product> products)

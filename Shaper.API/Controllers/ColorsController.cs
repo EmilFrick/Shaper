@@ -14,7 +14,7 @@ using Color = Shaper.Models.Entities.Color;
 namespace Shaper.API.Controllers
 {
     [Route("api/[controller]")]
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     [ApiController]
     public class ColorsController : ControllerBase
     {
