@@ -1,0 +1,43 @@
+﻿@model ProductDisplayVM
+@{
+    ColorComponentModel colorcomponent = new() { Name = Model.Color.Name, Hex = Model.Color.Hex };
+    ShapeComponentModel shapecomponent = new() { Name = Model.Shape.Name.ToLower(), HasFrame = Model.Shape.HasFrame };
+    TransparencyComponentModel transparencycomponent = new() { Name = Model.Transparency.Name, TransparencyValue = Model.Transparency.Value, Description = Model.Transparency.Description };
+    ShaperModel shapercomponent = new();
+}
+
+<div class="shaper-card" style=" padding:10px; border-radius:10px;">
+    <div>
+        @{
+            shapercomponent.Color = @colorcomponent.Hex.GetRGBA(transparencycomponent.TransparencyValue);
+            shapercomponent.HasFrame = shapecomponent.HasFrame;
+            shapercomponent.Shape = shapecomponent.Name;
+        }
+        <div class="content-box">
+            <partial name="Components/_ShaperComponent" model="shapercomponent" />
+        </div>
+    </div>
+
+    <div class="shaper-textbox-colors mt-3" style="background-color:#FFF;">
+        <partial name="Components/_ColorComponent" model="@colorcomponent" />
+    </div>
+    <div class="shaper-textbox-colors" style="background-color:#FFF;">
+        <partial name="Components/_ShapeComponent" model="@shapecomponent" />
+    </div>
+    <div class="shaper-textbox-colors" style="background-color:#FFF;">
+        <partial name="Components/_TransparencyComponent" model="@transparencycomponent" />
+    </div>
+    <div class="shaper-textbox-colors" style="background-color:#FFF;">
+        <h2 class="text-danger text-end">Unit Price: @Model.Price SEK</h2>
+    </div>
+    
+    <form asp-controller="ShoppingCart" asp-action="AddToCart">
+        <input asp-for="Id" hidden />
+        <div class="input-group">
+            <button class="btn-lg btn-danger w-25 shaper-quantity-control" type="button" id="decreasequantity">&nbsp;-&nbsp;</button>
+            <button class="btn-lg btn-success w-25 shaper-quantity-control" type="button" id="increasequantity">&nbsp;+&nbsp;</button>
+            <input asp-for="Quantity" type="number" class="form-control text-center shaper-quantity-control" id="productquantity" readonly>
+            <button type="submit" class="btn-lg btn-primary w-25 shaper-quantity-control"><i class="bi bi-cart-plus"></i></button>
+    </form>
+    </div>
+</div>

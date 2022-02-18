@@ -9,9 +9,28 @@
 .shaper-container {
     border-radius: 10px;
     margin-left: 30vh;
-    margin-right:30vh;
+    margin-right: 30vh;
     padding: 20px 40px;
     background-color: indigo;
+}
+
+.shaper-productdisplay-baground {
+    background-color: indigo;
+    min-height: 950px;
+    position: relative;
+    top: -100px;
+}
+
+.shaper-productdisplay-layer {
+    background-color: #E0CFFC;
+    height: 40vh;
+    border-radius: 0px 2000px 0px 0px;
+    position: relative;
+    top: 200px;
+}
+
+.shaper-card {
+    background: #FC5801;
 }
 
 .shoppingcart-container {
@@ -54,12 +73,14 @@
     padding-left: 10px;
     border-left: dotted 9px indigo;
 }
+
 .shaper-login-baground {
     background-color: #E0CFFC;
-    padding-top:10px;
+    padding-top: 10px;
     height: 80vh;
     border-radius: 0px 2000px 0px 0px;
 }
+
 .indigo {
     background-color: indigo;
 }
@@ -82,6 +103,15 @@
     .texteffect:hover {
         top: -10px;
     }
+
+.shaper-hover:hover {
+    border-bottom: solid 4px black;
+    border-right: solid 4px black;
+}
+
+.shaper-hover:hover {
+    background: #ff8b4e;
+}
 
 a.shaper-logo:hover {
     color: #E0CFFC;
@@ -113,15 +143,37 @@ span {
 }
 
 .shaper-center {
-text-align: center;
-margin-left: auto;
-margin-right:auto;
+    /*text-align: center;*/
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.lineheight-tight{
+.lineheight-tight {
     line-height: 0.5;
 }
 
 .shaper-linebreak {
     border-bottom: solid 3px white;
 }
+
+.shaper-quantity-control {
+    font-size: 24px;
+}
+
+a .shaper {
+    text-decoration: none;
+    color: #F8F9FA;
+}
+
+a:hover, a:visited, a:link, a:active {
+    text-decoration: none;
+}
+
+.shaper-underline {
+    text-decoration: underline;
+    color: #F8F9FA;
+}
+
+    .shaper-underline:hover {
+        color: #E0CFFC;
+    }

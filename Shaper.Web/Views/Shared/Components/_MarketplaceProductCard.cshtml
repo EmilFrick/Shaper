@@ -6,7 +6,7 @@
     ShaperModel shapercomponent = new();
 }
 
-<div class="" style="background: #FC5801; padding:10px; border-radius:10px;">
+<div class="shaper-hover texteffect shaper-card" style=" padding:10px; border-radius:10px;">
     <div class="shaper-center">
         @{
             shapercomponent.Color = @colorcomponent.Hex.GetRGBA(transparencycomponent.TransparencyValue);
@@ -25,9 +25,6 @@
         </div>
         <div class="shaper-textbox-colors">
             <partial name="Components/_TransparencyComponent" model="@transparencycomponent" />
-        </div>
-        <div class="shaper-center">
-            <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-primary">@Model.Name</a>
         </div>
     </div>
 </div>

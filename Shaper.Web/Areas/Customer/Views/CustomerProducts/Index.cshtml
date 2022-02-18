@@ -25,14 +25,15 @@
         <div class="row mt-5">
             @foreach (var product in Model.Products)
             {
-            <div class="col-4">
-                <partial name="Components/_MarketplaceProductCard" model="@product">
-            </div>   
-
+                <div class="col-4">
+                    <a asp-action="Details" asp-route-id="@product.Id" >
+                        <partial name="Components/_MarketplaceProductCard" model="@product">
+                    </a>
+                </div>
             }
-        </div>     
+        </div>
 
-                            
+
     </div>
 
 }

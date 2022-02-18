@@ -1,18 +1,35 @@
 ﻿@model IEnumerable<OrderDisplayVM>
 
 
+<div style="margin-left:auto">
 
-@foreach (var orderDisplayVM in Model)
-{
-    <p>@orderDisplayVM.Id</p>
-    <p>@orderDisplayVM.OrderValue</p>
-    <p>@orderDisplayVM.OrderPlaced</p>
-    foreach (var entries in orderDisplayVM.OrderProducts)
+    @foreach (var order in Model)
     {
-        <p>@entries.ColorName</p>
-        <p>@entries.ShapeName</p>
-        <p>@entries.TransparencyName</p>
-    }
+        <a asp-action="Details" asp-route-id="@order.Id">
 
-}
+            <div class="row indigo m-2 " style="width:1000px;">
+                <div class="col-3 pt-3">
+                    <p class="shaper">
+                        @order.OrderPlaced
+                    </p>
+                </div>
+                <div class="col-3 pt-3">
+                    <p class="shaper">
+                        @order.OrderValue SEK
+                    </p>
+                </div>
+                <div class="col-3 pt-3">
+                    <p class="shaper">
+                        @order.OrderProducts.Count Articles
+                    </p>
+                </div>
+                <div class="col-3 pt-3">
+                    <p class="shaper-underline">
+                        SEE MORE
+                    </p>
+                </div>
+            </div>
+        </a>
+    }
+</div>
 

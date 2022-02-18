@@ -1,28 +1,17 @@
 ﻿@model ProductDisplayVM
 @{
-    var userDetail = User.Identity.Name;
+    ColorComponentModel colorcomponent = new() { Name = Model.Color.Name, Hex = Model.Color.Hex };
+    ShapeComponentModel shapecomponent = new() { Name = Model.Shape.Name.ToLower(), HasFrame = Model.Shape.HasFrame };
+    TransparencyComponentModel transparencycomponent = new() { Name = Model.Transparency.Name, TransparencyValue = Model.Transparency.Value, Description = Model.Transparency.Description };
+    ShaperModel shapercomponent = new();
 }
-<div>
-    <p>@Model.Id</p>
-    <p>@Model.Name</p>
-    <p>@Model.Shape.Name</p>
-    <p>@Model.Color.Name</p>
-    <p>@Model.Color.Hex</p>
-    <p>@Model.Transparency.Value</p>
-    <p>@Model.Price</p>
-    <p>@userDetail</p>
-
-    <form asp-controller="ShoppingCart" asp-action="AddToCart">
-        <input asp-for="Id" hidden/>
-        <div class="input-group" style="width:200px;">
-            <button class="btn btn-danger" type="button" id="decreasequantity">&nbsp;-&nbsp;</button>
-            <button class="btn btn-success" type="button" id="increasequantity">&nbsp;+&nbsp;</button>
-            <input asp-for="Quantity" type="number" class="form-control text-center pe-1" id="productquantity" readonly>
-            <button type="submit" class="btn btn-primary"><i class="bi bi-cart-plus"></i></button>
+<div class="shaper-productdisplay-baground">
+    <div class="shaper-productdisplay-layer">
+        <div class="shaper-center col-md-6 offset-md-3" style="width:600px; position: relative;top: -100px;">
+            <partial name="Components/_DetailProductCard" model="@Model">
         </div>
-    </form>
+    </div>
 </div>
-
 
 @section Scripts{
 <script src="~/js/quantity.js"></script>
