@@ -11,7 +11,10 @@ namespace Shaper.API.RequestHandlers.IRequestHandlers
         Task<ShoppingCart> ShoppingCartExistAsync(string user);
         Task CalulatingShoppingCartValue(ShoppingCart cartId);
         Task<ShoppingCart> GetFreshShoppingCartAsync(string user);
-        Task RemoveItemFromShoppingCart(int cartId, int productId);
-        Task CheckOutShoppingCart(string user);
+        Task RemoveItemFromShoppingCartAsync(int cartId, int productId);
+        Task CheckOutShoppingCartAsync(string user);
+        Task<ShoppingCart> GetShoppingCartByIDAsync(int id);
+        Task UpdateShoppingCartAsync(int id, ShoppingCartUpdateModel cart);
+        Task<ShoppingCart> RemoveShoppingCart(int id);
     }
 }

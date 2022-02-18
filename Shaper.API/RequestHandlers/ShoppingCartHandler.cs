@@ -16,7 +16,7 @@ namespace Shaper.API.RequestHandlers
             _db = db;
         }
 
-        public async Task CheckOutShoppingCart(string user)
+        public async Task CheckOutShoppingCartAsync(string user)
         {
             var userShoppingCart = await _db.ShoppingCarts.GetFirstOrDefaultAsync(a => a.CustomerIdentity == user && a.CheckedOut == false);
             userShoppingCart.CheckedOut = true;
@@ -71,7 +71,7 @@ namespace Shaper.API.RequestHandlers
         }
 
 
-        public async Task RemoveItemFromShoppingCart(int cartId, int productId)
+        public async Task RemoveItemFromShoppingCartAsync(int cartId, int productId)
         {
             var itemToDelete = await _db.CartProducts.GetFirstOrDefaultAsync(a => a.ShoppingCartId == cartId && a.ProductId == productId);
             _db.CartProducts.Remove(itemToDelete);
@@ -88,6 +88,53 @@ namespace Shaper.API.RequestHandlers
             cart.OrderValue = cartValue;
             _db.ShoppingCarts.Update(cart);
             await _db.SaveAsync();
+        }
+
+        public async Task<ShoppingCart> GetShoppingCartByIDAsync(int id)
+        {
+            return await _db.ShoppingCarts.GetFirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task UpdateShoppingCartAsync(int id, ShoppingCartUpdateModel cart)
+        {
+            var originalShoppingcart = await _db.ShoppingCarts.GetFirstOrDefaultAsync(x => x.Id == id, includeProperties: "CartProducts");
+
+            if (cart.CartProducts != null && cart.CartProducts.Count > 0)
+            {
+                List<CartProduct> cartProducts = new();
+                CartProduct cartProduct = new();
+                double sum = 0;
+                foreach (var item in cart.CartProducts)
+                {
+                    var productdetails = await _db.Products.GetFirstOrDefaultAsync(x => x.Id == item.ProductId);
+                    cartProduct = new()
+                    {
+                        ProductId = item.ProductId,
+                        ProductQuantity = item.Quantity,
+                        UnitPrice = productdetails.Price
+                    };
+                    sum += (cartProduct.UnitPrice * cartProduct.ProductQuantity);
+                    cartProducts.Add(cartProduct);
+                }
+                originalShoppingcart.OrderValue = sum;
+                originalShoppingcart.CartProducts = cartProducts;
+            }
+
+            originalShoppingcart.CustomerIdentity = cart.UserIdentity;
+            originalShoppingcart.CheckedOut = cart.CheckedOut.GetValueOrDefault();
+            _db.ShoppingCarts.Update(originalShoppingcart);
+            await _db.SaveAsync();
+        }
+
+        public async Task<ShoppingCart> RemoveShoppingCart(int id)
+        {
+            var cart = await _db.ShoppingCarts.GetFirstOrDefaultAsync(x => x.Id == id);
+            if(cart is null)
+                return null;
+
+            _db.ShoppingCarts.Remove(cart);
+            await _db.SaveAsync();
+            return cart;
         }
     }
 }

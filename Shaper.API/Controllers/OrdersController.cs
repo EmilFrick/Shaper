@@ -56,7 +56,7 @@ namespace Shaper.API.Controllers
             var order = await _requestHandler.Orders.InitateOrderAsync(user.Identity);
             await _requestHandler.Orders.CheckOutCartProducts(userShoppingCart, order);
             await _requestHandler.Orders.ReconciliatingOrder(order.Id);
-            await _requestHandler.ShoppingCarts.CheckOutShoppingCart(user.Identity);
+            await _requestHandler.ShoppingCarts.CheckOutShoppingCartAsync(user.Identity);
             return Ok(order);
         }
 
